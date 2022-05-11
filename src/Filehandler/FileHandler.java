@@ -42,11 +42,11 @@ public class FileHandler {
     int age = input.nextInt();
     int phoneNumber = input.nextInt();
     String email = input.nextLine();
-    String memberId = input.next();
+    String memberID = input.next();
     boolean active = input.hasNext();
     boolean paid = input.hasNext();
 
-    Member member = new Member(name, age, phoneNumber, email, memberId, active, paid);
+    Member member = new Member(name, age, phoneNumber, email, memberID, active, paid);
 
     return member;
   }
@@ -54,8 +54,8 @@ public class FileHandler {
   public void saveMembersToFile(ArrayList<Member> members) {
     try {
       PrintStream out = new PrintStream(fileName);
-
-      out.println("name;age;phoneNumber;email;memberId;active;paid");
+// TODO Make headers for CSV
+     // out.println("name;age;phoneNumber;email;memberId;active;paid");
       for (Member member : members) {
         writeMember(out, member);
       }

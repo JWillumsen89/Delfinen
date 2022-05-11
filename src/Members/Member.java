@@ -59,7 +59,7 @@ public class Member {
         return email;
     }
     public String getMemberID() {
-        return getMemberID();
+        return memberID;
     }
 
     public boolean isActive() {
@@ -70,6 +70,16 @@ public class Member {
         return this.paid;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Member{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", memberID='" + memberID + '\'' +
+                ", age=" + age +
+                ", phoneNumber=" + phoneNumber +
+                ", active=" + active +
+                ", paid=" + paid +
+                '}';
+    }
 }

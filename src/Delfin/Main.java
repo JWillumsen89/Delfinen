@@ -41,4 +41,10 @@ public class Main {
     fileHandler.saveMembersToFile(members);
   }
 
+  public void createNewMember(String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid) {
+    Member member = new Member(name, age, phoneNumber, email, memberID, active, paid);
+    members.add(member);
+    System.out.println(member);
+  }
+
 }
