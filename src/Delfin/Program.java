@@ -1,4 +1,4 @@
-package src.Main;
+package Delfin;
 
 public class Program {
 
