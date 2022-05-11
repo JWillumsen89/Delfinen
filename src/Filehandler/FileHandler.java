@@ -67,22 +67,22 @@ public class FileHandler {
   }
 
   public void writeMember(PrintStream out, Member member) {
-    /*
+
     out.print(member.getName());
     out.print(";");
     out.print(member.getAge());
     out.print(";");
-    out.print(member.getphoneNumber());
+    out.print(member.getPhoneNumber());
     out.print(";");
     out.print(member.getEmail());
     out.print(";");
-    out.print(member.getMemberId());
+    out.print(member.getMemberID());
     out.print(";");
-    out.print(member.getActive());
+    out.print(member.isActive());
     out.print(";");
-    out.print(member.getPaid());
+    out.print(member.isPaid());
     out.print("\n");
 
-     */
+
   }
 }

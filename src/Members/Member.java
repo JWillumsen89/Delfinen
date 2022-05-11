@@ -30,4 +30,46 @@ public class Member {
 
     }
 
+    //-----------------Setter-----------------
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
+
+
+    //-----------------Getter-----------------
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public String getMemberID() {
+        return getMemberID();
+    }
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public boolean isPaid() {
+        return this.paid;
+    }
+
+
+
 }
