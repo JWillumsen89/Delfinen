@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class Member {
 
+
     private String name;
     private String email;
     private String memberID;
@@ -19,7 +20,7 @@ public class Member {
     private ArrayList<Member>members;
     private ArrayList<Member>restance;
 
-    public Member (String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid ) {
+    public void Member (String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid ) { //TODO: ændret til void, for at kunne estanchere den i payments
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;

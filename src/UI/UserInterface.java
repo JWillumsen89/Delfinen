@@ -3,13 +3,17 @@ package UI;
 
 import Delfin.Main;
 import Filehandler.DatabaseException;
+import Finance.MembersFee;
+import Members.Member;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Scanner;
 
 public class UserInterface {
 
   private boolean fileSaved = false;
-
+private String age;
   private final Main app;
 
   public UserInterface(Main app) {
@@ -70,14 +74,14 @@ public class UserInterface {
       choice = input.nextInt();
     }
 
-      switch (choice) {
-        case 0 -> start();
-        case 1 -> addMember();
-        case 2 -> removeMember();
-        case 3 -> memberList();
-        case 4 -> save();
+    switch (choice) {
+      case 0 -> start();
+      case 1 -> addMember();
+      case 2 -> removeMember();
+      case 3 -> memberList();
+      case 4 -> save();
 
-      }
+    }
   }
 
   public void addMember() {
@@ -85,9 +89,17 @@ public class UserInterface {
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
     String name = input.nextLine();
-    // TODO change to date of birth
-    System.out.print("Age: ");
-    int age = input.nextInt();
+
+    //------------------ageCalulatorUsed in Payments-------------------------------
+    System.out.print("Enter date of birth in YYYY-MM-DD format: ");
+    age = input.nextLine();
+    LocalDate temp = LocalDate.parse(age);
+    MembersFee memberFee = new MembersFee();
+    int result = memberFee.calculateAge(temp);
+    System.out.println(result);
+
+//----------------------------slut----------------------
+
     input.nextLine();
     System.out.print("Email: ");
     String email = input.nextLine();
@@ -101,7 +113,7 @@ public class UserInterface {
     boolean active = input.nextBoolean();
     Boolean paid = false;
 
-    app.createNewMember(name, age, phoneNumber, email, memberID, active, paid);
+    app.createNewMember(name, temp, phoneNumber, email, memberID, active, paid);
 
     chairman();
 
@@ -144,4 +156,9 @@ public class UserInterface {
     System.out.println("\u001b[1;31mPROGRAM SHUTTING DOWN\u001b[m");
     System.exit(0);
   }
+
+
 }
+
+
+
