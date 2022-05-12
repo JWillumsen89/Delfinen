@@ -1,8 +1,10 @@
-package UI;
+package src.UI;
 
 
-import Delfin.Main;
-import Filehandler.DatabaseException;
+import src.Delfin.Main;
+import src.Filehandler.DatabaseException;
+import src.Members.Member;
+//import src.Delfin.Main;
 
 import java.util.Scanner;
 
@@ -15,7 +17,7 @@ public class UserInterface {
   public UserInterface(Main app) {
     this.app = app;
   }
-
+  Scanner input = new Scanner(System.in);
 
   public void start() {
     System.out.println("Welcome to DELFIN SVØMMEKLUB");
@@ -40,7 +42,7 @@ public class UserInterface {
                         
         0) Exit application
         """);
-    Scanner input = new Scanner(System.in);
+
     int choice = input.nextInt();
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");
@@ -54,12 +56,12 @@ public class UserInterface {
   public void chairman() {
 
     System.out.println("""
-        Main menu
+        Chairman menu
         ---------
         1) Add new member
         2) Remove member
         3) Member list
-        3) Save member
+        4) Save member
                         
         0) Return to main
         """);
@@ -68,6 +70,7 @@ public class UserInterface {
     while (choice < 0 || choice > 4) {
       System.out.println("Only values 0-4 allowed");
       choice = input.nextInt();
+      input.nextLine(); //Scannerbug
     }
 
       switch (choice) {
@@ -99,7 +102,7 @@ public class UserInterface {
     String memberID = input.nextLine();
     System.out.print("Active: true/false ");
     boolean active = input.nextBoolean();
-    Boolean paid = false;
+    boolean paid = false;
 
     app.createNewMember(name, age, phoneNumber, email, memberID, active, paid);
 
@@ -108,15 +111,47 @@ public class UserInterface {
   }
 
   public void removeMember() {
+    Scanner sc = new Scanner (System.in);
+    System.out.println("Remove member\n");
+    System.out.println("\nWhich member do you want to remove with the member ID");
+    String memberID = sc.nextLine();
+
+    //TODO System.out.println("Are you sure tha"); are you sure?
+
+    boolean success = app.removeMember(memberID);
+
+      if(success){
+        System.out.println("The member has been removed");
+      }
+      else{
+        System.out.println("The member could not be found and can't be deleted");
+      }
 
   }
 
-  public void memberList() {
 
+  public void memberList() {
+    System.out.println("Member list");
+      for(Member member : app.getAllMembers()){
+        System.out.println(member);
+      }
+    System.out.println("The number of members in the list: "+app.getMemberCount());
   }
 
   //TODO MOVE TO SEPERATE CLASS
   public void cashier() {
+    System.out.println("""
+        Cashier menu
+        ---------
+        1) Add new member
+        2) Remove member
+        3) Member list
+        3) Save member
+                        
+        0) Return to main
+        """);
+
+
 
   }
 

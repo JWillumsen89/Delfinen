@@ -1,6 +1,5 @@
-package Members;
+package src.Members;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Member {
@@ -72,14 +71,14 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Member{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", memberID='" + memberID + '\'' +
-                ", age=" + age +
-                ", phoneNumber=" + phoneNumber +
-                ", active=" + active +
-                ", paid=" + paid +
-                '}';
+        return "Member\n" +
+                "\nName: " + name +
+                "\nEmail: " + email  +
+                "\nMemberID: " + memberID +
+                "\nAge: " + age +
+                "\nPhoneNumber: " + phoneNumber +
+                "\nActive: " + active +
+                "\nPaid: " + paid +
+                '\n';
     }
 }

@@ -1,17 +1,14 @@
-package Delfin;
+package src.Delfin;
 
-import Filehandler.FileHandler;
-import Members.Member;
-import UI.UserInterface;
+import src.Filehandler.FileHandler;
+import src.Members.Member;
+import src.UI.UserInterface;
 
 import java.util.ArrayList;
 
 public class Main {
 
-  private ArrayList<Member> members;
-
-
-
+    private ArrayList<Member> members;
   public void start() {
 
     UserInterface ui = new UserInterface(this);
@@ -19,11 +16,11 @@ public class Main {
     ui.start();
   }
 
-  public Main() {
-    members = new ArrayList<>();
-  }
+ // public Main() {
+   // members = new ArrayList<>();
+  //}
 
-  public static void main(String[] args) {
+ public static void main(String[] args) {
 
     Main main = new Main();
     main.loadDatabase();
@@ -46,5 +43,29 @@ public class Main {
     members.add(member);
     System.out.println(member);
   }
+  public boolean removeMember(String memberId){
+      Member member = findMemberById(memberId);
+        if(member == null){
+            return false;
+        }
+        else{
+            members.remove(member);
+            return true;
+        }
+  }
+  public Member findMemberById(String memberId){
+      for(Member member : members){
+          if(member.getMemberID().equalsIgnoreCase(memberId)){
+              return member;
+          }
+      }
+      return null;
+  }
+  public Iterable<Member> getAllMembers(){
+      return members;
+  }
 
+    public int getMemberCount() {
+      return members.size();
+    }
 }
