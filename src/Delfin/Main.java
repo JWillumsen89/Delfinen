@@ -1,14 +1,16 @@
-package src.Delfin;
+package Delfin;
 
-import src.Filehandler.FileHandler;
-import src.Members.Member;
-import src.UI.UserInterface;
+import Filehandler.FileHandler;
+import Members.Member;
+import UI.UserInterface;
 
 import java.util.ArrayList;
 
 public class Main {
 
-    private ArrayList<Member> members;
+  private ArrayList<Member> members = new ArrayList<>();
+
+
   public void start() {
 
     UserInterface ui = new UserInterface(this);

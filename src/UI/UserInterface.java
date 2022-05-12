@@ -1,10 +1,10 @@
-package src.UI;
+package UI;
 
 
-import src.Delfin.Main;
-import src.Filehandler.DatabaseException;
-import src.Members.Member;
-//import src.Delfin.Main;
+import Delfin.Main;
+import Filehandler.DatabaseException;
+import Members.Member;
+
 
 import java.util.Scanner;
 
@@ -17,7 +17,6 @@ public class UserInterface {
   public UserInterface(Main app) {
     this.app = app;
   }
-  Scanner input = new Scanner(System.in);
 
   public void start() {
     System.out.println("Welcome to DELFIN SVØMMEKLUB");
@@ -42,7 +41,7 @@ public class UserInterface {
                         
         0) Exit application
         """);
-
+    Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");

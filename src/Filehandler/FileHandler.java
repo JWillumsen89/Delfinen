@@ -1,7 +1,7 @@
-package src.Filehandler;
+package Filehandler;
 
-import src.Members.Member;
-import src.Filehandler.DatabaseException;
+import Members.Member;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;

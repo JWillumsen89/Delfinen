@@ -1,4 +1,4 @@
-package src.Filehandler;
+package Filehandler;
 
 public class DatabaseException extends RuntimeException{
 }
