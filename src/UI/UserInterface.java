@@ -126,6 +126,7 @@ public class UserInterface {
         System.out.println("The member could not be found and can't be deleted");
       }
 
+    chairman();
   }
 
 
@@ -135,6 +136,8 @@ public class UserInterface {
         System.out.println(member);
       }
     System.out.println("The number of members in the list: "+app.getMemberCount());
+
+    chairman();
   }
 
   //TODO MOVE TO SEPERATE CLASS
@@ -171,7 +174,7 @@ public class UserInterface {
     } catch (DatabaseException exception) {
       System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
     }
-
+    chairman();
   }
 
   public void exit() {
