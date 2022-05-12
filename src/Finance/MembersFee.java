@@ -2,81 +2,106 @@ package Finance;
 
 import Members.Member;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Scanner;
 
 public class MembersFee {
-
-  private boolean activMebership = false;
+  Member member = new Member();
+  //private boolean activMebership = false;
   private int junior;
   private int senior;
+  private int newAge;
   private double seniorGold;
-
-
+  double[] fees = new double[5];
 
 
   //---------------------------constructor-----------------------------------
 
-  public MembersFee(boolean aPmemebership, int juniorFee, int seniorFee, double seniorGoldFee){
-    activMebership = aPmemebership;
+  public MembersFee(boolean aPmemebership, int juniorFee, int seniorFee, double seniorGoldFee) {
+    //activMebership = aPmemebership;
     junior = juniorFee;
     senior = seniorFee;
     seniorGold = seniorGoldFee;
 
 
   }
-  public MembersFee(){
+
+  public MembersFee() {
 
   }
 
   //-------------------------------------gette----------------------------
 
-  public int getJunior(){
+  public int getJunior() {
     return junior;
   }
-  public int getSenior(){
+
+  public int getSenior() {
     return senior;
   }
-  public double getSeniorGold(){
+
+  public double getSeniorGold() {
     return seniorGold;
   }
 
-  public double[] fees(){
-    double[] fees = new double[5];
+  public double[] fees() {
+
     fees[0] = 1000; //junior
     fees[1] = 1600; //senior
-    fees[3]= 25; //seniorGold discount
+    fees[3] = 25; //seniorGold discount
     fees[4] = 500; // passivtMember
     return fees;
+  }
+
+
+  public void paymentCategoryCalculator(double category) {
+
+    //TODO: evt swichcase?
+
+    if (newAge < 18) {
+      category = fees()[0];
     }
+    if (newAge >= 18) {
+      category = fees()[1];
+    }
+    if (newAge >= 60) {
+      category = fees()[1] * 0.75;
 
-public void paymentCategoryCalculator(double category){
-  Member memeberAge = new Member();
-  //TODO: evt swichcase?
-
-  if (memeberAge.getAge() < 18) {
-     category = fees()[0];
-  }if (memeberAge.getAge() >=18){
-    category = fees()[1];
-    } if  (memeberAge.getAge() >=60 ){
-    category = fees()[1] *0.75;
-  }else {
-    category = memeberAge.isActive(fees([4]);
+    } else {
+      //category = member.isActive() ;
+    }
   }
-  }
-
-
 
 
 //TODO: hjælp
 
-      public double ChangememebersFees(){
+  public double ChangememebersFees(double newFee) {
     Scanner sc = new Scanner(System.in);
-    System.out.println("---------------Change memebrs fees------------------------\n");
-    System.out.print("List:\n" + fees([0]) +"");
+    System.out.println("---------------Change  Delfin Svømmeklub medlems fees------------------------\n");
+    System.out.print("Junior:............" + fees[0] + ",- kr.\n");
+    System.out.print("Senior:........... " + fees[1] + ",- kr.\n");
+    System.out.print("Senior Gold:...... " + fees[2] + ",- kr.\n");
+    System.out.print("Passiv Membership: " + fees[3] + ",- kr.\n");
+    System.out.println("Which would you like to change?");
+
+
+
+    return newFee;
+  }
+
+
+
+/*
+    for (double i: fees())
+      System.out.println(i + "\n ");
+
+
     sc.nextDouble();
   }
+
+ */
 
   //----------------------------is used in members fee------------------------------
 
@@ -84,7 +109,8 @@ public void paymentCategoryCalculator(double category){
     LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
     if ((age != null) && (curDate != null)) {
 
-      return Period.between(age, curDate).getYears();
+      newAge = Period.between(age, curDate).getYears();
+      return newAge;
     } else {
       return 0;
     }

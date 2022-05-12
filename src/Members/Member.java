@@ -20,7 +20,8 @@ public class Member {
     private ArrayList<Member>members;
     private ArrayList<Member>restance;
 
-    public void Member (String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid ) { //TODO: ændret til void, for at kunne estanchere den i payments
+
+    public  Member (String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid ) { //TODO: ændret til void, for at kunne estanchere den i payments
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
@@ -30,15 +31,23 @@ public class Member {
         this.paid = paid;
 
     }
+    public Member(){
+
+    }
+
 
     //-----------------Setter-----------------
 
     public void setActive(boolean active) {
         this.active = active;
+
     }
 
     public void setPaid(boolean paid) {
         this.paid = paid;
+    }
+    public void setAge(int age){
+        this.age = age;
     }
 
 
@@ -64,7 +73,8 @@ public class Member {
     }
 
     public boolean isActive() {
-        return this.active;
+        active = false;
+        return false;
     }
 
     public boolean isPaid() {
