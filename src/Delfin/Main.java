@@ -18,10 +18,6 @@ public class Main {
     ui.start();
   }
 
- // public Main() {
-   // members = new ArrayList<>();
-  //}
-
  public static void main(String[] args) {
 
     Main main = new Main();
