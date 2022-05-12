@@ -14,7 +14,7 @@ public class FileHandler {
 
   private String fileName = "MemberBase.csv";
 
-  public ArrayList<Member> loadMembersFromFile(){
+  public ArrayList<Member> loadMembersFromFile() {
 
     ArrayList<Member> members = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class FileHandler {
     try {
       PrintStream out = new PrintStream(fileName);
 // TODO Make headers for CSV
-     out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N)");
+      out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N)");
       for (Member member : members) {
         writeMember(out, member);
       }

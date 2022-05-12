@@ -24,7 +24,7 @@ public class UserInterface {
 
     while (true) {
       switch (mainMenu()) {
-        case 0 -> exit();
+        case 0 -> exitMenu();
         case 1 -> chairman();
         case 2 -> cashier();
         case 3 -> coaches();
@@ -48,7 +48,6 @@ public class UserInterface {
       System.out.println("Only values 0-3 allowed");
       choice = input.nextInt();
     }
-
     return choice;
   }
 
@@ -73,14 +72,24 @@ public class UserInterface {
       input.nextLine(); //Scannerbug
     }
 
-      switch (choice) {
-        case 0 -> start();
-        case 1 -> addMember();
-        case 2 -> removeMember();
-        case 3 -> memberList();
-        case 4 -> save();
-
+    switch (choice) {
+      case 0 -> {
+        if (!fileSaved) {
+          System.out.println("You haven't saved your members list, are you still sure you want to return to main menu and loose any new data? yes[Y] or no[N]: ");
+          char decision = input.next().toUpperCase(Locale.ROOT).charAt(0);
+          switch (decision) {
+            case 'Y' -> start();
+            case 'N' -> chairman();
+            default -> System.out.println("Invalid char");
+          }
+        }
       }
+      case 1 -> addMember();
+      case 2 -> removeMember();
+      case 3 -> memberList();
+      case 4 -> save();
+
+    }
   }
 
   public void addMember() {
@@ -106,7 +115,7 @@ public class UserInterface {
     boolean answer = false;
 
     do {
-      System.out.print("Active: [A] or Passive: [P]" );
+      System.out.print("Active: [A] or Passive: [P]");
       char active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
         System.out.println("Active member");
@@ -118,7 +127,7 @@ public class UserInterface {
         System.out.println("Invalid char");
       }
     }
-    while (!answer) ;
+    while (!answer);
 
     char paidOrNot = 'N';
     app.createNewMember(name, age, phoneNumber, email, memberID, active1, paidOrNot);
@@ -126,7 +135,7 @@ public class UserInterface {
   }
 
   public void removeMember() {
-    Scanner sc = new Scanner (System.in);
+    Scanner sc = new Scanner(System.in);
     System.out.println("Remove member\n");
     System.out.println("\nWhich member do you want to remove with the member ID");
     String memberID = sc.nextLine();
@@ -135,12 +144,11 @@ public class UserInterface {
 
     boolean success = app.removeMember(memberID);
 
-      if(success){
-        System.out.println("The member has been removed");
-      }
-      else{
-        System.out.println("The member could not be found and can't be deleted");
-      }
+    if (success) {
+      System.out.println("The member has been removed");
+    } else {
+      System.out.println("The member could not be found and can't be deleted");
+    }
 
     chairman();
   }
@@ -148,10 +156,10 @@ public class UserInterface {
 
   public void memberList() {
     System.out.println("Member list");
-      for(Member member : app.getAllMembers()){
-        System.out.println(member);
-      }
-    System.out.println("The number of members in the list: "+app.getMemberCount());
+    for (Member member : app.getAllMembers()) {
+      System.out.println(member);
+    }
+    System.out.println("The number of members in the list: " + app.getMemberCount());
 
     chairman();
   }
@@ -168,9 +176,6 @@ public class UserInterface {
                         
         0) Return to main
         """);
-
-
-
   }
 
   //TODO MOVE TO SEPERATE CLASS
@@ -179,7 +184,6 @@ public class UserInterface {
   }
 
   public void save() {
-
 
     try {
       System.out.println("Saving the database ...");
@@ -191,6 +195,19 @@ public class UserInterface {
       System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
     }
     chairman();
+  }
+
+  public void exitMenu() {
+    Scanner input = new Scanner(System.in);
+    if (!fileSaved) {
+      System.out.println("You haven't saved your members list, are you still sure you want to exit? yes[Y] or no[N]: ");
+      char decision = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      switch (decision) {
+        case 'Y' -> exit();
+        case 'N' -> mainMenu();
+      }
+    } else
+      exit();
   }
 
   public void exit() {
