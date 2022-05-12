@@ -12,13 +12,13 @@ public class Member {
     private int age;
     private int phoneNumber;
 
-    private boolean active;
+    private char active;
     private boolean paid;
 
     private ArrayList<Member>members;
     private ArrayList<Member>restance;
 
-    public Member (String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid ) {
+    public Member (String name, int age, int phoneNumber, String email, String memberID, char active, boolean paid ) {
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
@@ -31,7 +31,7 @@ public class Member {
 
     //-----------------Setter-----------------
 
-    public void setActive(boolean active) {
+    public void setActive(char active) {
         this.active = active;
     }
 
@@ -61,7 +61,7 @@ public class Member {
         return memberID;
     }
 
-    public boolean isActive() {
+    public char isActive() {
         return this.active;
     }
 

@@ -6,6 +6,7 @@ import src.Filehandler.DatabaseException;
 import src.Members.Member;
 //import src.Delfin.Main;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -100,12 +101,24 @@ public class UserInterface {
     //TODO Autogenerat ID Number!
     System.out.print("memberID: ");
     String memberID = input.nextLine();
-    System.out.print("Active: true/false ");
-    boolean active = input.nextBoolean();
+
+    char active1 = 'A';
+    char active2 = 'P';
+    boolean answer = false;
+    do {
+      System.out.print("Active: [A] or Passive: [P]" );
+      char active = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      if (active == active1) {
+        System.out.println("You are now an active member");
+      } else if (active == active2) {
+        System.out.println("You are now a passive member");
+      }
+    }
+      while (answer);
+
     boolean paid = false;
-
-    app.createNewMember(name, age, phoneNumber, email, memberID, active, paid);
-
+    app.createNewMember(name, age, phoneNumber, email, memberID, active1, paid);
+    System.out.println();
     chairman();
 
   }
@@ -143,26 +156,49 @@ public class UserInterface {
     System.out.println("""
         Cashier menu
         ---------
-        1) Add new member
-        2) Remove member
-        3) Member list
-        3) Save member
+        1) See list of all member's membership status
+        2) Change a member's payment status
+        3) See the total amount of the income for the year
+        4) Print all the members who hasn't paid
                         
+        0) Return to main
+        """);
+    Scanner input = new Scanner(System.in);
+    int choice = input.nextInt();
+    while (choice < 0 || choice > 4) {
+      System.out.println("Only values 0-4 allowed");
+      choice = input.nextInt();
+      input.nextLine(); //Scannerbug
+    }
+    switch (choice) {
+      case 1 -> membershipStatus();
+      //case 2 -> removeMember();
+      //case 3 -> memberList();
+      //case 4 -> save();
+
+    }
+  }
+  private void membershipStatus() {
+
+  }
+
+
+  //TODO MOVE TO SEPERATE CLASS
+  public void coaches() {
+    System.out.println("""
+        Coach menu
+        ---------
+        1) Add a swimmer to a traning score sheet 
+        2) Register a swimmers results from a competition
+        3) Print the top 5 swimmers in all 4 categories
+                      
         0) Return to main
         """);
 
 
-
-  }
-
-  //TODO MOVE TO SEPERATE CLASS
-  public void coaches() {
-
   }
 
   public void save() {
-
-
     try {
       System.out.println("Saving the database ...");
       app.saveDatabase();
@@ -172,7 +208,6 @@ public class UserInterface {
     } catch (DatabaseException exception) {
       System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
     }
-
   }
 
   public void exit() {

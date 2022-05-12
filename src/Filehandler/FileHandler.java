@@ -44,7 +44,7 @@ public class FileHandler {
     int phoneNumber = input.nextInt();
     String email = input.nextLine();
     String memberID = input.next();
-    boolean active = input.hasNext();
+    char active = input.next().charAt(0);
     boolean paid = input.hasNext();
 
     Member member = new Member(name, age, phoneNumber, email, memberID, active, paid);
