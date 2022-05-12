@@ -3,6 +3,7 @@ package UI;
 
 import Delfin.Main;
 import Filehandler.DatabaseException;
+import Finance.CashierMenu;
 import Finance.MembersFee;
 import Members.Member;
 
@@ -11,7 +12,7 @@ import java.time.Period;
 import java.util.Scanner;
 
 public class UserInterface {
-
+CashierMenu goToMenueCashier = new CashierMenu();
   private boolean fileSaved = false;
 private String age;
   private final Main app;
@@ -28,7 +29,7 @@ private String age;
       switch (mainMenu()) {
         case 0 -> exit();
         case 1 -> chairman();
-        case 2 -> cashier();
+        case 2 -> goToMenueCashier.cashierMenuUi();
         case 3 -> coaches();
       }
     }

@@ -2,14 +2,13 @@ package Finance;
 
 import Members.Member;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Scanner;
 
 public class MembersFee {
   Member member = new Member();
-  //private boolean activMebership = false;
+
   private int junior;
   private int senior;
   private int newAge;
@@ -74,34 +73,26 @@ public class MembersFee {
     }
   }
 
-
-//TODO: hjælp
-
-  public double ChangememebersFees(double newFee) {
+  public  void ChangememebersFees() {
     Scanner sc = new Scanner(System.in);
+    CashierMenu chanhiem = new CashierMenu();
     System.out.println("---------------Change  Delfin Svømmeklub medlems fees------------------------\n");
-    System.out.print("Junior:............" + fees[0] + ",- kr.\n");
-    System.out.print("Senior:........... " + fees[1] + ",- kr.\n");
-    System.out.print("Senior Gold:...... " + fees[2] + ",- kr.\n");
-    System.out.print("Passiv Membership: " + fees[3] + ",- kr.\n");
-    System.out.println("Which would you like to change?");
-
-
-
-    return newFee;
-  }
-
-
-
-/*
-    for (double i: fees())
-      System.out.println(i + "\n ");
-
-
-    sc.nextDouble();
-  }
-
- */
+    System.out.print("Junior:............" + fees[0] + ",- kr. Type 1\n");
+    System.out.print("Senior:........... " + fees[1] + ",- kr. Type 2\n");
+    System.out.print("Senior Gold:...... " + fees[2] + ",- kr. Type 3\n");
+    System.out.print("Passiv Membership: " + fees[3] + ",- kr. Type 4\n");
+    int feeToChange = sc.nextInt();
+    System.out.println("What is the new membbers fee for this category?");
+    double newMemberFee = sc.nextDouble();
+    for (int i = 0;i < fees.length;i++){
+    fees[i] = feeToChange;
+      if (fees[i]== feeToChange){
+      fees[i]=newMemberFee;
+      }
+    }
+    System.out.println("you have now change the fee from"+ feeToChange+" to " + newMemberFee);
+    chanhiem.cashierMenuUi();
+    }
 
   //----------------------------is used in members fee------------------------------
 
@@ -116,9 +107,11 @@ public class MembersFee {
     }
   }
 
+  public  String printMenmbersFees() {
+    for (int i = 0; i < fees.length; i++) {
+      System.out.println(i);
+    }
+    return null;
+  }
 
 }
-
-
-
-//TODO: For aktive medlemmer er kontingentet for ungdomssvømmere (under 18 år) 1000 kr. årligt, for seniorsvømmere (18 år og over) 1600 kr. årligt. For medlemmer over 60 år gives der 25 % rabat af seniortaksten. For passivt medlemskab er taksten 500 kr. årligt.
