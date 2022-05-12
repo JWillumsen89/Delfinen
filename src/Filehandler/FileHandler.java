@@ -43,10 +43,14 @@ public class FileHandler {
     int phoneNumber = input.nextInt();
     String email = input.next();
     String memberID = input.next();
-    boolean active = input.hasNext();
+    char activeOrPassive = input.next().charAt(0);
+    char paidOrNot = input.next().charAt(0);
+    /*boolean active = input.hasNext();
     boolean paid = input.hasNext();
 
-    Member member = new Member(name, age, phoneNumber, email, memberID, active, paid);
+     */
+
+    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
 
     return member;
   }
@@ -55,7 +59,7 @@ public class FileHandler {
     try {
       PrintStream out = new PrintStream(fileName);
 // TODO Make headers for CSV
-     out.println("name;age;phoneNumber;email;memberId;active;paid");
+     out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N)");
       for (Member member : members) {
         writeMember(out, member);
       }
@@ -78,9 +82,9 @@ public class FileHandler {
     out.print(";");
     out.print(member.getMemberID());
     out.print(";");
-    out.print(member.isActive());
+    out.print(member.getActiveOrPassive());
     out.print(";");
-    out.print(member.isPaid());
+    out.print(member.getPaidOrNot());
     out.print("\n");
 
 

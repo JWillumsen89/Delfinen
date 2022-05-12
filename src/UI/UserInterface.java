@@ -6,6 +6,7 @@ import Filehandler.DatabaseException;
 import Members.Member;
 
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -99,14 +100,29 @@ public class UserInterface {
     //TODO Autogenerat ID Number!
     System.out.print("memberID: ");
     String memberID = input.nextLine();
-    System.out.print("Active: true/false ");
-    boolean active = input.nextBoolean();
-    boolean paid = false;
 
-    app.createNewMember(name, age, phoneNumber, email, memberID, active, paid);
+    char active1 = 'A';
+    char active2 = 'P';
+    boolean answer = false;
 
+    do {
+      System.out.print("Active: [A] or Passive: [P]" );
+      char active = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      if (active == active1) {
+        System.out.println("Active member");
+        answer = true;
+      } else if (active == active2) {
+        System.out.println("Passive member");
+        answer = true;
+      } else {
+        System.out.println("Invalid char");
+      }
+    }
+    while (!answer) ;
+
+    char paidOrNot = 'N';
+    app.createNewMember(name, age, phoneNumber, email, memberID, active1, paidOrNot);
     chairman();
-
   }
 
   public void removeMember() {

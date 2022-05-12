@@ -40,10 +40,10 @@ public class Main {
     fileHandler.saveMembersToFile(members);
   }
 
-  public void createNewMember(String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid) {
-    Member member = new Member(name, age, phoneNumber, email, memberID, active, paid);
+  public void createNewMember(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
+    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
-    System.out.println(member);
+    //System.out.println(member);
   }
   public boolean removeMember(String memberId){
       Member member = findMemberById(memberId);

@@ -15,17 +15,20 @@ public class Member {
   private boolean active;
   private boolean paid;
 
+  private char activeOrPassive;
+  private char paidOrNot;
+
   private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
-  public Member(String name, int age, int phoneNumber, String email, String memberID, boolean active, boolean paid) {
+  public Member(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
     this.name = name;
     this.age = age;
     this.phoneNumber = phoneNumber;
     this.email = email;
     this.memberID = memberID;
-    this.active = active;
-    this.paid = paid;
+    this.activeOrPassive = activeOrPassive;
+    this.paidOrNot = paidOrNot;
 
   }
 
@@ -61,12 +64,20 @@ public class Member {
         return memberID;
     }
 
+    public char getActiveOrPassive() {
+    return activeOrPassive;
+    }
+
+    public char getPaidOrNot() {
+    return paidOrNot;
+    }
+
     public boolean isActive() {
-        return this.active;
+        return active;
     }
 
     public boolean isPaid() {
-        return this.paid;
+        return paid;
     }
 
     @Override
@@ -77,8 +88,8 @@ public class Member {
                 "\nMemberID: " + memberID +
                 "\nAge: " + age +
                 "\nPhoneNumber: " + phoneNumber +
-                "\nActive: " + active +
-                "\nPaid: " + paid +
+                "\nActive(A) or Passive(P): " + activeOrPassive +
+                "\nPaid(P) or Not(N): " + paidOrNot +
                 '\n';
     }
 }
