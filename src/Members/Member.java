@@ -12,9 +12,6 @@ public class Member {
   private int age;
   private int phoneNumber;
 
-  private boolean active;
-  private boolean paid;
-
   private char activeOrPassive;
   private char paidOrNot;
 
@@ -34,13 +31,6 @@ public class Member {
 
   //-----------------Setter-----------------
 
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-
-  public void setPaid(boolean paid) {
-    this.paid = paid;
-  }
 
 
   //-----------------Getter-----------------
@@ -71,14 +61,6 @@ public class Member {
 
   public char getPaidOrNot() {
     return paidOrNot;
-  }
-
-  public boolean isActive() {
-    return active;
-  }
-
-  public boolean isPaid() {
-    return paid;
   }
 
   @Override

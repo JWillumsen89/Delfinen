@@ -108,7 +108,7 @@ public class UserInterface {
     input.nextLine(); // ScannerBug fix
     //TODO Autogenerat ID Number!
     System.out.print("memberID: ");
-    String memberID = input.nextLine();
+    String memberID = String.format("%04d", input.nextLine());
 
     char active1 = 'A';
     char active2 = 'P';
