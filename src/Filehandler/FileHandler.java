@@ -1,6 +1,7 @@
 package Filehandler;
 
 import Members.Member;
+import UI.UserInterface;
 
 
 import java.io.File;
@@ -45,6 +46,7 @@ public class FileHandler {
     String memberID = input.next();
     char activeOrPassive = input.next().charAt(0);
     char paidOrNot = input.next().charAt(0);
+    //double memberCategory = input.nextDouble();
     /*boolean active = input.hasNext();
     boolean paid = input.hasNext();
 
