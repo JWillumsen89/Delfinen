@@ -106,12 +106,13 @@ private String age;
     age = input.nextLine();
     LocalDate temp = LocalDate.parse(age);
     MembersFee memberFee = new MembersFee();
-    int result = memberFee.calculateAge(temp);
-    System.out.println(result);
+    memberFee.calculateAge(temp);
+    double result = memberFee.paymentCategoryCalculator();
+    System.out.println(result); //TODO: skal slettes, kun til test(linjen)
 
 //----------------------------slut----------------------
 
-    input.nextLine();
+    //input.nextLine();
     System.out.print("Email: ");
     String email = input.nextLine();
     System.out.print("Phonenumber: ");
@@ -141,7 +142,7 @@ private String age;
     while (!answer);
 
     char paidOrNot = 'N';
-    app.createNewMember(name, Integer.parseInt(age), phoneNumber, email, memberID, active1, paidOrNot);
+    app.createNewMember(name, LocalDate.parse(age), phoneNumber, email, memberID, active1, paidOrNot);
     chairman();
   }
 

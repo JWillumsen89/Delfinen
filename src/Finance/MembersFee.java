@@ -15,15 +15,17 @@ public class MembersFee {
   private double seniorGold;
 //  double[] fees = new double[5];
   int[] fees = {1000, 1600, 25, 500};
+  double category;
 
 
   //---------------------------constructor-----------------------------------
 
-  public MembersFee(boolean aPmemebership, int juniorFee, int seniorFee, double seniorGoldFee) {
+  public MembersFee(boolean aPmemebership, int juniorFee, int seniorFee, double seniorGoldFee, double category) {
     //activMebership = aPmemebership;
     junior = juniorFee;
     senior = seniorFee;
     seniorGold = seniorGoldFee;
+    category = category;
 
 
   }
@@ -37,6 +39,9 @@ public class MembersFee {
   public int getJunior() {
     return junior;
   }
+public double getCategory(){
+    return category;
+}
 
   public int getSenior() {
     return senior;
@@ -46,22 +51,13 @@ public class MembersFee {
     return seniorGold;
   }
 
-
-
-  /*
-  double[] fees() { 1000
-
-    fees[0] = 1000; //junior
-    fees[1] = 1600; //senior
-    fees[3] = 25; //seniorGold discount
-    fees[4] = 500; // passivtMember
-    return fees;
+  public int getNewAge(){
+    return newAge;
   }
 
-   */
 
 
-  public void paymentCategoryCalculator(double category) {
+  public double paymentCategoryCalculator() {
 
     //TODO: evt swichcase?
 
@@ -77,7 +73,10 @@ public class MembersFee {
     } else {
       //category = member.isActive() ;
     }
+    return category;
   }
+
+
 
 
 

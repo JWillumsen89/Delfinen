@@ -4,6 +4,7 @@ import Filehandler.FileHandler;
 import Members.Member;
 import UI.UserInterface;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Main {
@@ -42,8 +43,11 @@ public class Main {
     fileHandler.saveMembersToFile(members);
   }
 
-  public void createNewMember(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
-    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+  //TODO: ændret "age" fra int til LocalDate, og ændre "gae" til age.getyear()
+
+
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
+    Member member = new Member(name, age.getYear(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
     //System.out.println(member);
   }
