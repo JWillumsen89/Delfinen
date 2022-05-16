@@ -6,7 +6,7 @@ public class Member {
 
   private String name;
   private String email;
-  private Integer memberID;
+  private String memberID;
   //   private LocalDate dateOfBirth;
 
   private int age;
@@ -18,7 +18,7 @@ public class Member {
   private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
-  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
+  public Member(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
     this.name = name;
     this.age = age;
     this.phoneNumber = phoneNumber;
@@ -51,7 +51,7 @@ public class Member {
     return email;
   }
 
-  public Integer getMemberID() {
+  public String getMemberID() {
     return memberID;
   }
 
