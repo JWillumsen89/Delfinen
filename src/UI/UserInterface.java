@@ -120,14 +120,10 @@ private String age;
     //TODO Autogenerat ID Number!
     System.out.print("memberID: ");
     String memberID = input.nextLine();
-    System.out.print("Active: true/false ");
-    boolean active = input.nextBoolean();
-    Boolean paid = false;
 
     char active1 = 'A';
     char active2 = 'P';
     boolean answer = false;
-    app.createNewMember(name, temp, phoneNumber, email, memberID, active, paid);
 
     do {
       System.out.print("Active: [A] or Passive: [P]");
@@ -145,9 +141,8 @@ private String age;
     while (!answer);
 
     char paidOrNot = 'N';
-    app.createNewMember(name, age, phoneNumber, email, memberID, active1, paidOrNot);
+    app.createNewMember(name, Integer.parseInt(age), phoneNumber, email, memberID, active1, paidOrNot);
     chairman();
-
   }
 
   public void removeMember() {
