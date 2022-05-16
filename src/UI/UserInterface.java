@@ -1,10 +1,10 @@
-package src.UI;
+package UI;
 
 
-import src.Delfin.Main;
-import src.Filehandler.DatabaseException;
-import src.Members.Member;
-//import src.Delfin.Main;
+import Delfin.Main;
+import Filehandler.DatabaseException;
+import Members.Member;
+
 
 import java.util.Locale;
 import java.util.Scanner;
@@ -18,14 +18,13 @@ public class UserInterface {
   public UserInterface(Main app) {
     this.app = app;
   }
-  Scanner input = new Scanner(System.in);
 
   public void start() {
     System.out.println("Welcome to DELFIN SVØMMEKLUB");
 
     while (true) {
       switch (mainMenu()) {
-        case 0 -> exit();
+        case 0 -> exitMenu();
         case 1 -> chairman();
         case 2 -> cashier();
         case 3 -> coaches();
@@ -43,13 +42,12 @@ public class UserInterface {
                         
         0) Exit application
         """);
-
+    Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");
       choice = input.nextInt();
     }
-
     return choice;
   }
 
@@ -74,14 +72,24 @@ public class UserInterface {
       input.nextLine(); //Scannerbug
     }
 
-      switch (choice) {
-        case 0 -> start();
-        case 1 -> addMember();
-        case 2 -> removeMember();
-        case 3 -> memberList();
-        case 4 -> save();
-
+    switch (choice) {
+      case 0 -> {
+        if (!fileSaved) {
+          System.out.println("You haven't saved your members list, are you still sure you want to return to main menu and loose any new data? yes[Y] or no[N]: ");
+          char decision = input.next().toUpperCase(Locale.ROOT).charAt(0);
+          switch (decision) {
+            case 'Y' -> start();
+            case 'N' -> chairman();
+            default -> System.out.println("Invalid char");
+          }
+        }
       }
+      case 1 -> addMember();
+      case 2 -> removeMember();
+      case 3 -> memberList();
+      case 4 -> save();
+
+    }
   }
 
   public void addMember() {
@@ -105,26 +113,29 @@ public class UserInterface {
     char active1 = 'A';
     char active2 = 'P';
     boolean answer = false;
+
     do {
-      System.out.print("Active: [A] or Passive: [P]" );
+      System.out.print("Active: [A] or Passive: [P]");
       char active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
-        System.out.println("You are now an active member");
+        System.out.println("Active member");
+        answer = true;
       } else if (active == active2) {
-        System.out.println("You are now a passive member");
+        System.out.println("Passive member");
+        answer = true;
+      } else {
+        System.out.println("Invalid char");
       }
     }
-      while (answer);
+    while (!answer);
 
-    boolean paid = false;
-    app.createNewMember(name, age, phoneNumber, email, memberID, active1, paid);
-    System.out.println();
+    char paidOrNot = 'N';
+    app.createNewMember(name, age, phoneNumber, email, memberID, active1, paidOrNot);
     chairman();
-
   }
 
   public void removeMember() {
-    Scanner sc = new Scanner (System.in);
+    Scanner sc = new Scanner(System.in);
     System.out.println("Remove member\n");
     System.out.println("\nWhich member do you want to remove with the member ID");
     String memberID = sc.nextLine();
@@ -133,22 +144,24 @@ public class UserInterface {
 
     boolean success = app.removeMember(memberID);
 
-      if(success){
-        System.out.println("The member has been removed");
-      }
-      else{
-        System.out.println("The member could not be found and can't be deleted");
-      }
+    if (success) {
+      System.out.println("The member has been removed");
+    } else {
+      System.out.println("The member could not be found and can't be deleted");
+    }
 
+    chairman();
   }
 
 
   public void memberList() {
     System.out.println("Member list");
-      for(Member member : app.getAllMembers()){
-        System.out.println(member);
-      }
-    System.out.println("The number of members in the list: "+app.getMemberCount());
+    for (Member member : app.getAllMembers()) {
+      System.out.println(member);
+    }
+    System.out.println("The number of members in the list: " + app.getMemberCount());
+
+    chairman();
   }
 
   //TODO MOVE TO SEPERATE CLASS
@@ -156,49 +169,22 @@ public class UserInterface {
     System.out.println("""
         Cashier menu
         ---------
-        1) See list of all member's membership status
-        2) Change a member's payment status
-        3) See the total amount of the income for the year
-        4) Print all the members who hasn't paid
+        1) Add new member
+        2) Remove member
+        3) Member list
+        3) Save member
                         
         0) Return to main
         """);
-    Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
-      choice = input.nextInt();
-      input.nextLine(); //Scannerbug
-    }
-    switch (choice) {
-      case 1 -> membershipStatus();
-      //case 2 -> removeMember();
-      //case 3 -> memberList();
-      //case 4 -> save();
-
-    }
   }
-  private void membershipStatus() {
-
-  }
-
 
   //TODO MOVE TO SEPERATE CLASS
   public void coaches() {
-    System.out.println("""
-        Coach menu
-        ---------
-        1) Add a swimmer to a traning score sheet 
-        2) Register a swimmers results from a competition
-        3) Print the top 5 swimmers in all 4 categories
-                      
-        0) Return to main
-        """);
-
 
   }
 
   public void save() {
+
     try {
       System.out.println("Saving the database ...");
       app.saveDatabase();
@@ -208,6 +194,20 @@ public class UserInterface {
     } catch (DatabaseException exception) {
       System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
     }
+    chairman();
+  }
+
+  public void exitMenu() {
+    Scanner input = new Scanner(System.in);
+    if (!fileSaved) {
+      System.out.println("You haven't saved your members list, are you still sure you want to exit? yes[Y] or no[N]: ");
+      char decision = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      switch (decision) {
+        case 'Y' -> exit();
+        case 'N' -> mainMenu();
+      }
+    } else
+      exit();
   }
 
   public void exit() {
