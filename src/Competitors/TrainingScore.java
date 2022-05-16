@@ -24,9 +24,17 @@ public class TrainingScore implements Comparable<TrainingScore> {
     public Discipline getDISCIPLIN() {
         return DISCIPLIN;
     }
+    public String toString() {
+        return "Date: " + DATE + "Time: " + TIME.getSeconds() + "Seconds" + "Discipline" + DISCIPLIN;
+    }
 
     @Override
-    public int compareTo(TrainingScore o) {
+    public int compareTo(TrainingScore other) {
+      //  if (getTIME().getSeconds() == 0 other.getTIME().getSeconds() == 0) {
+     //   }
         return 0;
     }
+
+
 }
+
