@@ -13,7 +13,8 @@ public class MembersFee {
   private int senior;
   private int newAge;
   private double seniorGold;
-  double[] fees = new double[5];
+//  double[] fees = new double[5];
+  int[] fees = {1000, 1600, 25, 500};
 
 
   //---------------------------constructor-----------------------------------
@@ -45,7 +46,10 @@ public class MembersFee {
     return seniorGold;
   }
 
-  public double[] fees() {
+
+
+  /*
+  double[] fees() { 1000
 
     fees[0] = 1000; //junior
     fees[1] = 1600; //senior
@@ -53,6 +57,8 @@ public class MembersFee {
     fees[4] = 500; // passivtMember
     return fees;
   }
+
+   */
 
 
   public void paymentCategoryCalculator(double category) {
@@ -73,17 +79,19 @@ public class MembersFee {
     }
   }
 
+
+
   public  void ChangememebersFees() {
     Scanner sc = new Scanner(System.in);
     CashierMenu chanhiem = new CashierMenu();
     System.out.println("---------------Change  Delfin Svømmeklub medlems fees------------------------\n");
     System.out.print("Junior:............" + fees[0] + ",- kr. Type 1\n");
     System.out.print("Senior:........... " + fees[1] + ",- kr. Type 2\n");
-    System.out.print("Senior Gold:...... " + fees[2] + ",- kr. Type 3\n");
+    System.out.print("Senior Gold:...... " + fees[2] + " % Type 3\n");
     System.out.print("Passiv Membership: " + fees[3] + ",- kr. Type 4\n");
     int feeToChange = sc.nextInt();
     System.out.println("What is the new membbers fee for this category?");
-    double newMemberFee = sc.nextDouble();
+    int newMemberFee = sc.nextInt();
     for (int i = 0;i < fees.length;i++){
     fees[i] = feeToChange;
       if (fees[i]== feeToChange){
