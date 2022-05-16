@@ -30,9 +30,14 @@ public class TrainingScore implements Comparable<TrainingScore> {
 
     @Override
     public int compareTo(TrainingScore other) {
-      //  if (getTIME().getSeconds() == 0 other.getTIME().getSeconds() == 0) {
-     //   }
-        return 0;
+        if (this.getTIME().getSeconds() == 0 && other.getTIME().getSeconds() == 0) {
+            return 0;
+        } else if (this.getTIME().getSeconds() == 0) {
+            return 1;
+        } else if (other.getTIME().getSeconds() == 0) {
+            return -1;
+        }
+        return (this.getTIME().compareTo(other.getTIME()));
     }
 
 
