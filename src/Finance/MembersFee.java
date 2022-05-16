@@ -66,13 +66,13 @@ public class MembersFee {
     //TODO: evt swichcase?
 
     if (newAge < 18) {
-      category = fees()[0];
+      category = fees[0];
     }
     if (newAge >= 18) {
-      category = fees()[1];
+      category = fees[1];
     }
     if (newAge >= 60) {
-      category = fees()[1] * 0.75;
+      category = fees[1] * 0.75;
 
     } else {
       //category = member.isActive() ;
@@ -115,10 +115,14 @@ public class MembersFee {
     }
   }
 
-  public  String printMenmbersFees() {
-    for (int i = 0; i < fees.length; i++) {
-      System.out.println(i);
-    }
+
+  public  Object printMenmbersFees() {
+    //for (int i = 0; i < fees.length; i++) {
+    System.out.println("-----------Curent members fee pr.season-------------\n");
+    System.out.println("Junior: "+fees [0]+",- kr. ");
+    System.out.println("Senior: "+fees [1]+",- kr. ");
+    System.out.println("Senior Gold: "+fees [2]+" % Discount off Senior fee");
+    System.out.println("Passiv Membership: "+fees [3]+",- kr. \n\n");
     return null;
   }
 
