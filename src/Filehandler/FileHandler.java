@@ -42,7 +42,7 @@ public class FileHandler {
     int age = input.nextInt();
     int phoneNumber = input.nextInt();
     String email = input.next();
-    String memberID = input.next();
+    Integer memberID = input.nextInt();
     char activeOrPassive = input.next().charAt(0);
     char paidOrNot = input.next().charAt(0);
     /*boolean active = input.hasNext();

@@ -11,7 +11,20 @@ import java.util.Scanner;
 
 public class UserInterface {
 
+  private String name;
+  private String email;
+  private Integer memberID;
+  //   private LocalDate dateOfBirth;
+
+  private int age;
+  private int phoneNumber;
+
+  private char active;
+  private char paidOrNot;
+
   private boolean fileSaved = false;
+
+  Scanner input = new Scanner(System.in);
 
   private final Main app;
 
@@ -94,21 +107,20 @@ public class UserInterface {
 
   public void addMember() {
     System.out.println("Create new member\n-----------------");
-    Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
-    String name = input.nextLine();
+    name = input.nextLine();
     // TODO change to date of birth
     System.out.print("Age: ");
-    int age = input.nextInt();
+    age = input.nextInt();
     input.nextLine();
     System.out.print("Email: ");
-    String email = input.nextLine();
+    email = input.nextLine();
     System.out.print("Phonenumber: ");
-    int phoneNumber = input.nextInt();
+    phoneNumber = input.nextInt();
     input.nextLine(); // ScannerBug fix
     //TODO Autogenerat ID Number!
     System.out.print("memberID: ");
-    String memberID = String.format("%04d", input.nextLine());
+    memberID = input.nextInt();
 
     char active1 = 'A';
     char active2 = 'P';
@@ -116,7 +128,7 @@ public class UserInterface {
 
     do {
       System.out.print("Active: [A] or Passive: [P]");
-      char active = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
         System.out.println("Active member");
         answer = true;
@@ -129,16 +141,86 @@ public class UserInterface {
     }
     while (!answer);
 
+
+    input.nextLine();//Scanner bug fix
+    saveMember();
+
+  }
+
+  public void saveMember() {
     char paidOrNot = 'N';
-    app.createNewMember(name, age, phoneNumber, email, memberID, active1, paidOrNot);
-    chairman();
+    System.out.println("Name: " + name + "; Date of birth: " + age + "; Email: " + email + "; Phone number: "
+        + phoneNumber + "; member ID: " + "; Active or passive: " + active);
+    System.out.print("Are the information correct? Yes[Y], edit[E] or discard[D]: ");
+    String decision = input.nextLine().toUpperCase(Locale.ROOT);
+    switch (decision) {
+      case "Y" -> {
+        app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
+        chairman();
+      }
+      case "E" -> {
+        editMember();
+      }
+      case "D" -> {
+        System.out.println("DISCARDED - Nothing have been saved");
+        chairman();
+      }
+    }
+  }
+
+  public void editMember() {
+    System.out.println("""
+        NAME            [N]
+        DATE OF BIRTH   [D]
+        EMAIL           [E]
+        PHONE NUMBER    [P]
+        MEMBER STATUS   [M]
+        EXIT            [EXIT]
+        """);
+    System.out.print("What do you want to edit: ");
+    String decision = input.nextLine().toUpperCase(Locale.ROOT);
+    switch (decision) {
+      case "N" -> {
+        System.out.println("Change name: ");
+        name = input.nextLine();
+        saveMember();
+      }
+      case "D" -> {
+        System.out.println("Change date of birth: ");
+        age = input.nextInt();
+        input.nextLine(); //Scanner bug fix
+        saveMember();
+      }
+      case "E" -> {
+        System.out.println("Change email: ");
+        email = input.nextLine();
+        saveMember();
+      }
+      case "P" -> {
+        System.out.println("Change phone number: ");
+        phoneNumber = input.nextInt();
+        input.nextLine(); //Scanner bug fix
+        saveMember();
+      }
+      case "M" -> {
+        System.out.println("Change member status to Active: [A] or Passive: [P]: ");
+        active = input.next().toUpperCase(Locale.ROOT).charAt(0);
+        input.nextLine(); //Scanner bug fix
+        saveMember();
+      }
+      case "EXIT" -> chairman();
+      default -> {
+        System.out.println("Invalid decision");
+        editMember();
+      }
+    }
   }
 
   public void removeMember() {
     Scanner sc = new Scanner(System.in);
     System.out.println("Remove member\n");
     System.out.println("\nWhich member do you want to remove with the member ID");
-    String memberID = sc.nextLine();
+    Integer memberID = sc.nextInt();
 
     //TODO System.out.println("Are you sure tha"); are you sure?
 
@@ -155,11 +237,11 @@ public class UserInterface {
 
 
   public void memberList() {
-    System.out.println("Member list");
+    System.out.println("---------------------MEMBER LIST---------------------");
     for (Member member : app.getAllMembers()) {
       System.out.println(member);
     }
-    System.out.println("The number of members in the list: " + app.getMemberCount());
+    System.out.println("\nThe number of members in the list: " + app.getMemberCount() + "\n");
 
     chairman();
   }
