@@ -83,6 +83,52 @@ public class Member {
 
   @Override
   public String toString() {
+
+    if (activeOrPassive == 'A' && paidOrNot == 'P') {
+      return "Member\n" +
+          "\nName: " + name +
+          "\nEmail: " + email +
+          "\nMemberID: " + memberID +
+          "\nAge: " + age +
+          "\nPhoneNumber: " + phoneNumber +
+          "\nActive member" +
+          "\nPaid Membership fee" +
+          '\n';
+    }
+    if (activeOrPassive == 'A' && paidOrNot == 'N') {
+      return "Member\n" +
+          "\nName: " + name +
+          "\nEmail: " + email +
+          "\nMemberID: " + memberID +
+          "\nAge: " + age +
+          "\nPhoneNumber: " + phoneNumber +
+          "\nActive member" +
+          "\nPaid Membership fee" +
+          '\n';
+    }
+    if (activeOrPassive == 'P' && paidOrNot == 'P') {
+      return "Member\n" +
+          "\nName: " + name +
+          "\nEmail: " + email +
+          "\nMemberID: " + memberID +
+          "\nAge: " + age +
+          "\nPhoneNumber: " + phoneNumber +
+          "\nPassive member" +
+          "\nPaid Membership fee" +
+          '\n';
+    }
+
+    if (activeOrPassive == 'P' && paidOrNot == 'N') {
+      return "Member\n" +
+          "\nName: " + name +
+          "\nEmail: " + email +
+          "\nMemberID: " + memberID +
+          "\nAge: " + age +
+          "\nPhoneNumber: " + phoneNumber +
+          "\nPassive member" +
+          "\nNot Paid Membership fee" +
+          '\n';
+    }
     return "Member\n" +
         "\nName: " + name +
         "\nEmail: " + email +
@@ -92,5 +138,7 @@ public class Member {
         "\nActive(A) or Passive(P): " + activeOrPassive +
         "\nPaid(P) or Not(N): " + paidOrNot +
         '\n';
+
+
   }
 }
