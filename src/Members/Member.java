@@ -136,7 +136,7 @@ public class Member {
         "\nAge: " + age +
         "\nPhoneNumber: " + phoneNumber +
         "\nActive(A) or Passive(P): " + activeOrPassive +
-        "\nPaid(P) or Not(N): test" + paidOrNot +
+        "\nPaid(P) or Not(N):" + paidOrNot +
         '\n';
 
 
