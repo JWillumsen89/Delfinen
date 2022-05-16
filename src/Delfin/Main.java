@@ -4,13 +4,13 @@ import Filehandler.FileHandler;
 import Members.Member;
 import UI.UserInterface;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Main {
 
   private ArrayList<Member> members = new ArrayList<>();
 
+  //private ArrayList<Member> members = new ArrayList<>();
 
 
   public void start() {
@@ -20,6 +20,9 @@ public class Main {
     ui.start();
   }
 
+  public Main() {
+    members = new ArrayList<>();
+  }
 
   public static void main(String[] args) {
 
@@ -39,10 +42,36 @@ public class Main {
     fileHandler.saveMembersToFile(members);
   }
 
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, String memberID, boolean active, boolean paid) {
-    Member member = new Member(); //var inden i meber(name, age, phoneNumber, email, memberID, active, paid)
+  public void createNewMember(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
+    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
-    System.out.println(member);
+    //System.out.println(member);
   }
 
+  public boolean removeMember(String memberId) {
+    Member member = findMemberById(memberId);
+    if (member == null) {
+      return false;
+    } else {
+      members.remove(member);
+      return true;
+    }
+  }
+
+  public Member findMemberById(String memberId) {
+    for (Member member : members) {
+      if (member.getMemberID().equalsIgnoreCase(memberId)) {
+        return member;
+      }
+    }
+    return null;
+  }
+
+  public Iterable<Member> getAllMembers() {
+    return members;
+  }
+
+  public int getMemberCount() {
+    return members.size();
+  }
 }

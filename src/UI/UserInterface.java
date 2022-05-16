@@ -51,7 +51,6 @@ private String age;
       System.out.println("Only values 0-3 allowed");
       choice = input.nextInt();
     }
-
     return choice;
   }
 
@@ -59,12 +58,12 @@ private String age;
   public void chairman() {
 
     System.out.println("""
-        Main menu
+        Chairman menu
         ---------
         1) Add new member
         2) Remove member
         3) Member list
-        3) Save member
+        4) Save member
                         
         0) Return to main
         """);
@@ -76,7 +75,17 @@ private String age;
     }
 
     switch (choice) {
-      case 0 -> start();
+      case 0 -> {
+        if (!fileSaved) {
+          System.out.println("You haven't saved your members list, are you still sure you want to return to main menu and loose any new data? yes[Y] or no[N]: ");
+          char decision = input.next().toUpperCase(Locale.ROOT).charAt(0);
+          switch (decision) {
+            case 'Y' -> start();
+            case 'N' -> chairman();
+            default -> System.out.println("Invalid char");
+          }
+        }
+      }
       case 1 -> addMember();
       case 2 -> removeMember();
       case 3 -> memberList();
@@ -114,18 +123,60 @@ private String age;
     boolean active = input.nextBoolean();
     Boolean paid = false;
 
+    char active1 = 'A';
+    char active2 = 'P';
+    boolean answer = false;
     app.createNewMember(name, temp, phoneNumber, email, memberID, active, paid);
 
+    do {
+      System.out.print("Active: [A] or Passive: [P]");
+      char active = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      if (active == active1) {
+        System.out.println("Active member");
+        answer = true;
+      } else if (active == active2) {
+        System.out.println("Passive member");
+        answer = true;
+      } else {
+        System.out.println("Invalid char");
+      }
+    }
+    while (!answer);
+
+    char paidOrNot = 'N';
+    app.createNewMember(name, age, phoneNumber, email, memberID, active1, paidOrNot);
     chairman();
 
   }
 
   public void removeMember() {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("Remove member\n");
+    System.out.println("\nWhich member do you want to remove with the member ID");
+    String memberID = sc.nextLine();
 
+    //TODO System.out.println("Are you sure tha"); are you sure?
+
+    boolean success = app.removeMember(memberID);
+
+    if (success) {
+      System.out.println("The member has been removed");
+    } else {
+      System.out.println("The member could not be found and can't be deleted");
+    }
+
+    chairman();
   }
 
-  public void memberList() {
 
+  public void memberList() {
+    System.out.println("Member list");
+    for (Member member : app.getAllMembers()) {
+      System.out.println(member);
+    }
+    System.out.println("The number of members in the list: " + app.getMemberCount());
+
+    chairman();
   }
 
   //TODO MOVE TO SEPERATE CLASS
@@ -150,7 +201,20 @@ private String age;
     } catch (DatabaseException exception) {
       System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
     }
+    chairman();
+  }
 
+  public void exitMenu() {
+    Scanner input = new Scanner(System.in);
+    if (!fileSaved) {
+      System.out.println("You haven't saved your members list, are you still sure you want to exit? yes[Y] or no[N]: ");
+      char decision = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      switch (decision) {
+        case 'Y' -> exit();
+        case 'N' -> mainMenu();
+      }
+    } else
+      exit();
   }
 
   public void exit() {
