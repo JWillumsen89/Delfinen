@@ -1,7 +1,6 @@
 package Filehandler;
 
 import Members.Member;
-import UI.UserInterface;
 
 
 import java.io.*;
@@ -13,6 +12,8 @@ public class FileHandler {
 
   private String fileName = "MemberBase.csv";
   private String fileNameID = "IDNumber.txt";
+  private String data = "0";
+
 
   public ArrayList<Member> loadMembersFromFile() {
 
@@ -96,5 +97,22 @@ public class FileHandler {
       System.out.println("An error occurred.");
       e.printStackTrace();
     }
+  }
+
+  public Integer loadMemberID() {
+
+    try {
+      File myObj = new File(fileNameID);
+      Scanner myReader = new Scanner(myObj);
+      while (myReader.hasNextLine()) {
+        data = myReader.nextLine();
+
+      }
+      myReader.close();
+    } catch (FileNotFoundException e) {
+      System.out.println("An error occurred.");
+      e.printStackTrace();
+    }
+    return Integer.parseInt(data);
   }
 }

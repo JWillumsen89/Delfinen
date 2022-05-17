@@ -26,7 +26,6 @@ public class Main {
 
   public void start() {
 
-    findMaxID();
     UserInterface ui = new UserInterface(this);
 
     ui.start();
@@ -40,16 +39,10 @@ public class Main {
 
   }
 
-
-  public void findMaxID() {
-    for (int i = 0; i < members.size(); i++) {
-      System.out.println(members.get(i).getMemberID());
-    }
-  }
-
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
+    fileHandler.loadMemberID();
   }
 
   public void saveDatabase() {
