@@ -1,26 +1,31 @@
 package Members;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Member {
 
   private String name;
   private String email;
-  private String memberID;
+  private String active = "ACTIVE";
+  private String passive = "PASSIVE";
+  private String paid = "PAID";
+  private String notPaid = "NOT PAID";
   //   private LocalDate dateOfBirth;
 
+  private Integer memberID;
   private int age;
   private int phoneNumber;
 
-
-
   private char activeOrPassive;
   private char paidOrNot;
+  private double memberCategory;
 
   private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
-  public Member(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
+  //TODO: add double memberCategory
+  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
     this.name = name;
     this.age = age;
     this.phoneNumber = phoneNumber;
@@ -28,6 +33,10 @@ public class Member {
     this.memberID = memberID;
     this.activeOrPassive = activeOrPassive;
     this.paidOrNot = paidOrNot;
+    this.memberCategory = memberCategory;
+
+    }
+    public Member(){
 
   }
 
@@ -53,7 +62,7 @@ public class Member {
     return email;
   }
 
-  public String getMemberID() {
+  public Integer getMemberID() {
     return memberID;
   }
 
@@ -64,66 +73,28 @@ public class Member {
   public char getPaidOrNot() {
     return paidOrNot;
   }
-  
 
   @Override
   public String toString() {
 
     if (activeOrPassive == 'A' && paidOrNot == 'P') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nActive member" +
-          "\nPaid Membership fee" +
-          '\n';
+      return
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
     }
     if (activeOrPassive == 'A' && paidOrNot == 'N') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nActive member" +
-          "\nPaid Membership fee" +
-          '\n';
+      return
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, notPaid);
     }
     if (activeOrPassive == 'P' && paidOrNot == 'P') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nPassive member" +
-          "\nPaid Membership fee" +
-          '\n';
+      return
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, passive, paid);
     }
 
     if (activeOrPassive == 'P' && paidOrNot == 'N') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nPassive member" +
-          "\nNot Paid Membership fee" +
-          '\n';
+      return
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, passive, notPaid);
     }
-    return "Member\n" +
-        "\nName: " + name +
-        "\nEmail: " + email +
-        "\nMemberID: " + memberID +
-        "\nAge: " + age +
-        "\nPhoneNumber: " + phoneNumber +
-        "\nActive(A) or Passive(P): " + activeOrPassive +
-        "\nPaid(P) or Not(N): " + paidOrNot +
-        '\n';
-
-
+    return
+        String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
   }
 }

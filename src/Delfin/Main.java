@@ -1,15 +1,23 @@
 package Delfin;
 
 import Filehandler.FileHandler;
+import Finance.MembersFee;
 import Members.Member;
 import UI.UserInterface;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
 
   private ArrayList<Member> members = new ArrayList<>();
 
+  public ArrayList<Member> getMembers() {
+    return members;
+  }
+
+  MembersFee memberFee = new MembersFee();
 
   public void start() {
 
@@ -26,6 +34,8 @@ public class Main {
 
   }
 
+
+
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
@@ -36,13 +46,16 @@ public class Main {
     fileHandler.saveMembersToFile(members);
   }
 
-  public void createNewMember(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
-    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+  //TODO: tilføj deres kategori. og konstruktør
+
+
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
+    Member member = new Member(name, memberFee.getNewAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
     //System.out.println(member);
   }
 
-  public boolean removeMember(String memberId) {
+  public boolean removeMember(Integer memberId) {
     Member member = findMemberById(memberId);
     if (member == null) {
       return false;
@@ -52,9 +65,9 @@ public class Main {
     }
   }
 
-  public Member findMemberById(String memberId) {
+  public Member findMemberById(Integer memberId) {
     for (Member member : members) {
-      if (member.getMemberID().equalsIgnoreCase(memberId)) {
+      if (member.getMemberID() == memberId) {
         return member;
       }
     }
