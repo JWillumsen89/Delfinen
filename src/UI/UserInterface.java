@@ -117,7 +117,7 @@ CashierMenu goToMenueCashier = new CashierMenu();
     System.out.println("Create new member\n-----------------");
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
-    String name = input.nextLine();
+    name = input.nextLine();
 
     //------------------ageCalulatorUsed in Payments-------------------------------
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
@@ -168,8 +168,6 @@ CashierMenu goToMenueCashier = new CashierMenu();
 
   public void saveMember() {
     char paidOrNot = 'N';
-    app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
-    chairman();
     System.out.println("Name: " + name + "; Date of birth: " + age + "; Email: " + email + "; Phone number: "
         + phoneNumber + "; member ID: " + "; Active or passive: " + active);
     System.out.print("Are the information correct? Yes[Y], edit[E] or discard[D]: ");
