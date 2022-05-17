@@ -7,12 +7,16 @@ import UI.UserInterface;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Main {
 
   private ArrayList<Member> members = new ArrayList<>();
 
-  //private ArrayList<Member> members = new ArrayList<>();
+  public ArrayList<Member> getMembers() {
+    return members;
+  }
+
   MembersFee memberFee = new MembersFee();
 
   public void start() {
@@ -22,10 +26,6 @@ public class Main {
     ui.start();
   }
 
-  public Main() {
-    members = new ArrayList<>();
-  }
-
   public static void main(String[] args) {
 
     Main main = new Main();
@@ -33,6 +33,8 @@ public class Main {
     main.start();
 
   }
+
+
 
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
