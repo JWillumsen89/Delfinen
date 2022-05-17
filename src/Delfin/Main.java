@@ -1,6 +1,7 @@
 package Delfin;
 
 import Filehandler.FileHandler;
+import Finance.MembersFee;
 import Members.Member;
 import UI.UserInterface;
 
@@ -47,7 +48,7 @@ public class Main {
 
 
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot, double memberCategory) {
-    Member member = new Member(name, age.getYear(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+    Member member = new Member(name, age.lengthOfYear(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
     //System.out.println(member);
   }

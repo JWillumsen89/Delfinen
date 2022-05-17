@@ -107,8 +107,10 @@ private String age;
     LocalDate temp = LocalDate.parse(age);
     MembersFee memberFee = new MembersFee();
     memberFee.calculateAge(temp);
-    double result = memberFee.paymentCategoryCalculator();
+    int result = (int) memberFee.paymentCategoryCalculator();
     System.out.println(result); //TODO: skal slettes, kun til test(linjen)
+   System.out.println(memberFee.getNewAge());
+
 
 //----------------------------slut----------------------
 

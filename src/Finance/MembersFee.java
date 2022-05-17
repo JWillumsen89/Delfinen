@@ -7,7 +7,7 @@ import java.time.Period;
 import java.util.Scanner;
 
 public class MembersFee {
-  Member member = new Member();
+  //Member member = new Member();
 
   private int junior;
   private int senior;
@@ -105,7 +105,7 @@ public double getCategory(){
 
   public int calculateAge(LocalDate age) {
     LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
-    if ((age != null) && (curDate != null)) {
+    if (age != null) {
 
       newAge = Period.between(age, curDate).getYears();
       return newAge;
