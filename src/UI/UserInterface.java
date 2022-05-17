@@ -33,7 +33,6 @@ public class UserInterface {
   MembersFee memberFee = new MembersFee();
   Scanner input = new Scanner(System.in);
 
-  //private String age;
   private final Main app;
 
   public UserInterface(Main app) {
@@ -177,6 +176,7 @@ public class UserInterface {
     switch (decision) {
       case "Y" -> {
         app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
+        app.setMemberId(memberID);
         System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
         chairman();
       }

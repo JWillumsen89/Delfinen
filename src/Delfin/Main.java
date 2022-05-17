@@ -11,16 +11,22 @@ import java.util.Collections;
 
 public class Main {
 
+  private Integer memberId;
   private ArrayList<Member> members = new ArrayList<>();
 
   public ArrayList<Member> getMembers() {
     return members;
   }
 
+  public void setMemberId(Integer memberId) {
+    this.memberId = memberId;
+  }
+
   MembersFee memberFee = new MembersFee();
 
   public void start() {
 
+    findMaxID();
     UserInterface ui = new UserInterface(this);
 
     ui.start();
@@ -35,6 +41,11 @@ public class Main {
   }
 
 
+  public void findMaxID() {
+    for (int i = 0; i < members.size(); i++) {
+      System.out.println(members.get(i).getMemberID());
+    }
+  }
 
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
@@ -44,6 +55,7 @@ public class Main {
   public void saveDatabase() {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
+    fileHandler.saveMemberID(memberId);
   }
 
   //TODO: tilføj deres kategori. og konstruktør
