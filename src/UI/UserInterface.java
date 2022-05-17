@@ -20,7 +20,7 @@ CashierMenu goToMenueCashier = new CashierMenu();
   private Integer memberID;
   //   private LocalDate dateOfBirth;
 
-  private int age;
+  //private int age;
   private int phoneNumber;
 
   private char active;
@@ -28,6 +28,8 @@ CashierMenu goToMenueCashier = new CashierMenu();
 
   private boolean fileSaved = false;
 
+
+  MembersFee memberFee = new MembersFee();
   Scanner input = new Scanner(System.in);
 
 private String age;
@@ -121,7 +123,7 @@ private String age;
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = input.nextLine();
     LocalDate temp = LocalDate.parse(age);
-    MembersFee memberFee = new MembersFee();
+    //MembersFee memberFee = new MembersFee();
     memberFee.calculateAge(temp);
     int result = (int) memberFee.paymentCategoryCalculator();
     System.out.println(result); //TODO: skal slettes, kun til test(linjen)
@@ -167,7 +169,7 @@ private String age;
 
   public void saveMember() {
     char paidOrNot = 'N';
-    app.createNewMember(name, temp, phoneNumber, email, memberID, active1, paidOrNot, result);
+    app.createNewMember(name, memberFee.getNewAge(), phoneNumber, email, memberID, active, paidOrNot);
     chairman();
     System.out.println("Name: " + name + "; Date of birth: " + age + "; Email: " + email + "; Phone number: "
         + phoneNumber + "; member ID: " + "; Active or passive: " + active);
@@ -175,7 +177,7 @@ private String age;
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
-        app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
+        app.createNewMember(name, memberFee.getNewAge(), phoneNumber, email, memberID, active, paidOrNot);
         chairman();
       }
       case "E" -> {

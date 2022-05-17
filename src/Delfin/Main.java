@@ -13,7 +13,7 @@ public class Main {
   private ArrayList<Member> members = new ArrayList<>();
 
   //private ArrayList<Member> members = new ArrayList<>();
-
+  MembersFee memberFee = new MembersFee();
 
   public void start() {
 
@@ -47,8 +47,8 @@ public class Main {
   //TODO: tilføj deres kategori. og konstruktør
 
 
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot, double memberCategory) {
-    Member member = new Member(name, age.lengthOfYear(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double memberCategory) {
+    Member member = new Member(name, memberFee.getNewAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
     //System.out.println(member);
   }

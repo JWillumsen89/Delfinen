@@ -2,6 +2,7 @@ package Members;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+//lav LocanDate til en attribute hos memebr. Locan date på memebr. frem for int age age
 
 public class Member {
 

@@ -108,6 +108,7 @@ public double getCategory(){
   public int calculateAge(LocalDate age) {
     LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
     if (age != null) {
+// gem fødselsdag under member som attribut
 
       newAge = Period.between(age, curDate).getYears();
       return newAge;
