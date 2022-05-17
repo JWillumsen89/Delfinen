@@ -11,10 +11,15 @@ import java.util.Collections;
 
 public class Main {
 
+  private Integer memberId;
   private ArrayList<Member> members = new ArrayList<>();
 
   public ArrayList<Member> getMembers() {
     return members;
+  }
+
+  public void setMemberId(Integer memberId) {
+    this.memberId = memberId;
   }
 
   MembersFee memberFee = new MembersFee();
@@ -34,16 +39,16 @@ public class Main {
 
   }
 
-
-
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
+    fileHandler.loadMemberID();
   }
 
   public void saveDatabase() {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
+    fileHandler.saveMemberID(memberId);
   }
 
   //TODO: tilføj deres kategori. og konstruktør
