@@ -9,11 +9,12 @@ import Members.Member;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class UserInterface {
-CashierMenu goToMenueCashier = new CashierMenu();
+  CashierMenu goToMenueCashier = new CashierMenu();
 
   private String name;
   private String email;
@@ -32,7 +33,7 @@ CashierMenu goToMenueCashier = new CashierMenu();
   MembersFee memberFee = new MembersFee();
   Scanner input = new Scanner(System.in);
 
-//private String age;
+  //private String age;
   private final Main app;
 
   public UserInterface(Main app) {
@@ -126,7 +127,7 @@ CashierMenu goToMenueCashier = new CashierMenu();
     memberFee.calculateAge(temp);
     int result = (int) memberFee.paymentCategoryCalculator();
     System.out.println(result); //TODO: skal slettes, kun til test(linjen)
-   System.out.println(memberFee.getNewAge());
+    System.out.println(memberFee.getNewAge());
 
 
 //----------------------------slut----------------------
@@ -168,20 +169,22 @@ CashierMenu goToMenueCashier = new CashierMenu();
 
   public void saveMember() {
     char paidOrNot = 'N';
-    System.out.println("Name: " + name + "; Date of birth: " + age + "; Email: " + email + "; Phone number: "
-        + phoneNumber + "; member ID: " + "; Active or passive: " + active);
-    System.out.print("Are the information correct? Yes[Y], edit[E] or discard[D]: ");
+    System.out.println("\nMember information:");
+    System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
+        + phoneNumber + "\nmember ID: " + "\nActive or passive: " + active);
+    System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
         app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
+        System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
         chairman();
       }
       case "E" -> {
         editMember();
       }
       case "D" -> {
-        System.out.println("DISCARDED - Nothing have been saved");
+        System.out.println("\nDISCARDED - Nothing have been saved\n");
         chairman();
       }
     }
