@@ -20,7 +20,7 @@ CashierMenu goToMenueCashier = new CashierMenu();
   private Integer memberID;
   //   private LocalDate dateOfBirth;
 
-  //private int age;
+  private LocalDate age;
   private int phoneNumber;
 
   private char active;
@@ -32,7 +32,7 @@ CashierMenu goToMenueCashier = new CashierMenu();
   MembersFee memberFee = new MembersFee();
   Scanner input = new Scanner(System.in);
 
-private String age;
+//private String age;
   private final Main app;
 
   public UserInterface(Main app) {
@@ -121,9 +121,8 @@ private String age;
 
     //------------------ageCalulatorUsed in Payments-------------------------------
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
-    age = input.nextLine();
-    LocalDate temp = LocalDate.parse(age);
-    //MembersFee memberFee = new MembersFee();
+    age = LocalDate.parse(input.nextLine());
+    LocalDate temp = LocalDate.parse(age.toString());
     memberFee.calculateAge(temp);
     int result = (int) memberFee.paymentCategoryCalculator();
     System.out.println(result); //TODO: skal slettes, kun til test(linjen)
@@ -169,7 +168,7 @@ private String age;
 
   public void saveMember() {
     char paidOrNot = 'N';
-    app.createNewMember(name, memberFee.getNewAge(), phoneNumber, email, memberID, active, paidOrNot);
+    app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
     chairman();
     System.out.println("Name: " + name + "; Date of birth: " + age + "; Email: " + email + "; Phone number: "
         + phoneNumber + "; member ID: " + "; Active or passive: " + active);
@@ -177,7 +176,7 @@ private String age;
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
-        app.createNewMember(name, memberFee.getNewAge(), phoneNumber, email, memberID, active, paidOrNot);
+        app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
         chairman();
       }
       case "E" -> {
@@ -209,7 +208,7 @@ private String age;
       }
       case "D" -> {
         System.out.println("Change date of birth: ");
-        age = input.nextInt();
+        age = LocalDate.parse(String.valueOf(input.nextInt()));
         input.nextLine(); //Scanner bug fix
         saveMember();
       }

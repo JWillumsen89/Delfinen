@@ -47,7 +47,7 @@ public class Main {
   //TODO: tilføj deres kategori. og konstruktør
 
 
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double memberCategory) {
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
     Member member = new Member(name, memberFee.getNewAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
     //System.out.println(member);
