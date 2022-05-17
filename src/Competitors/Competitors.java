@@ -14,7 +14,7 @@ public class Competitors extends Member {
                        int age,
                        int phoneNumber,
                        String email,
-                       String memberID,
+                       int memberID,
                        char activeOrPassive,
                        char paidOrNot,
                        ArrayList<Discipline>disciplines,
@@ -36,5 +36,19 @@ public class Competitors extends Member {
     public void setCompetitions(ArrayList<Competition> competitions) {
         this.competitions = competitions;
     }
+
+    // ------------------------------GETTER---------------------------------------------
+
+    public ArrayList<Discipline> getDisciplines() {
+        return disciplines;
+    }
+    public  ArrayList<TrainingScore> getTrainingScores() {
+        return trainingScores;
+    }
+    public  ArrayList<Competition> getCompetitions() {
+        return competitions;
+    }
+
+
 
 }
