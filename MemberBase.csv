@@ -1,6 +1,6 @@
 name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N)
-Sille;20;12457;dsfsf;1;A;N
-Jonathan;32;1234;dsfs;2;A;N
-Simon;28;453219;fdsfsf;3;A;P
+Sille;20;12457;dsfsf;1;A;P
+Jonathan;32;1234;dsfs;2;P;P
+Simon;28;453219;fdsfsf;3;A;N
 Christian;23;34529282;rodrigo@sweetnoize.com;4;P;N
-ads;1;3;asd;10;A;N
+ads;1;3;asd;10;A;P

@@ -259,7 +259,9 @@ private String age;
 
 
   public void memberList() {
-    System.out.println("---------------------MEMBER LIST---------------------");
+    System.out.println("-----------------------------------------------MEMBER LIST-----------------------------------------------------------");
+    System.out.printf("%-4s %-30s %-35s %-10s %-16s %-8s %-7s\n", "ID", "Name", "Email", "DOT", "Phone Number", "Status", "Paid");
+    System.out.println("---------------------------------------------------------------------------------------------------------------------");
     for (Member member : app.getAllMembers()) {
       System.out.println(member);
     }

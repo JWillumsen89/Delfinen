@@ -46,11 +46,8 @@ public class FileHandler {
     Integer memberID = input.nextInt();
     char activeOrPassive = input.next().charAt(0);
     char paidOrNot = input.next().charAt(0);
-    //double memberCategory = input.nextDouble();
-    /*boolean active = input.hasNext();
-    boolean paid = input.hasNext();
 
-     */
+
 
     Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
 
