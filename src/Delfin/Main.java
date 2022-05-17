@@ -43,10 +43,10 @@ public class Main {
     fileHandler.saveMembersToFile(members);
   }
 
-  //TODO: ændret "age" fra int til LocalDate, og ændre "gae" til age.getyear()
+  //TODO: tilføj deres kategori. og konstruktør
 
 
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot, double memberCategory) {
     Member member = new Member(name, age.getYear(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
     //System.out.println(member);
