@@ -3,6 +3,7 @@ package UI;
 
 import Delfin.Main;
 import Filehandler.DatabaseException;
+import Filehandler.FileHandler;
 import Finance.CashierMenu;
 import Finance.MembersFee;
 import Members.Member;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 
 public class UserInterface {
   CashierMenu goToMenueCashier = new CashierMenu();
+  FileHandler fileHandler = new FileHandler();
 
   private String name;
   private String email;
@@ -33,7 +35,6 @@ public class UserInterface {
   MembersFee memberFee = new MembersFee();
   Scanner input = new Scanner(System.in);
 
-  //private String age;
   private final Main app;
 
   public UserInterface(Main app) {
@@ -82,35 +83,22 @@ public class UserInterface {
         1) Add new member
         2) Remove member
         3) Member list
-        4) Save member
                         
         0) Return to main
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
+    while (choice < 0 || choice > 3) {
+      System.out.println("Only values 0-3 allowed");
       choice = input.nextInt();
       input.nextLine(); //Scannerbug
     }
 
     switch (choice) {
-      case 0 -> {
-        if (!fileSaved) {
-          System.out.println("You haven't saved your members list, are you still sure you want to return to main menu and loose any new data? yes[Y] or no[N]: ");
-          char decision = input.next().toUpperCase(Locale.ROOT).charAt(0);
-          switch (decision) {
-            case 'Y' -> start();
-            case 'N' -> chairman();
-            default -> System.out.println("Invalid char");
-          }
-        }
-      }
+      case 0 -> start();
       case 1 -> addMember();
       case 2 -> removeMember();
       case 3 -> memberList();
-      case 4 -> save();
-
     }
   }
 
@@ -139,8 +127,11 @@ public class UserInterface {
     phoneNumber = input.nextInt();
     input.nextLine(); // ScannerBug fix
     //TODO Autogenerat ID Number!
-    System.out.print("memberID: ");
+    memberID = (fileHandler.loadMemberID() + 1);
+    /*System.out.print("memberID: ");
     memberID = input.nextInt();
+
+     */
 
     char active1 = 'A';
     char active2 = 'P';
@@ -171,12 +162,14 @@ public class UserInterface {
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
     System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + "\nActive or passive: " + active);
+        + phoneNumber + "\nmember ID: " + memberID + "\nActive or passive: " + active);
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
         app.createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
+        app.setMemberId(memberID);
+        save();
         System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
         chairman();
       }
@@ -250,13 +243,13 @@ public class UserInterface {
 
     if (success) {
       System.out.println("The member has been removed");
+      save();
     } else {
       System.out.println("The member could not be found and can't be deleted");
     }
 
     chairman();
   }
-
 
   public void memberList() {
     System.out.println("-----------------------------------------------MEMBER LIST-----------------------------------------------------------");
@@ -283,7 +276,6 @@ public class UserInterface {
   }
 
   public void save() {
-
 
     try {
       System.out.println("Saving the database ...");
