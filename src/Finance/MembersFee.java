@@ -51,6 +51,8 @@ public double getCategory(){
     return seniorGold;
   }
 
+
+  //----------blir brugt til at printe "age" ud bla.-------------------
   public int getNewAge(){
     return newAge;
   }
