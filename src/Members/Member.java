@@ -5,16 +5,13 @@ import java.util.ArrayList;
 
 public class Member {
 
-    private String name;
-    private String email;
-    private String memberID;
- //   private LocalDate dateOfBirth;
+  private String name;
+  private String email;
+  private String memberID;
+  //   private LocalDate dateOfBirth;
 
   private int age;
   private int phoneNumber;
-
-  private boolean active;
-  private boolean paid;
 
   private char activeOrPassive;
   private char paidOrNot;
@@ -42,16 +39,6 @@ public class Member {
 
   //-----------------Setter-----------------
 
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-
-  public void setPaid(boolean paid) {
-    this.paid = paid;
-  }
-    public void setAge(int age){
-        this.age = age;
-    }
 
 
   //-----------------Getter-----------------
@@ -84,71 +71,58 @@ public class Member {
     return paidOrNot;
   }
 
-  public boolean isActive() {
-    return active;
-  }
-
-  public boolean isPaid() {
-    return paid;
-  }
-
   @Override
   public String toString() {
 
     if (activeOrPassive == 'A' && paidOrNot == 'P') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nActive member" +
-          "\nPaid Membership fee" +
-          '\n';
+      return
+          "Name: " + name +
+          "; Email: " + email +
+          "; MemberID: " + memberID +
+          "; Age: " + age +
+          "; PhoneNumber: " + phoneNumber +
+          "; Active member" +
+          "; Paid Membership fee";
     }
-    if (activeOrPassive == 'A' && paidOrNot == 'N') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nActive member" +
-          "\nPaid Membership fee" +
-          '\n';
+    if (activeOrPassive == 'A'&& paidOrNot == 'N') {
+      return
+          "Name: " + name +
+          "; Email: " + email +
+          "; MemberID: " + memberID +
+          "; Age: " + age +
+          "; PhoneNumber: " + phoneNumber +
+          "; Active member" +
+          "; Not Paid Membership fee";
     }
     if (activeOrPassive == 'P' && paidOrNot == 'P') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nPassive member" +
-          "\nPaid Membership fee" +
-          '\n';
+      return
+          "Name: " + name +
+          "; Email: " + email +
+          "; MemberID: " + memberID +
+          "; Age: " + age +
+          "; PhoneNumber: " + phoneNumber +
+          "; Passive member" +
+          "; Paid Membership fee";
     }
 
     if (activeOrPassive == 'P' && paidOrNot == 'N') {
-      return "Member\n" +
-          "\nName: " + name +
-          "\nEmail: " + email +
-          "\nMemberID: " + memberID +
-          "\nAge: " + age +
-          "\nPhoneNumber: " + phoneNumber +
-          "\nPassive member" +
-          "\nNot Paid Membership fee" +
-          '\n';
+      return
+          "Name: " + name +
+          "; Email: " + email +
+          "; MemberID: " + memberID +
+          "; Age: " + age +
+          "; PhoneNumber: " + phoneNumber +
+          "; Passive member" +
+          "; Not Paid Membership fee";
     }
-    return "Member\n" +
-        "\nName: " + name +
-        "\nEmail: " + email +
-        "\nMemberID: " + memberID +
-        "\nAge: " + age +
-        "\nPhoneNumber: " + phoneNumber +
-        "\nActive(A) or Passive(P): " + activeOrPassive +
-        "\nPaid(P) or Not(N): test" + paidOrNot +
-        '\n';
+    return
+        "Name: " + name +
+        "; Email: " + email +
+        "; MemberID: " + memberID +
+        "; Age: " + age +
+        "; PhoneNumber: " + phoneNumber +
+        "; Active(A) or Passive(P): " + activeOrPassive +
+        "; Paid(P) or Not(N): test" + paidOrNot;
 
 
   }

@@ -53,7 +53,7 @@ public class Main {
     //System.out.println(member);
   }
 
-  public boolean removeMember(String memberId) {
+  public boolean removeMember(Integer memberId) {
     Member member = findMemberById(memberId);
     if (member == null) {
       return false;
@@ -63,9 +63,9 @@ public class Main {
     }
   }
 
-  public Member findMemberById(String memberId) {
+  public Member findMemberById(Integer memberId) {
     for (Member member : members) {
-      if (member.getMemberID().equalsIgnoreCase(memberId)) {
+      if (member.getMemberID() == memberId) {
         return member;
       }
     }
