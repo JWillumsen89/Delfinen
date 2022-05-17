@@ -142,7 +142,7 @@ private String age;
     while (!answer);
 
     char paidOrNot = 'N';
-    app.createNewMember(name, temp, phoneNumber, email, memberID, active1, paidOrNot, result);
+    app.createNewMember(name, LocalDate.parse(age), phoneNumber, email, memberID, active1, paidOrNot);
     chairman();
   }
 

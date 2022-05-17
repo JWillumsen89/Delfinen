@@ -18,12 +18,10 @@ public class Member {
 
   private char activeOrPassive;
   private char paidOrNot;
-  private double memberCategory;
 
   private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
-  //TODO: add double memberCategory
   public Member(String name, int age, int phoneNumber, String email, String memberID, char activeOrPassive, char paidOrNot) {
     this.name = name;
     this.age = age;
@@ -32,7 +30,6 @@ public class Member {
     this.memberID = memberID;
     this.activeOrPassive = activeOrPassive;
     this.paidOrNot = paidOrNot;
-    this.memberCategory = memberCategory;
 
     }
     public Member(){
