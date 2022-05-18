@@ -25,6 +25,8 @@ public class ManageTeams {
         teams[6] = new Teams("Choach2 ", "SENIOR ", Discipline.CRAWL);
         teams[7] = new Teams("Choach1 ", "JUNIOR ", Discipline.BUTTERFLY);
 
+        addToTeam();
+
     }
 
     //-------------------------------------GETTER--------------------------------------------
