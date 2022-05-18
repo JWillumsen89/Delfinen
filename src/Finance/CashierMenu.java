@@ -25,7 +25,7 @@ public class CashierMenu {
         1) Change Members fees
         2) See members fees
         3) MemberList of missing payments
-        4) See all incomming payments for this sesson
+        4) Grand total for this sesson
         6) Exit program
                                 
         0) Return to main
@@ -42,7 +42,7 @@ public class CashierMenu {
       case 1 -> memebrsfees.ChangememebersFees();
       case 2 -> memebrsfees.printMenmbersFees();
       case 3 -> payments.allMissingPayments();
-      //case 4 -> payments.incommingpoayments();
+      case 4 -> payments.sessonTotal();
       case 6 -> exit();
      case 0 -> udserInterface.mainMenu();
 

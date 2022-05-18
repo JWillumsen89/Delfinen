@@ -35,7 +35,7 @@ public class Main {
 
     UserInterface ui = new UserInterface(this);
 
-    ui.start();
+    ui.start();  //TODO:her crsher den!!
   }
 
   public static void main(String[] args) {
