@@ -1,47 +1,58 @@
 package Finance;
 
+import Delfin.Main;
+import Members.Member;
 import UI.UserInterface;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+//import static java.lang.Shutdown.exit;
 
 public class CashierMenu {
 
+  UserInterface udserInterface = new UserInterface(null);
+  Payments payments = new Payments(null);
+  MembersFee memebrsfees = new MembersFee();
+
+  //UserInterface backToMainMenu = new UserInterface();
 
   public void cashierMenuUi() {
-    MembersFee memebrsfees = new MembersFee();
+
     System.out.println("""
-        Cashier Menu
+        \nCashier Menu
         ---------
-        1) See Missing payments
-        2) Change Members fees
-        3) See all payments
-        4) See members fees
-        5) Exit program
+        1) Change Members fees
+        2) See members fees
+        3) MemberList of missing payments
+        4) See all incomming payments for this sesson
+        6) Exit program
                                 
         0) Return to main
         """);
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
+    while (choice < 0 || choice > 6) {
+      System.out.println("Only values 0-6 allowed");
       choice = input.nextInt();
+      input.nextLine(); //Scannerbug
     }
 
     switch (choice) {
-      //case 1 -> missingpyments();
-      case 2 -> memebrsfees.ChangememebersFees();
-      //case 3 -> seeAllPayments();
-      case 4 -> memebrsfees.printMenmbersFees();
-      case 5 -> exit();
-     // case 0 -> returnToMain();
+      case 1 -> memebrsfees.ChangememebersFees();
+      case 2 -> memebrsfees.printMenmbersFees();
+      case 3 -> payments.allMissingPayments();
+      //case 4 -> payments.incommingpoayments();
+      case 6 -> exit();
+     case 0 -> udserInterface.mainMenu();
 
 
     }
   }
 
-  public void exit() {
-    System.out.println("\u001b[1;31mPROGRAM SHUTTING DOWN\u001b[m");
-    System.exit(0);
+  public void exit () {
+      System.out.println("\u001b[1;31mPROGRAM SHUTTING DOWN\u001b[m");
+      System.exit(0);
+    }
   }
 
-}

@@ -1,7 +1,9 @@
 package Members;
 
-import java.time.LocalDate;
+import com.sun.tools.javac.Main;
+
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Member {
 
@@ -21,7 +23,7 @@ public class Member {
   private char paidOrNot;
   private double memberCategory;
 
-  private ArrayList<Member> members;
+  //private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
   //TODO: add double memberCategory
@@ -35,16 +37,22 @@ public class Member {
     this.paidOrNot = paidOrNot;
     this.memberCategory = memberCategory;
 
+
     }
     public Member(){
 
   }
+
 
   //-----------------Setter-----------------
 
 
 
   //-----------------Getter-----------------
+
+  public String getNotPaid(){ //TODO: HUSK
+    return notPaid;
+  }
 
   public String getName() {
     return name;
@@ -53,6 +61,8 @@ public class Member {
   public int getAge() {
     return age;
   }
+
+
 
   public int getPhoneNumber() {
     return phoneNumber;
@@ -97,4 +107,25 @@ public class Member {
     return
         String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
   }
+
+
+
+
+
+
+
+
+
+
+/*
+  public ArrayList<Member> getRestance() {
+    Main main = new Main;
+    if (Objects.equals(paidOrNot, "n")){
+      restance.add(getPaidOrNot());
+      System.out.println(restance);
+    }
+    return restance;
+  }
+
+ */
 }

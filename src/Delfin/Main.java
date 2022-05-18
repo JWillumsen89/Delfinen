@@ -7,20 +7,27 @@ import UI.UserInterface;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Main {
 
   private Integer memberId;
   private ArrayList<Member> members = new ArrayList<>();
 
+
+  ArrayList<Member> restance = new ArrayList<Member>();
+
+
   public ArrayList<Member> getMembers() {
     return members;
   }
 
+
+
   public void setMemberId(Integer memberId) {
     this.memberId = memberId;
   }
+
+
 
   MembersFee memberFee = new MembersFee();
 
@@ -60,6 +67,10 @@ public class Main {
     //System.out.println(member);
   }
 
+
+
+
+
   public boolean removeMember(Integer memberId) {
     Member member = findMemberById(memberId);
     if (member == null) {
@@ -69,6 +80,9 @@ public class Main {
       return true;
     }
   }
+
+
+
 
   public Member findMemberById(Integer memberId) {
     for (Member member : members) {
@@ -86,4 +100,10 @@ public class Main {
   public int getMemberCount() {
     return members.size();
   }
+
+
+
+
+
+
 }

@@ -1,11 +1,13 @@
 package Finance;
 
+import Members.Member;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Scanner;
 
 public class MembersFee {
-  //Member member = new Member();
+  Member member = new Member();
 
   private int junior;
   private int senior;
@@ -71,7 +73,9 @@ public double getCategory(){
       category = fees[1] * 0.75;
 
     } else {
-      //category = member.isActive() ;
+      System.out.println("WRONG");
+     // member.getActiveOrPassive()=category;
+
     }
     return category;
   }

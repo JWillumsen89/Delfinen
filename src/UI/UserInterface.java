@@ -40,6 +40,13 @@ public class UserInterface {
   public UserInterface(Main app) {
     this.app = app;
   }
+  /*
+  public UserInterface(){
+
+  }
+
+   */
+
 
 
   public void start() {
@@ -307,6 +314,9 @@ public class UserInterface {
     System.exit(0);
   }
 
+  public void setApp(){
+
+  }
 
 }
 
