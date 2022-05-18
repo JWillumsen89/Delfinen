@@ -2,6 +2,7 @@ package Competitors;
 
 import Members.Member;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Competitors extends Member {
@@ -22,8 +23,21 @@ public class Competitors extends Member {
                        ArrayList<Competition>competitions) {
 
         super(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+        setCompetitions(competitions);
+        setDisciplines(disciplines);
+        setTrainingScores(trainingScores);
+    }
 
-
+    public Competitors(String name,
+                       int age,
+                       int phoneNumber,
+                       String email,
+                       int memberID,
+                       char activeOrPassive,
+                       char paidOrNot,
+                       ArrayList<Discipline> disciplines) {
+        super(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+        setDisciplines(disciplines);
     }
 // ----------------------------------SETTER--------------------------------------------
 
@@ -49,6 +63,23 @@ public class Competitors extends Member {
         return competitions;
     }
 
+    public String getName() {
+        return super.getName();
+    }
 
+    public int getAge() {
+        return super.getAge();
+    }
+
+    public String toString() {
+        return super.toString() +
+                "Training Scores: " +
+                trainingScores +
+                "Disciplines: " +
+                disciplines +
+                "Competitions: " +
+                competitions;
+
+    }
 
 }
