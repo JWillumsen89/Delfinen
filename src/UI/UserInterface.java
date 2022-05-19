@@ -1,10 +1,11 @@
 package UI;
 
+import Finance.MembersFee;
 
 import java.util.Scanner;
 
 public class UserInterface {
-
+MembersFee membersFee = new MembersFee();
   public void displayWelcomeMsg() {
     System.out.println("Welcome to DELFIN SVØMMEKLUB");
 
@@ -59,6 +60,20 @@ public class UserInterface {
     return choice;
   }
 
+  public void printCschierMenu(){
+    System.out.println("""
+        Cashier Menu
+        ---------
+        1) See Missing payments
+        2) Change Members fees
+        3) See all payments
+        4) See members fees
+        5) Exit program
+                                
+        0) Return to main
+        """);
+  }
+
   public void printChoiceEditMember() {
     Scanner input = new Scanner(System.in);
     input.nextLine(); //Scanner bug fix
@@ -93,10 +108,29 @@ public class UserInterface {
 
   public void printMemberList() {
     System.out.println("-----------------------------------------------MEMBER LIST-----------------------------------------------------------");
-    System.out.printf("%-4s %-30s %-35s %-10s %-16s %-8s %-7s\n", "ID", "Name", "Email", "DOT", "Phone Number", "Status", "Paid");
+    System.out.printf("%-4s %-30s %-35s %-10s %-16s %-8s %-7s\n", "ID", "Name", "Email", "AGE", "Phone Number", "Status", "Paid");
     System.out.println("---------------------------------------------------------------------------------------------------------------------");
 
   }
 
+  public void printChoseToChangeFees(){
+    //CashierMenu chanhiem = new CashierMenu();
+    System.out.println("---------------Change  Delfin Svømmeklub medlems fees------------------------\n");
+    System.out.print("Junior:............" + membersFee.fees[0] + ",- kr. Type 1\n");
+    System.out.print("Senior:........... " + membersFee.fees[1] + ",- kr. Type 2\n");
+    System.out.print("Senior Gold:...... " + membersFee.fees[2] + " % Type 3\n");
+    System.out.print("Passiv Membership: " + membersFee.fees[3] + ",- kr. Type 4\n");
 
+    System.out.println("What is the new membbers fee for this category?");
+  }
+
+  public Object printMenmbersFees() {
+    //for (int i = 0; i < fees.length; i++) {
+    System.out.println("-----------Curent members fee pr.season-------------\n");
+    System.out.println("Junior: " + membersFee.fees[0] + ",- kr. ");
+    System.out.println("Senior: " + membersFee.fees[1] + ",- kr. ");
+    System.out.println("Senior Gold: " + membersFee.fees[2] + " % Discount off Senior fee");
+    System.out.println("Passiv Membership: " + membersFee.fees[3] + ",- kr. \n\n");
+    return null;
+  }
 }

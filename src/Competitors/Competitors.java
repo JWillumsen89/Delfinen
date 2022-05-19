@@ -2,7 +2,6 @@ package Competitors;
 
 import Members.Member;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Competitors extends Member {
