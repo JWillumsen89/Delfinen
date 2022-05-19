@@ -46,6 +46,22 @@ public class Member {
 
   //-----------------Getter-----------------
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setPhoneNumber(Integer phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public void setActiveOrPassive(char activeOrPassive) {
+    this.activeOrPassive = activeOrPassive;
+  }
+
   public String getName() {
     return name;
   }

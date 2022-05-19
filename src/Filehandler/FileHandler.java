@@ -10,9 +10,14 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-  private String fileName = "MemberBase.csv";
-  private String fileNameID = "IDNumber.txt";
-  private String data = "0";
+  private String fileName = "res/MemberBase.csv";
+  private String fileNameID = "res/IDNumber.txt";
+
+  private Integer dataValue;
+
+  public Integer getDataValue() {
+    return dataValue;
+  }
 
 
   public ArrayList<Member> loadMembersFromFile() {
@@ -99,20 +104,22 @@ public class FileHandler {
     }
   }
 
-  public Integer loadMemberID() {
+
+  public void loadMemberID() {
 
     try {
       File myObj = new File(fileNameID);
       Scanner myReader = new Scanner(myObj);
-      while (myReader.hasNextLine()) {
-        data = myReader.nextLine();
-
-      }
+      //while (myReader.hasNextLine()) {
+      String data = myReader.nextLine();
+      // }
+      dataValue = Integer.parseInt(data);
       myReader.close();
     } catch (FileNotFoundException e) {
       System.out.println("An error occurred.");
       e.printStackTrace();
     }
-    return Integer.parseInt(data);
   }
+
+
 }
