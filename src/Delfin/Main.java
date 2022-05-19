@@ -13,7 +13,7 @@ public class Main {
   private Integer memberId;
   private ArrayList<Member> members = new ArrayList<>();
   private ArrayList<Member> searchedForMembers = new ArrayList<>();
-
+  UserInterface ui = new UserInterface(this);
   //MAIN!!!
   public static void main(String[] args) {
 
@@ -35,8 +35,6 @@ public class Main {
 
   public void start() {
 
-    UserInterface ui = new UserInterface(this);
-
     ui.start();
   }
 
@@ -49,7 +47,7 @@ public class Main {
   public void saveDatabase() {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
-    memberId = fileHandler.getDataValue();
+    memberId = ui.getMemberID();
     fileHandler.saveMemberID(memberId);
   }
 

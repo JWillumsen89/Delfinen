@@ -20,7 +20,12 @@ public class UserInterface {
 
   private String name;
   private String email;
-  private Integer memberID;
+
+  private Integer memberID = fileHandler.loadMemberID();
+
+  public Integer getMemberID() {
+    return memberID;
+  }
 
   //   private LocalDate dateOfBirth;
   private LocalDate age;
@@ -126,8 +131,8 @@ public class UserInterface {
     System.out.print("Phonenumber: ");
     phoneNumber = input.nextInt();
     input.nextLine(); // ScannerBug fix
-    //TODO ASK TINE - Autogenerat ID Number!
-    memberID = (fileHandler.getDataValue() + 1);
+
+    memberID = fileHandler.loadMemberID() + 1;
 
 
     char active1 = 'A';
