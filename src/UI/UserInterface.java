@@ -91,7 +91,7 @@ public class UserInterface {
       System.out.println("Only values 0-4 allowed");
       System.out.print("Pick an option: ");
       choice = input.nextInt();
-      input.nextLine(); //Scannerbug
+      input.nextLine(); //Scanner bug fix
     }
 
     switch (choice) {
