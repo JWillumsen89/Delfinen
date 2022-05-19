@@ -12,7 +12,7 @@ public class FileHandler {
 
   private String fileName = "MemberBase.csv";
   private String fileNameID = "IDNumber.txt";
-  private String data = "0";
+  //private String data = null;
 
 
   public ArrayList<Member> loadMembersFromFile() {
@@ -100,14 +100,12 @@ public class FileHandler {
   }
 
   public Integer loadMemberID() {
-
+    String data = null;
     try {
       File myObj = new File(fileNameID);
       Scanner myReader = new Scanner(myObj);
-      while (myReader.hasNextLine()) {
+      if (myReader.hasNextLine())
         data = myReader.nextLine();
-
-      }
       myReader.close();
     } catch (FileNotFoundException e) {
       System.out.println("An error occurred.");

@@ -41,7 +41,6 @@ public class UserInterface {
     this.app = app;
   }
 
-
   public void start() {
     System.out.println("Welcome to DELFIN SVØMMEKLUB");
 
@@ -91,7 +90,7 @@ public class UserInterface {
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");
       choice = input.nextInt();
-      input.nextLine(); //Scannerbug
+      input.nextLine(); //Scanner bug fix
     }
 
     switch (choice) {
