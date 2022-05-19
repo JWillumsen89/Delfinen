@@ -11,7 +11,7 @@ public class Member {
   private String passive = "PASSIVE";
   private String paid = "PAID";
   private String notPaid = "NOT PAID";
-  //   private LocalDate dateOfBirth;
+  // private LocalDate dateOfBirth;
 
   private Integer memberID;
   private int age;
