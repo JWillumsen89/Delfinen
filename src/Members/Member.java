@@ -27,6 +27,7 @@ public class Member {
   private ArrayList<Member> restance;
 
   //TODO: add double memberCategory
+  //Constructors
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
     this.name = name;
     this.age = age;
@@ -37,8 +38,9 @@ public class Member {
     this.paidOrNot = paidOrNot;
     this.memberCategory = memberCategory;
 
-    }
-    public Member(){
+  }
+
+  public Member() {
 
   }
 
@@ -56,10 +58,6 @@ public class Member {
 
   //-----------------Setter-----------------
 
-
-
-  //-----------------Getter-----------------
-
   public void setName(String name) {
     this.name = name;
   }
@@ -75,6 +73,8 @@ public class Member {
   public void setActiveOrPassive(char activeOrPassive) {
     this.activeOrPassive = activeOrPassive;
   }
+
+  //-----------------Getter-----------------
 
   public String getName() {
     return name;
