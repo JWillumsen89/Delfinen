@@ -18,7 +18,7 @@ public class Controller {
   private String email;
 
   FileHandler fileHandler = new FileHandler();
-  private Integer memberID = fileHandler.loadMemberID();
+
 
   //   private LocalDate dateOfBirth;
   private LocalDate age;
@@ -31,7 +31,7 @@ public class Controller {
   Scanner input = new Scanner(System.in);
 
 
-  private Integer memberId;
+  private Integer memberId = fileHandler.loadMemberID();
   private ArrayList<Member> members = new ArrayList<>();
   private ArrayList<Member> searchedForMembers = new ArrayList<>();
   UserInterface ui = new UserInterface();
@@ -123,11 +123,11 @@ public class Controller {
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");
       choice = input.nextInt();
-      input.nextLine(); //Scannerbug
+      //input.nextLine(); //Scannerbug
     }
 
     switch (choice) {
-      case 0 -> ui.printChairmanMenu();
+      case 0 -> chairman();
       case 1 -> removeMember();
       case 2 -> editMember(member);
       case 3 -> searchMember();
@@ -137,11 +137,11 @@ public class Controller {
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
-    fileHandler.loadMemberID();
+    memberId = fileHandler.loadMemberID();
   }
 
   public void addMember() {
-    System.out.println("Create new member\n-----------------");
+    System.out.println("\nCreate -new member\n-----------------");
     Scanner input = new Scanner(System.in);
     System.out.print("Name: ");
     name = input.nextLine();
@@ -164,7 +164,7 @@ public class Controller {
     phoneNumber = input.nextInt();
     input.nextLine(); // ScannerBug fix
 
-    memberID = fileHandler.loadMemberID() + 1;
+    memberId = fileHandler.loadMemberID() + 1;
 
 
     char active1 = 'A';
@@ -172,7 +172,7 @@ public class Controller {
     boolean answer = false;
 
     do {
-      System.out.print("Active: [A] or Passive: [P]");
+      System.out.print("Active[A] or Passive[P]: ");
       active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
         System.out.println("Active member");
@@ -207,13 +207,13 @@ public class Controller {
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
     System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + memberID + "\nActive or passive: " + active);
+        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active);
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
-        createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
-        setMemberId(memberID);
+        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot);
+        //memberID = memberId;
         save();
         System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
 
@@ -230,9 +230,13 @@ public class Controller {
 
   public void editMember(Member member) {
     ui.printChoiceEditMember();
+    input.nextLine(); //Scanner bug fix
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
-      case "N" -> changeName(member);
+      case "N" -> {
+        changeName(member);
+        save();
+      }
       case "D" -> {
         System.out.println("Change date of birth: ");
         age = LocalDate.parse(String.valueOf(input.nextInt()));
@@ -241,24 +245,23 @@ public class Controller {
       }
       case "E" -> {
         changeEmail(member);
+        save();
       }
       case "P" -> {
         changePhoneNumber(member);
+        save();
       }
       case "M" -> {
         changeActiveOrPassive(member);
+        save();
       }
-      case "EXIT" -> ui.printChairmanMenu();
-      default -> {
-        System.out.println("Invalid decision");
-
-      }
+      case "EXIT" -> chairman();
+      default -> System.out.println("Invalid decision");
     }
-    save();
   }
 
   public void changeName(Member member) {
-    System.out.println("Change name: ");
+    System.out.print("Change name: ");
     name = input.nextLine();
     if (member != null) {
       member.setName(name);
@@ -273,7 +276,7 @@ public class Controller {
   }
 
   public void changeEmail(Member member) {
-    System.out.println("Change email: ");
+    System.out.print("Change email: ");
     email = input.nextLine();
     if (member != null) {
       member.setEmail(email);
@@ -284,7 +287,7 @@ public class Controller {
   }
 
   public void changePhoneNumber(Member member) {
-    System.out.println("Change phone number: ");
+    System.out.print("Change phone number: ");
     phoneNumber = input.nextInt();
     input.nextLine(); //Scanner bug fix
     if (member != null) {
@@ -296,7 +299,7 @@ public class Controller {
   }
 
   public void changeActiveOrPassive(Member member) {
-    System.out.println("Change member status to Active: [A] or Passive: [P]: ");
+    System.out.print("Change member status to Active: [A] or Passive: [P]: ");
     active = input.next().toUpperCase(Locale.ROOT).charAt(0);
     input.nextLine(); //Scanner bug fix
     if (member != null) {

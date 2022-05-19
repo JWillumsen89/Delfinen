@@ -44,6 +44,7 @@ public class UserInterface {
         0) Return to main
         """);
 
+    System.out.print("Pick a menu: ");
 
   }
 
@@ -60,8 +61,10 @@ public class UserInterface {
   }
 
   public void printChoiceEditMember() {
-    Scanner input = new Scanner(System.in);
+    /*Scanner input = new Scanner(System.in);
     input.nextLine(); //Scanner bug fix
+
+     */
     System.out.println("""
         NAME            [N]
         DATE OF BIRTH   [D]
