@@ -2,6 +2,8 @@ package Members;
 
 import com.sun.tools.javac.Main;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -23,7 +25,7 @@ public class Member {
   private char paidOrNot;
   private double memberCategory;
 
-  //private ArrayList<Member> members;
+  private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
   //TODO: add double memberCategory
@@ -37,12 +39,10 @@ public class Member {
     this.paidOrNot = paidOrNot;
     this.memberCategory = memberCategory;
 
-
     }
     public Member(){
 
   }
-
 
   //-----------------Setter-----------------
 
@@ -50,8 +50,20 @@ public class Member {
 
   //-----------------Getter-----------------
 
-  public String getNotPaid(){ //TODO: HUSK
-    return notPaid;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setPhoneNumber(Integer phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public void setActiveOrPassive(char activeOrPassive) {
+    this.activeOrPassive = activeOrPassive;
   }
 
   public String getName() {
@@ -61,8 +73,6 @@ public class Member {
   public int getAge() {
     return age;
   }
-
-
 
   public int getPhoneNumber() {
     return phoneNumber;
@@ -83,6 +93,20 @@ public class Member {
   public char getPaidOrNot() {
     return paidOrNot;
   }
+
+
+  public int calculateAge(LocalDate newAge) {
+    LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
+    if (newAge != null) {
+// gem fødselsdag under member som attribut
+
+      age = Period.between(newAge, curDate).getYears();
+      return age;
+    } else {
+      return 0;
+    }
+  }
+
 
   @Override
   public String toString() {
@@ -110,22 +134,4 @@ public class Member {
 
 
 
-
-
-
-
-
-
-
-/*
-  public ArrayList<Member> getRestance() {
-    Main main = new Main;
-    if (Objects.equals(paidOrNot, "n")){
-      restance.add(getPaidOrNot());
-      System.out.println(restance);
-    }
-    return restance;
-  }
-
- */
 }

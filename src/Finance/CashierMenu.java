@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class CashierMenu {
 
-  //UserInterface udserInterface = new UserInterface(null);
-  Payments payments = new Payments(null);
+  //UserInterface udserInterface = new UserInterface();
+  Payments payments = new Payments();
   MembersFee memebrsfees = new MembersFee();
 
   //UserInterface backToMainMenu = new UserInterface();

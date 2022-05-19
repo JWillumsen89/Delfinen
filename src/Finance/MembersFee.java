@@ -18,6 +18,7 @@ public class MembersFee {
   double category;
 
 
+
   //---------------------------constructor-----------------------------------
 
   public MembersFee(boolean aPmemebership, int juniorFee, int seniorFee, double seniorGoldFee, double category) {
@@ -107,17 +108,6 @@ public double getCategory(){
 
   //----------------------------is used in members fee------------------------------
 
-  public int calculateAge(LocalDate age) {
-    LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
-    if (age != null) {
-// gem fødselsdag under member som attribut
-
-      newAge = Period.between(age, curDate).getYears();
-      return newAge;
-    } else {
-      return 0;
-    }
-  }
 
 
   public  Object printMenmbersFees() {

@@ -12,9 +12,20 @@ public class Main {
 
   private Integer memberId;
   private ArrayList<Member> members = new ArrayList<>();
+  private ArrayList<Member> searchedForMembers = new ArrayList<>();
+  ArrayList<Member> restance = new ArrayList<>();
+
+  //MAIN!!!
+  public static void main(String[] args) {
+
+    Main main = new Main();
+    main.loadDatabase();
+    main.start();
+
+  }
 
 
-  ArrayList<Member> restance = new ArrayList<Member>();
+
 
 
   public ArrayList<Member> getMembers() {
@@ -33,17 +44,9 @@ public class Main {
 
   public void start() {
 
-    UserInterface ui = new UserInterface(this);
+    UserInterface ui = new UserInterface();
 
     ui.start();  //TODO:her crsher den!!
-  }
-
-  public static void main(String[] args) {
-
-    Main main = new Main();
-    main.loadDatabase();
-    main.start();
-
   }
 
   public void loadDatabase() {
@@ -55,12 +58,11 @@ public class Main {
   public void saveDatabase() {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
+    //memberId = fileHandler.getDataValue();
     fileHandler.saveMemberID(memberId);
   }
 
   //TODO: tilføj deres kategori. og konstruktør
-
-
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
     Member member = new Member(name, memberFee.getNewAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(member);
@@ -91,6 +93,45 @@ public class Main {
       }
     }
     return null;
+  }
+
+  public Member searchMember(String name) {
+    Member member = findMemberByName(name);
+    if (member == null) {
+      return null;
+    } else {
+      return member;
+    }
+  }
+
+  public Member findMemberByName(String name) {
+    for (Member member : members) {
+      if (member.getName().equalsIgnoreCase(name)) {
+        return member;
+      }
+    }
+    return null;
+  }
+
+  //TODO Make search more flexible
+  public ArrayList<Member> findMemberByName2(String name) {
+    searchedForMembers.clear();
+    for (Member member : members) {
+      if (member.getName().equalsIgnoreCase(name)) {
+        searchedForMembers.add(member);
+      }
+    }
+    return searchedForMembers;
+  }
+
+  public ArrayList<Member> findMemberByNotPaid() {
+    restance.clear();
+    for (Member member : members) {
+      if (member.getPaidOrNot() == 'N') {
+        restance.add(member);
+      }
+    }
+    return restance;
   }
 
   public Iterable<Member> getAllMembers() {
