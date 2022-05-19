@@ -30,11 +30,10 @@ public class UserInterface {
     return choice;
   }
 
-  //TODO MOVE TO SEPERATE CLASS
-  public void printChaimanMenu() {
+  public void printChairmanMenu() {
 
     System.out.println("""
-        
+                
         Chairman menu
         ---------
         1) Add new member
@@ -46,9 +45,9 @@ public class UserInterface {
         """);
 
 
-
   }
-  public int readChaimanUi(){
+
+  public int readChairmanUi() {
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
     while (choice < 0 || choice > 4) {
@@ -57,12 +56,12 @@ public class UserInterface {
       choice = input.nextInt();
       input.nextLine(); //Scanner bug fix
     }
-return choice;
+    return choice;
   }
 
   public void printChoiceEditMember() {
     Scanner input = new Scanner(System.in);
-   input.nextLine(); //Scanner bug fix
+    input.nextLine(); //Scanner bug fix
     System.out.println("""
         NAME            [N]
         DATE OF BIRTH   [D]
@@ -80,7 +79,7 @@ return choice;
 
   }
 
-  public void printScMenu() {
+  public void printSearchMenu() {
 
     System.out.println("""
         1) Remove member
@@ -98,10 +97,6 @@ return choice;
     System.out.println("---------------------------------------------------------------------------------------------------------------------");
 
   }
-
-  //TODO MOVE TO SEPERATE CLASS
-
-
 
 
 }

@@ -61,8 +61,8 @@ public class Controller {
   }
 
   public void chairman() {
-    ui.printChaimanMenu();
-    int choice = ui.readChaimanUi();
+    ui.printChairmanMenu();
+    int choice = ui.readChairmanUi();
     switch (choice) {
       case 0 -> start();
       case 1 -> addMember();
@@ -79,7 +79,6 @@ public class Controller {
     }
     System.out.println("\nThe number of members in the list: " + getMemberCount() + "\n");
 
-    ui.printChaimanMenu();
   }
 
   public void searchMember() {
@@ -96,10 +95,10 @@ public class Controller {
       System.out.print("Select a member by ID number that you want to edit: ");
       int memberID = input.nextInt();
       Member member = pickAMember(memberID);
-      searchMemberMenu();
+      searchMemberMenu(member);
     } else {
       System.out.println("The member could not be found");
-      ui.printChaimanMenu();
+
     }
   }
 
@@ -116,8 +115,8 @@ public class Controller {
     return null;
   }
 
-  public void searchMemberMenu() {
-    ui.printScMenu();
+  public void searchMemberMenu(Member member) {
+    ui.printSearchMenu();
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
     input.nextLine(); //Scanner bug fix
@@ -128,9 +127,9 @@ public class Controller {
     }
 
     switch (choice) {
-      case 0 -> ui.printChaimanMenu();
+      case 0 -> ui.printChairmanMenu();
       case 1 -> removeMember();
-      case 2 -> ui.printChoiceEditMember();
+      case 2 -> editMember(member);
       case 3 -> searchMember();
     }
   }
@@ -230,6 +229,7 @@ public class Controller {
   }
 
   public void editMember(Member member) {
+    ui.printChoiceEditMember();
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "N" -> changeName(member);
@@ -248,10 +248,10 @@ public class Controller {
       case "M" -> {
         changeActiveOrPassive(member);
       }
-      case "EXIT" -> ui.printChaimanMenu();
+      case "EXIT" -> ui.printChairmanMenu();
       default -> {
         System.out.println("Invalid decision");
-        ui.printChoiceEditMember();
+
       }
     }
     save();
@@ -343,7 +343,7 @@ public class Controller {
       System.out.println("The member has been removed");
       save();
     }
-    ui.printChaimanMenu();
+
   }
 
 
