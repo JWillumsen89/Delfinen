@@ -2,7 +2,6 @@ package Delfin;
 
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
-import Finance.CashierMenu;
 import Finance.MembersFee;
 import Members.Member;
 import UI.UserInterface;
@@ -26,10 +25,10 @@ public class Controller {
 
   private char active;
   private char paidOrNot;
-  CashierMenu goToMenueCashier = new CashierMenu();
-  MembersFee memberFee = new MembersFee();
+  //MembersFee memebrsfees = new MembersFee(); //blir brugt?
+  MembersFee memberFee = new MembersFee(); //blir brugt?
   Scanner input = new Scanner(System.in);
-
+Member member = new Member();
 
   private Integer memberId = fileHandler.loadMemberID();
   private ArrayList<Member> members = new ArrayList<>();
@@ -54,7 +53,7 @@ public class Controller {
       switch (choice) {
         case 0 -> exit();
         case 1 -> chairman();
-        case 2 -> goToMenueCashier.cashierMenuUi();
+        case 2 -> cashier();
         case 3 -> coaches();
       }
     }
@@ -71,6 +70,43 @@ public class Controller {
       case 4 -> searchMember();
     }
   }
+
+  public void cashier(){
+    ui.printCschierMenu();
+    Scanner input = new Scanner(System.in);
+    int choice = input.nextInt();
+    while (choice < 0 || choice > 5) {
+      System.out.println("Only values 0-4 allowed");
+      choice = input.nextInt();
+    }
+
+    switch (choice) {
+      //case 1 -> missingpyments();
+      case 2 -> changeMemberFees();
+      //case 3 -> seeAllPayments();
+      case 4 -> ui.printMenmbersFees();
+      case 5 -> exit();
+      case 0 -> start();
+
+
+    }
+  }
+
+  public void changeMemberFees(){
+    ui.printChoseToChangeFees();
+    Scanner sc = new Scanner(System.in);
+    int feeToChange = sc.nextInt();
+    int newMemberFee = sc.nextInt();
+    for (int i = 0;i < memberFee.fees.length;i++){
+      memberFee.fees[i] = feeToChange;
+      if (memberFee .fees[i]== feeToChange){
+        memberFee.fees[i]=newMemberFee;
+      }
+    }
+    System.out.println("you have now change the fee from"+ feeToChange+" to " + newMemberFee);
+    cashier();
+  }
+
 
   public void memberList() {
     ui.printMemberList();
@@ -150,10 +186,10 @@ public class Controller {
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
-    memberFee.calculateAge(temp);
+    member.calculateAge(temp);
     int result = (int) memberFee.paymentCategoryCalculator();
     System.out.println(result); //TODO: skal slettes, kun til test(linjen)
-    System.out.println(memberFee.getNewAge());
+    System.out.println(member.getAge());
 
 
 //----------------------------slut----------------------
@@ -326,8 +362,8 @@ public class Controller {
 
   //TODO: tilføj deres kategori. og konstruktør
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
-    Member member = new Member(name, memberFee.getNewAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
-    members.add(member);
+    Member newMember = new Member (name,  member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+    members.add(newMember);
     //System.out.println(member);
   }
 

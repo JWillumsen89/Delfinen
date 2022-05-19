@@ -1,6 +1,7 @@
 package Members;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class Member {
@@ -11,10 +12,11 @@ public class Member {
   private String passive = "PASSIVE";
   private String paid = "PAID";
   private String notPaid = "NOT PAID";
-  // private LocalDate dateOfBirth;
+
+  private LocalDate dateOfBirth;
 
   private Integer memberID;
-  private int age;
+  public int age;
   private int phoneNumber;
 
   private char activeOrPassive;
@@ -38,6 +40,18 @@ public class Member {
     }
     public Member(){
 
+  }
+
+  public int calculateAge(LocalDate newAge) {
+    LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
+    if (newAge != null) {
+// gem fødselsdag under member som attribut
+
+      age = Period.between(newAge, curDate).getYears();
+      return age;
+    } else {
+      return 0;
+    }
   }
 
   //-----------------Setter-----------------
