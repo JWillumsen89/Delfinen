@@ -1,5 +1,5 @@
 name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N)
-Jonathan;0;84675264;niels@hansen.dk;2;A;N
+Jonathan Willumsen;0;31150173;Jhon2010@live.dk;2;P;N
 Christian Rodrigo;0;98467;dfsgf;3;A;N
 Simon;0;98314;rewtds;4;A;N
 Niels;0;1234567;hans@and.dk;5;A;N
@@ -7,3 +7,4 @@ Niels;0;1;1;6;A;N
 christian;33;38566;rodrigo;7;A;N
 w;121;1;1;8;A;N
 Jonas;32;1;1;9;A;N
+Jonathan Willumsen;32;31150173;Jhon2010@live.dk;10;A;N

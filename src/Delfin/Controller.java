@@ -16,6 +16,7 @@ public class Controller {
   private String name;
   private String email;
 
+
   FileHandler fileHandler = new FileHandler();
 
 
@@ -176,13 +177,7 @@ public class Controller {
     memberId = fileHandler.loadMemberID();
   }
 
-  public void addMember() {
-    System.out.println("\nCreate -new member\n-----------------");
-    Scanner input = new Scanner(System.in);
-    System.out.print("Name: ");
-    name = input.nextLine();
-
-    //------------------ageCalculator Used in Payments-------------------------------
+  public void typeDOT() {
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
@@ -190,19 +185,56 @@ public class Controller {
     int result = (int) memberFee.paymentCategoryCalculator();
     System.out.println(result); //TODO: skal slettes, kun til test(linjen)
     System.out.println(member.getAge());
+  }
 
+  public void typeDOTException() {
+    try {
+      typeDOT();
+    } catch (Exception e) {
+      wrongInput();
+      typeDOT();
+    }
+  }
 
-//----------------------------slut----------------------
+  public void typeName() {
+    System.out.print("Name: ");
+    name = input.nextLine();
+  }
 
-    System.out.print("Email: ");
-    email = input.nextLine();
+  public void typeEmail() {
+    try {
+      System.out.print("Email: ");
+      email = input.nextLine();
+    } catch (Exception e) {
+      wrongInput();
+      System.out.print("Email: ");
+      email = input.nextLine();
+    }
+  }
+
+  public void typePhoneNumber() {
+    phoneNumber = 0;
+    boolean bError = true;
     System.out.print("Phone number: ");
-    phoneNumber = input.nextInt();
-    input.nextLine(); // ScannerBug fix
+    while (bError) {
+      if (input.hasNextInt()) {
+        phoneNumber = input.nextInt();
+      } else {
+        wrongInput();
+        System.out.print("Phone number: ");
+        input.next();
+        continue;
+      }
+      bError = false;
+    }
+  }
 
+  public void addMemberID() {
+    //Adds memberId
     memberId = fileHandler.loadMemberID() + 1;
+  }
 
-
+  public void typeMemberStatus() {
     char active1 = 'A';
     char active2 = 'P';
     boolean answer = false;
@@ -217,15 +249,31 @@ public class Controller {
         System.out.println("Passive member");
         answer = true;
       } else {
-        System.out.println("Invalid char");
+        System.out.println("Invalid character");
       }
     }
     while (!answer);
+  }
 
+  public void wrongInput() {
+    String wrongInput = "\u001b[1;31mWRONG INPUT! - TRY AGAIN\u001b[m";
+    System.out.println(wrongInput);
+  }
 
-    input.nextLine();//Scanner bug fix
+  public void scannerBugFix() {
+    input.nextLine();
+  }
+
+  public void addMember() {
+    System.out.println("\nCreate -new member\n-----------------");
+    typeName();
+    typeDOTException();
+    typeEmail();
+    typePhoneNumber();
+    addMemberID();
+    typeMemberStatus();
+    scannerBugFix();
     saveMember();
-
   }
 
   public void saveDatabase() {
@@ -292,8 +340,7 @@ public class Controller {
   }
 
   public void changeName(Member member) {
-    System.out.print("Change name: ");
-    name = input.nextLine();
+    typeName();
     if (member != null) {
       member.setName(name);
       System.out.println(member);
@@ -307,8 +354,7 @@ public class Controller {
   }
 
   public void changeEmail(Member member) {
-    System.out.print("Change email: ");
-    email = input.nextLine();
+    typeEmail();
     if (member != null) {
       member.setEmail(email);
       System.out.println(member);
@@ -318,9 +364,7 @@ public class Controller {
   }
 
   public void changePhoneNumber(Member member) {
-    System.out.print("Change phone number: ");
-    phoneNumber = input.nextInt();
-    input.nextLine(); //Scanner bug fix
+    typePhoneNumber();
     if (member != null) {
       member.setPhoneNumber(phoneNumber);
       System.out.println(member);
@@ -330,9 +374,11 @@ public class Controller {
   }
 
   public void changeActiveOrPassive(Member member) {
-    System.out.print("Change member status to Active: [A] or Passive: [P]: ");
+    typeMemberStatus();
+    /*System.out.print("Change member status to Active: [A] or Passive: [P]: ");
     active = input.next().toUpperCase(Locale.ROOT).charAt(0);
     input.nextLine(); //Scanner bug fix
+     */
     if (member != null) {
       member.setActiveOrPassive(active);
       System.out.println(member);

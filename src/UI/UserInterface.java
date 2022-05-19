@@ -53,8 +53,8 @@ public class UserInterface {
   public int readChairmanUi() {
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
+    while (choice < 0 || choice > 5) {
+      System.out.println("Only values 0-5 allowed");
       System.out.print("Pick an option: ");
       choice = input.nextInt();
       input.nextLine(); //Scanner bug fix
