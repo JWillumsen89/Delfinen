@@ -1,10 +1,10 @@
 name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N)
-Jonathan Willumsen;0;31150173;Jhon2010@live.dk;2;P;N
-Christian Rodrigo;0;98467;dfsgf;3;A;N
-Simon;0;98314;rewtds;4;A;N
-Niels;0;1234567;hans@and.dk;5;A;N
-Niels;0;1;1;6;A;N
-christian;33;38566;rodrigo;7;A;N
-w;121;1;1;8;A;N
-Jonas;32;1;1;9;A;N
-Jonathan Willumsen;32;31150173;Jhon2010@live.dk;10;A;N
+Hans Christian Andersen;0;12345678;Hans@ndersen.dk;1;A;P
+Jens Hansen;0;22334455;hansens@bondegaard.dk;2;A;N
+Lars Løkke;0;88457164;larsloekke@mail.dk;3;P;N
+Micky Mouse;0;77777777;mickymouse@disney.dk;4;A;P
+Tony Stark;0;66666666;tony.s@starkindustries.com;5;A;P
+Jack Sparrow;33;46794675;sparrow@pirates.com;6;A;N
+Mary Donaldson;121;97794611;mary@kongehuset.dk;7;P;N
+Casper Christensen;32;66885599;casper@klovn.dk;8;A;N
+Anders Lund Madsen;32;77994477;anders.lund@madsen.dk;9;A;N

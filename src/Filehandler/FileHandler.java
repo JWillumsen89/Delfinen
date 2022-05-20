@@ -13,8 +13,6 @@ public class FileHandler {
   private String fileName = "res/MemberBase.csv";
   private String fileNameID = "res/IDNumber.txt";
 
-
-
   public ArrayList<Member> loadMembersFromFile() {
 
     ArrayList<Member> members = new ArrayList<>();
