@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-  private String fileName = "MemberBase.csv";
-  private String fileNameID = "IDNumber.txt";
+  private String fileName = "res/MemberBase.csv";
+  private String fileNameID = "res/IDNumber.txt";
   //private String data = null;
 
 

@@ -1,11 +1,8 @@
 package Members;
 
-import com.sun.tools.javac.Main;
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Member {
 
@@ -15,10 +12,11 @@ public class Member {
   private String passive = "PASSIVE";
   private String paid = "PAID";
   private String notPaid = "NOT PAID";
-  //   private LocalDate dateOfBirth;
+
+  private LocalDate dateOfBirth;
 
   private Integer memberID;
-  private int age;
+  public int age;
   private int phoneNumber;
 
   private char activeOrPassive;
@@ -42,6 +40,18 @@ public class Member {
     }
     public Member(){
 
+  }
+
+  public int calculateAge(LocalDate newAge) {
+    LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
+    if (newAge != null) {
+// gem fødselsdag under member som attribut
+
+      age = Period.between(newAge, curDate).getYears();
+      return age;
+    } else {
+      return 0;
+    }
   }
 
   //-----------------Setter-----------------
@@ -94,20 +104,6 @@ public class Member {
     return paidOrNot;
   }
 
-
-  public int calculateAge(LocalDate newAge) {
-    LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
-    if (newAge != null) {
-// gem fødselsdag under member som attribut
-
-      age = Period.between(newAge, curDate).getYears();
-      return age;
-    } else {
-      return 0;
-    }
-  }
-
-
   @Override
   public String toString() {
 
@@ -131,7 +127,4 @@ public class Member {
     return
         String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
   }
-
-
-
 }
