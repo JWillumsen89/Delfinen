@@ -1,5 +1,7 @@
 package Finance;
 
+import Members.Member;
+
 public class MembersFee {
   //Member member = new Member();
 
@@ -19,7 +21,6 @@ public class MembersFee {
     junior = juniorFee;
     senior = seniorFee;
     seniorGold = seniorGoldFee;
-    category = category;
 
 
   }
@@ -46,17 +47,18 @@ public class MembersFee {
     return seniorGold;
   }
 
-  public double paymentCategoryCalculator() {
+  public double paymentCategoryCalculator(double result) {
 
-    //TODO: evt switch case?
+     Member member = new Member();
 
-    if (newAge < 18) {
+
+    if (result < 18) {
       category = fees[0];
     }
-    if (newAge >= 18) {
+    if (result>= 18) {
       category = fees[1];
     }
-    if (newAge >= 60) {
+    if (result >= 60) {
       category = fees[1] * 0.75;
 
     } else {

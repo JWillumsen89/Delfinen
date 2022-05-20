@@ -181,10 +181,20 @@ public class Controller {
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
-    member.calculateAge(temp);
-    int paymentCategory = (int) memberFee.paymentCategoryCalculator();
-    System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
+    double resultAge = member.calculateAge(temp);
+    paymentCategory(resultAge);
+
+
+
+
     System.out.println(member.getAge());
+
+
+  }
+
+  public void paymentCategory(double resultAge){
+    double paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
+    System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
   }
 
   public void typeDOTException() {

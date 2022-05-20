@@ -5,7 +5,7 @@ import Members.Member;
 import UI.UserInterface;
 
 import java.util.ArrayList;
-
+/*
 public class Payments {
   MembersFee membersFee = new MembersFee();
   Member members = new Member();
@@ -24,6 +24,8 @@ public class Payments {
       }
     }
   }
+
+ */
 
 
 
@@ -127,4 +129,4 @@ public class Payments {
 
    */
 
-}
+//}
