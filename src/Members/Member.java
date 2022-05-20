@@ -6,27 +6,29 @@ import java.util.ArrayList;
 
 public class Member {
 
-  private String name;
-  private String email;
   private String active = "ACTIVE";
-  private String passive = "PASSIVE";
-  private String paid = "PAID";
+  private String email;
+  private String name;
   private String notPaid = "NOT PAID";
+  private String paid = "PAID";
+  private String passive = "PASSIVE";
 
-  private LocalDate dateOfBirth;
-
-  private Integer memberID;
   public int age;
   private int phoneNumber;
 
   private char activeOrPassive;
   private char paidOrNot;
+
+
+  private LocalDate dateOfBirth;
+
+  private Integer memberID;
+
   private double paymentCategory;
 
   private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
-  //TODO: add double memberCategory
   //Constructors
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     this.name = name;
