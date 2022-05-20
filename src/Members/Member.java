@@ -115,22 +115,22 @@ public class Member {
 
     if (activeOrPassive == 'A' && paidOrNot == 'P') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
     }
     if (activeOrPassive == 'A' && paidOrNot == 'N') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, notPaid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, notPaid, paymentCategory, "dkk");
     }
     if (activeOrPassive == 'P' && paidOrNot == 'P') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, passive, paid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, passive, paid, paymentCategory, "dkk");
     }
 
     if (activeOrPassive == 'P' && paidOrNot == 'N') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, passive, notPaid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, passive, notPaid, paymentCategory, "dkk");
     }
     return
-        String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
+        String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
   }
 }
