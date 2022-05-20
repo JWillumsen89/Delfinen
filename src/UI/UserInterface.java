@@ -5,7 +5,8 @@ import Finance.MembersFee;
 import java.util.Scanner;
 
 public class UserInterface {
-MembersFee membersFee = new MembersFee();
+  MembersFee membersFee = new MembersFee();
+
   public void displayWelcomeMsg() {
     System.out.println("Welcome to DELFIN SVØMMEKLUB");
 
@@ -45,14 +46,15 @@ MembersFee membersFee = new MembersFee();
         0) Return to main
         """);
 
+    System.out.print("Pick a menu: ");
 
   }
 
   public int readChairmanUi() {
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
-    while (choice < 0 || choice > 4) {
-      System.out.println("Only values 0-4 allowed");
+    while (choice < 0 || choice > 5) {
+      System.out.println("Only values 0-5 allowed");
       System.out.print("Pick an option: ");
       choice = input.nextInt();
       input.nextLine(); //Scanner bug fix
@@ -60,7 +62,7 @@ MembersFee membersFee = new MembersFee();
     return choice;
   }
 
-  public void printCschierMenu(){
+  public void printCashierMenu() {
     System.out.println("""
         Cashier Menu
         ---------
@@ -75,9 +77,9 @@ MembersFee membersFee = new MembersFee();
   }
 
   public void printChoiceEditMember() {
-    Scanner input = new Scanner(System.in);
-    input.nextLine(); //Scanner bug fix
+
     System.out.println("""
+                
         NAME            [N]
         DATE OF BIRTH   [D]
         EMAIL           [E]
@@ -97,11 +99,13 @@ MembersFee membersFee = new MembersFee();
   public void printSearchMenu() {
 
     System.out.println("""
+                
         1) Remove member
         2) Edit member
         3) Search for another member
                   
-        0) Return to Chairman menu""");
+        0) Return to Chairman menu
+        """);
     System.out.print("What do you want to do?: ");
 
   }
@@ -113,24 +117,24 @@ MembersFee membersFee = new MembersFee();
 
   }
 
-  public void printChoseToChangeFees(){
-    //CashierMenu chanhiem = new CashierMenu();
+  public void printChoseToChangeFees() {
+    //CashierMenu cashierMenu = new CashierMenu();
     System.out.println("---------------Change  Delfin Svømmeklub medlems fees------------------------\n");
     System.out.print("Junior:............" + membersFee.fees[0] + ",- kr. Type 1\n");
     System.out.print("Senior:........... " + membersFee.fees[1] + ",- kr. Type 2\n");
     System.out.print("Senior Gold:...... " + membersFee.fees[2] + " % Type 3\n");
-    System.out.print("Passiv Membership: " + membersFee.fees[3] + ",- kr. Type 4\n");
+    System.out.print("Passive Membership: " + membersFee.fees[3] + ",- kr. Type 4\n");
 
-    System.out.println("What is the new membbers fee for this category?");
+    System.out.println("What is the new members fee for this category?");
   }
 
-  public Object printMenmbersFees() {
+  public Object printMembersFees() {
     //for (int i = 0; i < fees.length; i++) {
-    System.out.println("-----------Curent members fee pr.season-------------\n");
+    System.out.println("-----------Current members fee pr.season-------------\n");
     System.out.println("Junior: " + membersFee.fees[0] + ",- kr. ");
     System.out.println("Senior: " + membersFee.fees[1] + ",- kr. ");
     System.out.println("Senior Gold: " + membersFee.fees[2] + " % Discount off Senior fee");
-    System.out.println("Passiv Membership: " + membersFee.fees[3] + ",- kr. \n\n");
+    System.out.println("Passive Membership: " + membersFee.fees[3] + ",- kr. \n\n");
     return null;
   }
 }

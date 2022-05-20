@@ -1,9 +1,5 @@
 package Finance;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Scanner;
-
 public class MembersFee {
   //Member member = new Member();
 
@@ -32,7 +28,7 @@ public class MembersFee {
 
   }
 
-  //-------------------------------------gette----------------------------
+  //-------------------------------------getter----------------------------
 
   public int getJunior() {
     return junior;
@@ -52,7 +48,7 @@ public class MembersFee {
 
   public double paymentCategoryCalculator() {
 
-    //TODO: evt swichcase?
+    //TODO: evt switch case?
 
     if (newAge < 18) {
       category = fees[0];

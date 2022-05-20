@@ -4,19 +4,19 @@ import java.time.Duration;
 
 public class Competition {
 
-    private final String CompetitonName;
+    private final String CompetitorName;
     private final int CompetitorPlacement;
     private final Duration CompetitorTime;
 
-    public Competition(String competionName, int competionPlacement, Duration competitorTime) {
-        CompetitonName = competionName;
-        CompetitorPlacement = competionPlacement;
+    public Competition(String competitionName, int competitionPlacement, Duration competitorTime) {
+        CompetitorName = competitionName;
+        CompetitorPlacement = competitionPlacement;
         CompetitorTime = competitorTime;
 
         //------------------------Getter-------------------------
     }
-    public String getCompetitonName() {
-        return CompetitonName;
+    public String getCompetitorName() {
+        return CompetitorName;
     }
 
     public int getCompetitorPlacement() {
@@ -29,7 +29,7 @@ public class Competition {
 
     public String toString() {
         return "Competition Name: "
-                + CompetitonName
+                + CompetitorName
                 + "Placement: "
                 + CompetitorPlacement
                 + "Time: "

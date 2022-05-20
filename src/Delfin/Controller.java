@@ -16,31 +16,29 @@ public class Controller {
   private String name;
   private String email;
 
+
   FileHandler fileHandler = new FileHandler();
-  private Integer memberID = fileHandler.loadMemberID();
+
 
   //   private LocalDate dateOfBirth;
   private LocalDate age;
   private int phoneNumber;
 
   private char active;
-  private char paidOrNot;
-  //MembersFee memebrsfees = new MembersFee(); //blir brugt?
+  //TODO Delete??
+  //private char paidOrNot;
+  //MembersFee members fees = new MembersFee(); //blir brugt?
   MembersFee memberFee = new MembersFee(); //blir brugt?
   Scanner input = new Scanner(System.in);
-Member member = new Member();
+  Member member = new Member();
 
-  private Integer memberId;
+  private Integer memberId = fileHandler.loadMemberID();
   private ArrayList<Member> members = new ArrayList<>();
   private ArrayList<Member> searchedForMembers = new ArrayList<>();
   UserInterface ui = new UserInterface();
 
   public ArrayList<Member> getMembers() {
     return members;
-  }
-
-  public void setMemberId(Integer memberId) {
-    this.memberId = memberId;
   }
 
   //MembersFee memberFee = new MembersFee();
@@ -71,8 +69,8 @@ Member member = new Member();
     }
   }
 
-  public void cashier(){
-    ui.printCschierMenu();
+  public void cashier() {
+    ui.printCashierMenu();
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
     while (choice < 0 || choice > 5) {
@@ -81,10 +79,10 @@ Member member = new Member();
     }
 
     switch (choice) {
-      //case 1 -> missingpyments();
+      //case 1 -> missingPayments();
       case 2 -> changeMemberFees();
       //case 3 -> seeAllPayments();
-      case 4 -> ui.printMenmbersFees();
+      case 4 -> ui.printMembersFees();
       case 5 -> exit();
       case 0 -> start();
 
@@ -92,21 +90,20 @@ Member member = new Member();
     }
   }
 
-  public void changeMemberFees(){
+  public void changeMemberFees() {
     ui.printChoseToChangeFees();
     Scanner sc = new Scanner(System.in);
     int feeToChange = sc.nextInt();
     int newMemberFee = sc.nextInt();
-    for (int i = 0;i < memberFee.fees.length;i++){
+    for (int i = 0; i < memberFee.fees.length; i++) {
       memberFee.fees[i] = feeToChange;
-      if (memberFee .fees[i]== feeToChange){
-        memberFee.fees[i]=newMemberFee;
+      if (memberFee.fees[i] == feeToChange) {
+        memberFee.fees[i] = newMemberFee;
       }
     }
-    System.out.println("you have now change the fee from"+ feeToChange+" to " + newMemberFee);
+    System.out.println("you have now change the fee from" + feeToChange + " to " + newMemberFee);
     cashier();
   }
-
 
   public void memberList() {
     ui.printMemberList();
@@ -120,21 +117,26 @@ Member member = new Member();
   public void searchMember() {
 
     Scanner sc = new Scanner(System.in);
-    System.out.print("SEARCH MEMBER - Type name of member: ");
-    String memberName = sc.nextLine();
+    System.out.print("\nSEARCH MEMBER - Type name or part of name: ");
+    String memberName = sc.nextLine().toLowerCase(Locale.ROOT);
+    System.out.println(" ");
 
     ArrayList<Member> members = findMemberByName2(memberName);
     if (members.size() != 0) {
       for (Member member : members) {
         System.out.println(member);
       }
-      System.out.print("Select a member by ID number that you want to edit: ");
+      System.out.print("\nType [0] to return to menu or select a member by ID number that you want to edit: ");
       int memberID = input.nextInt();
-      Member member = pickAMember(memberID);
-      searchMemberMenu(member);
+      System.out.println();
+      if (memberID == 0) {
+        System.out.println("\nNo changes have been made.");
+      } else {
+        Member member = pickAMember(memberID);
+        searchMemberMenu(member);
+      }
     } else {
       System.out.println("The member could not be found");
-
     }
   }
 
@@ -159,11 +161,10 @@ Member member = new Member();
     while (choice < 0 || choice > 3) {
       System.out.println("Only values 0-3 allowed");
       choice = input.nextInt();
-      input.nextLine(); //Scannerbug
     }
 
     switch (choice) {
-      case 0 -> ui.printChairmanMenu();
+      case 0 -> chairman();
       case 1 -> removeMember();
       case 2 -> editMember(member);
       case 3 -> searchMember();
@@ -173,16 +174,10 @@ Member member = new Member();
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
-    fileHandler.loadMemberID();
+    memberId = fileHandler.loadMemberID();
   }
 
-  public void addMember() {
-    System.out.println("Create new member\n-----------------");
-    Scanner input = new Scanner(System.in);
-    System.out.print("Name: ");
-    name = input.nextLine();
-
-    //------------------ageCalulatorUsed in Payments-------------------------------
+  public void typeDOT() {
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
@@ -190,25 +185,62 @@ Member member = new Member();
     int paymentCategory = (int) memberFee.paymentCategoryCalculator();
     System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
     System.out.println(member.getAge());
+  }
 
+  public void typeDOTException() {
+    try {
+      typeDOT();
+    } catch (Exception e) {
+      wrongInput();
+      typeDOT();
+    }
+  }
 
-//----------------------------slut----------------------
+  public void typeName() {
+    System.out.print("Name: ");
+    name = input.nextLine();
+  }
 
-    System.out.print("Email: ");
-    email = input.nextLine();
-    System.out.print("Phonenumber: ");
-    phoneNumber = input.nextInt();
-    input.nextLine(); // ScannerBug fix
+  public void typeEmail() {
+    try {
+      System.out.print("Email: ");
+      email = input.nextLine();
+    } catch (Exception e) {
+      wrongInput();
+      System.out.print("Email: ");
+      email = input.nextLine();
+    }
+  }
 
-    memberID = fileHandler.loadMemberID() + 1;
+  public void typePhoneNumber() {
+    phoneNumber = 0;
+    boolean bError = true;
+    System.out.print("Phone number: ");
+    while (bError) {
+      if (input.hasNextInt()) {
+        phoneNumber = input.nextInt();
+      } else {
+        wrongInput();
+        System.out.print("Phone number: ");
+        input.next();
+        continue;
+      }
+      bError = false;
+    }
+  }
 
+  public void addMemberID() {
+    //Adds memberId
+    memberId = fileHandler.loadMemberID() + 1;
+  }
 
+  public void typeMemberStatus() {
     char active1 = 'A';
     char active2 = 'P';
     boolean answer = false;
 
     do {
-      System.out.print("Active: [A] or Passive: [P]");
+      System.out.print("Active[A] or Passive[P]: ");
       active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
         System.out.println("Active member");
@@ -217,15 +249,31 @@ Member member = new Member();
         System.out.println("Passive member");
         answer = true;
       } else {
-        System.out.println("Invalid char");
+        System.out.println("Invalid character");
       }
     }
     while (!answer);
+  }
 
+  public void wrongInput() {
+    String wrongInput = "\u001b[1;31mWRONG INPUT! - TRY AGAIN\u001b[m";
+    System.out.println(wrongInput);
+  }
 
-    input.nextLine();//Scanner bug fix
+  public void scannerBugFix() {
+    input.nextLine();
+  }
+
+  public void addMember() {
+    System.out.println("\nCreate -new member\n-----------------");
+    typeName();
+    typeDOTException();
+    typeEmail();
+    typePhoneNumber();
+    addMemberID();
+    typeMemberStatus();
+    scannerBugFix();
     saveMember();
-
   }
 
   public void saveDatabase() {
@@ -243,32 +291,31 @@ Member member = new Member();
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
     System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + memberID + "\nActive or passive: " + active);
+        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active);
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
-        createNewMember(name, age, phoneNumber, email, memberID, active, paidOrNot);
-        setMemberId(memberID);
+        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot);
+        //memberID = memberId;
         save();
         System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
 
       }
-      case "E" -> {
-        editMember(null);
-      }
-      case "D" -> {
-        System.out.println("\nDISCARDED - Nothing have been saved\n");
-
-      }
+      case "E" -> editMember(null);
+      case "D" -> System.out.println("\nDISCARDED - Nothing have been saved\n");
     }
   }
 
   public void editMember(Member member) {
     ui.printChoiceEditMember();
+    input.nextLine(); //Scanner bug fix
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
-      case "N" -> changeName(member);
+      case "N" -> {
+        changeName(member);
+        save();
+      }
       case "D" -> {
         System.out.println("Change date of birth: ");
         age = LocalDate.parse(String.valueOf(input.nextInt()));
@@ -277,25 +324,23 @@ Member member = new Member();
       }
       case "E" -> {
         changeEmail(member);
+        save();
       }
       case "P" -> {
         changePhoneNumber(member);
+        save();
       }
       case "M" -> {
         changeActiveOrPassive(member);
+        save();
       }
-      case "EXIT" -> ui.printChairmanMenu();
-      default -> {
-        System.out.println("Invalid decision");
-
-      }
+      case "EXIT" -> chairman();
+      default -> System.out.println("Invalid decision");
     }
-    save();
   }
 
   public void changeName(Member member) {
-    System.out.println("Change name: ");
-    name = input.nextLine();
+    typeName();
     if (member != null) {
       member.setName(name);
       System.out.println(member);
@@ -309,8 +354,7 @@ Member member = new Member();
   }
 
   public void changeEmail(Member member) {
-    System.out.println("Change email: ");
-    email = input.nextLine();
+    typeEmail();
     if (member != null) {
       member.setEmail(email);
       System.out.println(member);
@@ -320,9 +364,7 @@ Member member = new Member();
   }
 
   public void changePhoneNumber(Member member) {
-    System.out.println("Change phone number: ");
-    phoneNumber = input.nextInt();
-    input.nextLine(); //Scanner bug fix
+    typePhoneNumber();
     if (member != null) {
       member.setPhoneNumber(phoneNumber);
       System.out.println(member);
@@ -332,9 +374,11 @@ Member member = new Member();
   }
 
   public void changeActiveOrPassive(Member member) {
-    System.out.println("Change member status to Active: [A] or Passive: [P]: ");
+    typeMemberStatus();
+    /*System.out.print("Change member status to Active: [A] or Passive: [P]: ");
     active = input.next().toUpperCase(Locale.ROOT).charAt(0);
     input.nextLine(); //Scanner bug fix
+     */
     if (member != null) {
       member.setActiveOrPassive(active);
       System.out.println(member);
@@ -348,7 +392,7 @@ Member member = new Member();
     try {
       System.out.println("Saving the database ...");
       saveDatabase();
-      System.out.println("Saving database completed succesfully");
+      System.out.println("Saving database completed successfully");
       System.out.println("You can now exit the application");
     } catch (DatabaseException exception) {
       System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
@@ -356,10 +400,9 @@ Member member = new Member();
 
   }
 
-
   //TODO: tilføj deres kategori. og konstruktør
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
-    Member newMember = new Member (name,  member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+    Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(newMember);
     //System.out.println(member);
   }
@@ -382,39 +425,19 @@ Member member = new Member();
 
   }
 
-
   public Member findMemberById(Integer memberId) {
     for (Member member : members) {
-      if (member.getMemberID() == memberId) {
+      if (member.getMemberID().equals(memberId)) {
         return member;
       }
     }
     return null;
   }
 
-  public Member searchMember(String name) {
-    Member member = findMemberByName(name);
-    if (member == null) {
-      return null;
-    } else {
-      return member;
-    }
-  }
-
-  public Member findMemberByName(String name) {
-    for (Member member : members) {
-      if (member.getName().equalsIgnoreCase(name)) {
-        return member;
-      }
-    }
-    return null;
-  }
-
-  //TODO Make search more flexible
   public ArrayList<Member> findMemberByName2(String name) {
     searchedForMembers.clear();
     for (Member member : members) {
-      if (member.getName().equalsIgnoreCase(name)) {
+      if (member.getName().toLowerCase().contains(name)) {
         searchedForMembers.add(member);
       }
     }
@@ -434,5 +457,3 @@ Member member = new Member();
     System.exit(0);
   }
 }
-
-
