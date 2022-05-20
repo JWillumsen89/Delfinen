@@ -187,8 +187,8 @@ Member member = new Member();
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
     member.calculateAge(temp);
-    int result = (int) memberFee.paymentCategoryCalculator();
-    System.out.println(result); //TODO: skal slettes, kun til test(linjen)
+    int paymentCategory = (int) memberFee.paymentCategoryCalculator();
+    System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
     System.out.println(member.getAge());
 
 
