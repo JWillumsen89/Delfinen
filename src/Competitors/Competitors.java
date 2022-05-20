@@ -17,7 +17,9 @@ public class Competitors extends Member {
                        int memberID,
                        char activeOrPassive,
                        char paidOrNot,
-                       ArrayList<Discipline>disciplines,
+                       String seniority,
+                        int result,
+                        ArrayList<Discipline>disciplines,
                        ArrayList<TrainingScore>trainingScores,
                        ArrayList<Competition>competitions) {
 

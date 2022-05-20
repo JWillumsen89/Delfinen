@@ -13,15 +13,19 @@ public class Member {
   private String paid = "PAID";
   private String notPaid = "NOT PAID";
 
+
   private LocalDate dateOfBirth;
 
   private Integer memberID;
   public int age;
   private int phoneNumber;
+  private int result;
 
   private char activeOrPassive;
   private char paidOrNot;
   private double memberCategory;
+  private String seniority;
+
 
   private ArrayList<Member> members;
   private ArrayList<Member> restance;
@@ -37,6 +41,8 @@ public class Member {
     this.activeOrPassive = activeOrPassive;
     this.paidOrNot = paidOrNot;
     this.memberCategory = memberCategory;
+    this.seniority = seniority;
+    this.result = result;
 
   }
 
@@ -102,6 +108,22 @@ public class Member {
 
   public char getPaidOrNot() {
     return paidOrNot;
+  }
+
+  public int getResult() {
+    return result;
+  }
+
+  public void setResult(int result) {
+    this.result = result;
+  }
+
+  public String getSeniority() {
+    return seniority;
+  }
+
+  public void setSeniority(String seniority) {
+    this.seniority = seniority;
   }
 
   @Override

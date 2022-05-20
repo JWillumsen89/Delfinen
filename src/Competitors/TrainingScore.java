@@ -2,6 +2,7 @@ package Competitors;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import Competitors.Competition;
 
 public class TrainingScore implements Comparable<TrainingScore> {
 

@@ -1,5 +1,6 @@
 package Filehandler;
 
+import Competitors.Discipline;
 import Members.Member;
 
 
@@ -62,6 +63,7 @@ public class FileHandler {
     char paidOrNot = input.next().charAt(0);
 
 
+
     Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
 
     return member;
@@ -83,8 +85,6 @@ public class FileHandler {
     out.print(";");
     out.print(member.getPaidOrNot());
     out.print("\n");
-
-
   }
 
   public void saveMemberID(Integer id) {

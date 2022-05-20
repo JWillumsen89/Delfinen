@@ -7,6 +7,7 @@ import Members.Member;
 import UI.UserInterface;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -16,6 +17,10 @@ public class Controller {
   private String name;
   private String email;
 
+  private String seniority;
+  private int ageAgain;
+  private int result;
+
 
   FileHandler fileHandler = new FileHandler();
 
@@ -23,6 +28,7 @@ public class Controller {
   //   private LocalDate dateOfBirth;
   private LocalDate age;
   private int phoneNumber;
+
 
   private char active;
   //TODO Delete??
@@ -182,9 +188,11 @@ public class Controller {
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
     member.calculateAge(temp);
-    int result = (int) memberFee.paymentCategoryCalculator();
+    result = (int) memberFee.paymentCategoryCalculator();
+    seniority = memberFee.seniorityCategory();
     System.out.println(result); //TODO: skal slettes, kun til test(linjen)
     System.out.println(member.getAge());
+    System.out.println(seniority);
   }
 
   public void typeDOTException() {
@@ -263,6 +271,19 @@ public class Controller {
   public void scannerBugFix() {
     input.nextLine();
   }
+  public String memberSeniority(){
+    if (member.getAge() <=60) {
+      seniority = "Senior gold";
+    }
+    else if (member.getAge() <= 18) {
+      seniority = "Senior";
+    }
+    else {
+      seniority = "Junior";
+    }
+    return seniority;
+  }
+
 
   public void addMember() {
     System.out.println("\nCreate -new member\n-----------------");
@@ -274,7 +295,14 @@ public class Controller {
     typeMemberStatus();
     scannerBugFix();
     saveMember();
+
+    //memberSeniority();
+    memberFee.seniorityCategory();
+
+
   }
+
+
 
   public void saveDatabase() {
     FileHandler fileHandler = new FileHandler();
@@ -287,16 +315,15 @@ public class Controller {
   }
 
   public void saveMember() {
-
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
-    System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active);
+    System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nAge: " +member.getAge()+ "\nEmail: " + email + "\nPhone number: "
+        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + "\nMember category: "+seniority +"\nSubscription: "+result );
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
-        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot);
+        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot,seniority,result);
         //memberID = memberId;
         save();
         System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
@@ -401,7 +428,7 @@ public class Controller {
   }
 
   //TODO: tilføj deres kategori. og konstruktør
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot,String seniority,int result) {
     Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
     members.add(newMember);
     //System.out.println(member);
