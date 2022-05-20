@@ -17,11 +17,12 @@ public class Competitors extends Member {
                        int memberID,
                        char activeOrPassive,
                        char paidOrNot,
+                       double paymentCategory,
                        ArrayList<Discipline>disciplines,
                        ArrayList<TrainingScore>trainingScores,
                        ArrayList<Competition>competitions) {
 
-        super(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+        super(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
         setCompetitions(competitions);
         setDisciplines(disciplines);
         setTrainingScores(trainingScores);
@@ -34,8 +35,9 @@ public class Competitors extends Member {
                        int memberID,
                        char activeOrPassive,
                        char paidOrNot,
+                       double paymentCategory,
                        ArrayList<Discipline> disciplines) {
-        super(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+        super(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
         setDisciplines(disciplines);
     }
 // ----------------------------------SETTER--------------------------------------------

@@ -34,7 +34,7 @@ public class FileHandler {
   public void saveMembersToFile(ArrayList<Member> members) {
     try {
       PrintStream out = new PrintStream(fileName);
-      out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N)");
+      out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory");
       for (Member member : members) {
         writeMember(out, member);
       }
@@ -58,9 +58,10 @@ public class FileHandler {
     Integer memberID = input.nextInt();
     char activeOrPassive = input.next().charAt(0);
     char paidOrNot = input.next().charAt(0);
+    double paymentCategory = input.nextDouble();
 
 
-    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot,paymentCategory);
 
     return member;
   }
@@ -80,7 +81,10 @@ public class FileHandler {
     out.print(member.getActiveOrPassive());
     out.print(";");
     out.print(member.getPaidOrNot());
+    out.print(";");
+    out.print(member.getPaymentCategory());
     out.print("\n");
+
 
 
   }

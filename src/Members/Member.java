@@ -21,14 +21,14 @@ public class Member {
 
   private char activeOrPassive;
   private char paidOrNot;
-  private double memberCategory;
+  private double paymentCategory;
 
   private ArrayList<Member> members;
   private ArrayList<Member> restance;
 
   //TODO: add double memberCategory
   //Constructors
-  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
+  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     this.name = name;
     this.age = age;
     this.phoneNumber = phoneNumber;
@@ -36,7 +36,7 @@ public class Member {
     this.memberID = memberID;
     this.activeOrPassive = activeOrPassive;
     this.paidOrNot = paidOrNot;
-    this.memberCategory = memberCategory;
+    this.paymentCategory = paymentCategory;
 
   }
 
@@ -102,6 +102,10 @@ public class Member {
 
   public char getPaidOrNot() {
     return paidOrNot;
+  }
+
+  public double getPaymentCategory(){
+    return paymentCategory;
   }
 
   @Override

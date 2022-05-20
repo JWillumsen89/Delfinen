@@ -23,6 +23,7 @@ public class Controller {
   //   private LocalDate dateOfBirth;
   private LocalDate age;
   private int phoneNumber;
+  private  double paymentCategory;
 
   private char active;
   //TODO Delete??
@@ -193,7 +194,7 @@ public class Controller {
   }
 
   public void paymentCategory(double resultAge){
-    double paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
+     paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
     System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
   }
 
@@ -306,7 +307,7 @@ public class Controller {
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
-        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot);
+        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory);
         //memberID = memberId;
         save();
         System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
@@ -411,8 +412,8 @@ public class Controller {
   }
 
   //TODO: tilføj deres kategori. og konstruktør
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
-    Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
+    Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
     members.add(newMember);
     //System.out.println(member);
   }
