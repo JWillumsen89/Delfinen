@@ -1,10 +1,12 @@
 package Finance;
 
+import Members.Member;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Scanner;
 
-public class MembersFee {
+public class MembersFee extends Member {
   //Member member = new Member();
 
   private int junior;

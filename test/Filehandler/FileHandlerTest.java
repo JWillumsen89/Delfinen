@@ -1,5 +1,6 @@
-package Filehandler;
+package test.Filehandler;
 
+import Filehandler.FileHandler;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
