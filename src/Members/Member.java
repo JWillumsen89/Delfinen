@@ -41,7 +41,7 @@ public class Member {
   public int calculateAge(LocalDate newAge) {
     LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
     if (newAge != null) {
-// gem fødselsdag under member som attribut
+// gem fødselsdag under member som attribute
 
       age = Period.between(newAge, curDate).getYears();
       return age;

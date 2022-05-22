@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
+
 public class Controller {
 
   private String name;
   private String email;
-
+  private String choice;
 
   private int phoneNumber;
   private double paymentCategory;
@@ -23,6 +24,10 @@ public class Controller {
   private char active;
 
   private LocalDate age;
+
+  boolean programRunning;
+  boolean intError;
+  boolean correctInput = false;
 
   Scanner input = new Scanner(System.in);
 
@@ -34,17 +39,15 @@ public class Controller {
   MembersFee memberFee = new MembersFee();
   Member member = new Member();
 
-
   private ArrayList<Member> members = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
-
 
   //CHAIRMAN
   public void addMember() {
     System.out.println("\nCreate new member\n-----------------");
     typeName();
     typeDOTException();
-    typeEmail();
+    typeEmailError();
     typePhoneNumber();
     addMemberID();
     typeMemberStatus();
@@ -87,7 +90,7 @@ public class Controller {
 
   public void chairman() {
     ui.printChairmanMenu();
-    String choice = ui.readChairmanUi();
+    choice = ui.readChairmanUi();
     switch (choice) {
       case "0" -> start();
       case "1" -> addMember();
@@ -132,10 +135,13 @@ public class Controller {
 
   }
 
+  public void paymentCategory(double resultAge) {
+    paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
+    System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
+  }
+
   public Member pickAMember(int memberID) {
-
     Member member = findMemberById(memberID);
-
     if (member != null) {
       System.out.println(member);
       return member;
@@ -193,7 +199,7 @@ public class Controller {
 
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
-    String choice = input.nextLine();
+    choice = input.nextLine();
     switch (choice) {
       case "0" -> chairman();
       case "1" -> removeMember();
@@ -207,40 +213,40 @@ public class Controller {
   }
 
   public void typeDOT() {
+
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
     double resultAge = member.calculateAge(temp);
     paymentCategory(resultAge);
-
-
     System.out.println(member.getAge());
-
-
-  }
-
-  public void paymentCategory(double resultAge) {
-    paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
-    System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
+    correctInput = true;
   }
 
   public void typeDOTException() {
+    while (!correctInput) {
     try {
       typeDOT();
     } catch (Exception e) {
-      wrongInput();
-      typeDOT();
+        wrongInput();
+      }
     }
   }
 
   public void typeEmail() {
-    try {
-      System.out.print("Email: ");
-      email = input.nextLine();
-    } catch (Exception e) {
+
+    System.out.print("Email: ");
+    email = input.nextLine();
+  }
+
+  public void typeEmailError() {
+
+    String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
+
+    typeEmail();
+    while (!email.matches(regex)) {
       wrongInput();
-      System.out.print("Email: ");
-      email = input.nextLine();
+      typeEmail();
     }
   }
 
@@ -253,53 +259,56 @@ public class Controller {
       System.out.print("Active[A] or Passive[P]: ");
       active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
-        System.out.println("Active member");
+        //System.out.println("Active member");
         answer = true;
       } else if (active == active2) {
-        System.out.println("Passive member");
+        //System.out.println("Passive member");
         answer = true;
       } else {
-        System.out.println("Invalid character");
+        wrongInput();
       }
     }
     while (!answer);
   }
 
   public void typeName() {
-    System.out.print("Name: ");
+    System.out.print("Enter Name: ");
     name = input.nextLine();
+    while (!name.matches("^[a-zA-Z ]*$")) {
+      wrongInput();
+      System.out.print("Please enter a valid name!: ");
+      name = input.nextLine();
+    }
   }
 
   public void typePhoneNumber() {
     phoneNumber = 0;
-    boolean bError = true;
+    intError = true;
     System.out.print("Phone number: ");
-    while (bError) {
+    while (intError) {
       if (input.hasNextInt()) {
         phoneNumber = input.nextInt();
       } else {
         wrongInput();
-        System.out.print("Phone number: ");
+        System.out.print("Please enter a valid phone number: ");
         input.next();
         continue;
       }
-      bError = false;
+      intError = false;
     }
   }
 
-
-  //TODO: ADD their category and constructor
+  //TODO: Add their category and constructor
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
     members.add(newMember);
-    //System.out.println(member);
   }
 
   public void removeMember() {
     ui.printRemoveMember();
     memberId = 0;
-    boolean bError = true;
-    while (bError) {
+    intError = true;
+    while (intError) {
       if (input.hasNextInt()) {
         memberId = input.nextInt();
       } else {
@@ -308,7 +317,7 @@ public class Controller {
         input.next();
         continue;
       }
-      bError = false;
+      intError = false;
     }
     scannerBugFix();
 
@@ -334,7 +343,7 @@ public class Controller {
 
   public void cashier() {
     ui.printCashierMenu();
-    String choice = input.nextLine();
+    choice = input.nextLine();
     switch (choice) {
       //case 1 -> missingPayments();
       case "2" -> changeMemberFees();
@@ -442,8 +451,8 @@ public class Controller {
   public void start() {
 
     ui.displayWelcomeMessage();
-    String choice = ui.mainMenu();
-    while (true) {
+    choice = ui.mainMenu();
+    while (programRunning) {
       switch (choice) {
         case "0" -> exit();
         case "1" -> chairman();
