@@ -2,16 +2,11 @@ package Members;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 
 public class Member {
 
-  private String active = "ACTIVE";
   private String email;
   private String name;
-  private String notPaid = "NOT PAID";
-  private String paid = "PAID";
-  private String passive = "PASSIVE";
 
   public int age;
   private int phoneNumber;
@@ -25,9 +20,6 @@ public class Member {
   private Integer memberID;
 
   private double paymentCategory;
-
-  private ArrayList<Member> members;
-  private ArrayList<Member> restance;
 
   //Constructors
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
@@ -106,21 +98,25 @@ public class Member {
     return paidOrNot;
   }
 
-  public double getPaymentCategory(){
+  public double getPaymentCategory() {
     return paymentCategory;
   }
 
   @Override
   public String toString() {
 
+    String active = "ACTIVE";
+    String paid = "PAID";
     if (activeOrPassive == 'A' && paidOrNot == 'P') {
       return
           String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
     }
+    String notPaid = "NOT PAID";
     if (activeOrPassive == 'A' && paidOrNot == 'N') {
       return
           String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, notPaid, paymentCategory, "dkk");
     }
+    String passive = "PASSIVE";
     if (activeOrPassive == 'P' && paidOrNot == 'P') {
       return
           String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, passive, paid, paymentCategory, "dkk");

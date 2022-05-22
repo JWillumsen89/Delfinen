@@ -6,7 +6,10 @@ import java.util.Scanner;
 
 public class UserInterface {
 
+  private String choice;
+
   MembersFee membersFee = new MembersFee();
+  Scanner input = new Scanner(System.in);
 
   public void displayWelcomeMessage() {
     System.out.println("\nWelcome to DELFIN SVØMMEKLUB\n");
@@ -23,9 +26,8 @@ public class UserInterface {
                         
         0) Exit application
         """);
-    Scanner input = new Scanner(System.in);
     System.out.print("Pick a menu: ");
-    String choice = input.nextLine();
+    choice = input.nextLine();
 
     return choice;
   }
@@ -79,7 +81,7 @@ public class UserInterface {
 
   public void printChoseToChangeFees() {
     //CashierMenu cashierMenu = new CashierMenu();
-    System.out.println("---------------Change  Delfin Svømmeklub medlems fees------------------------\n");
+    System.out.println("---------------Change Delfin Svømmeklub membership fees------------------------\n");
     System.out.print("Junior:............" + membersFee.fees[0] + ",- kr. Type 1\n");
     System.out.print("Senior:........... " + membersFee.fees[1] + ",- kr. Type 2\n");
     System.out.print("Senior Gold:...... " + membersFee.fees[2] + " % Type 3\n");
@@ -125,8 +127,7 @@ public class UserInterface {
   }
 
   public String readChairmanUi() {
-    Scanner input = new Scanner(System.in);
-    String choice = input.nextLine();
+    choice = input.nextLine();
 
     return choice;
   }

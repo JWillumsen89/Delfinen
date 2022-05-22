@@ -18,11 +18,9 @@ public class Controller {
 
 
   private int phoneNumber;
-  private  double paymentCategory;
+  private double paymentCategory;
 
   private char active;
-
-  private Member member1 = null;
 
   private LocalDate age;
 
@@ -38,7 +36,7 @@ public class Controller {
 
 
   private ArrayList<Member> members = new ArrayList<>();
-  private ArrayList<Member> searchedForMembers = new ArrayList<>();
+  private final ArrayList<Member> searchedForMembers = new ArrayList<>();
 
 
   //CHAIRMAN
@@ -111,7 +109,7 @@ public class Controller {
       case "D" -> {
         System.out.println("Change date of birth: ");
         age = LocalDate.parse(String.valueOf(input.nextInt()));
-        input.nextLine(); //Scanner bug fix
+        scannerBugFix();
         saveMember();
       }
       case "E" -> changeEmail(member);
@@ -185,7 +183,7 @@ public class Controller {
       if (memberID == 0) {
         System.out.println("\nNo changes have been made.");
       } else {
-        member1 = pickAMember(memberID);
+        Member member1 = pickAMember(memberID);
         searchMemberMenu(member1);
       }
     } else {
@@ -196,7 +194,6 @@ public class Controller {
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
     String choice = input.nextLine();
-
     switch (choice) {
       case "0" -> chairman();
       case "1" -> removeMember();
@@ -217,16 +214,14 @@ public class Controller {
     paymentCategory(resultAge);
 
 
-
-
     System.out.println(member.getAge());
 
 
   }
 
-  public void paymentCategory(double resultAge){
-     paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
-    System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
+  public void paymentCategory(double resultAge) {
+    paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
+    System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
   }
 
   public void typeDOTException() {
@@ -293,7 +288,7 @@ public class Controller {
   }
 
 
-  //TODO: tilføj deres kategori. og konstruktør
+  //TODO: ADD their category and constructor
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
     members.add(newMember);
@@ -339,30 +334,25 @@ public class Controller {
 
   public void cashier() {
     ui.printCashierMenu();
-    Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
-    while (choice < 0 || choice > 5) {
-      System.out.println("Only values 0-4 allowed");
-      choice = input.nextInt();
-    }
-
+    String choice = input.nextLine();
     switch (choice) {
       //case 1 -> missingPayments();
-      case 2 -> changeMemberFees();
+      case "2" -> changeMemberFees();
       //case 3 -> seeAllPayments();
-      case 4 -> ui.printMembersFees();
-      case 5 -> exit();
-      case 0 -> start();
-
-
+      case "4" -> ui.printMembersFees();
+      case "5" -> exit();
+      case "0" -> start();
+      default -> {
+        wrongInput();
+        cashier();
+      }
     }
   }
 
   public void changeMemberFees() {
     ui.printChoseToChangeFees();
-    Scanner sc = new Scanner(System.in);
-    int feeToChange = sc.nextInt();
-    int newMemberFee = sc.nextInt();
+    int feeToChange = input.nextInt();
+    int newMemberFee = input.nextInt();
     for (int i = 0; i < memberFee.fees.length; i++) {
       memberFee.fees[i] = feeToChange;
       if (memberFee.fees[i] == feeToChange) {
