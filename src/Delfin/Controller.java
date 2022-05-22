@@ -18,7 +18,7 @@ public class Controller {
 
 
   private int phoneNumber;
-  private  double paymentCategory;
+  private double paymentCategory;
 
   private char active;
 
@@ -217,15 +217,13 @@ public class Controller {
     paymentCategory(resultAge);
 
 
-
-
     System.out.println(member.getAge());
 
 
   }
 
-  public void paymentCategory(double resultAge){
-     paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
+  public void paymentCategory(double resultAge) {
+    paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
     System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
   }
 
@@ -475,18 +473,28 @@ public class Controller {
         System.out.println(member.toString());
       }
     }
-    System.out.println("\nThe number of members in the list: " + restance.size() + "\n");
+    System.out.println("\nThe number of members that have restance is: " + restance.size() + "\n");
   }
 
   public void seeAllPayments() {
     double totalPayment = 0.0;
     for (Member member : members) {
       if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {
-        totalPayment = +member.getPaymentCategory();
+        totalPayment += member.getPaymentCategory();
         System.out.println(member.toString());
       }
     }
-    System.out.println("\n The total fees actually paid by activ members is: " + totalPayment + "\n");
+    System.out.println("\n The total income from activ members this sesson is: " + totalPayment + ",- kr.\n");
+  }
+
+  //TODO: blir ikke brugt. vil ahve denne til at knytte sig til payments.
+  @Override
+  public String toString() {
+    return "Payments{" +
+        "Name: '" + name + '\'' +
+        ", Member ID: " + memberId + '\'' +
+        ", Member fee: " + paymentCategory +
+        '}';
   }
 }
 

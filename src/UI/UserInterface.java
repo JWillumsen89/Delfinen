@@ -34,10 +34,10 @@ public class UserInterface {
     System.out.println("""
         Cashier Menu
         ---------
-        1) See Missing payments
-        2) Change Members fees
-        3) See all payments
-        4) See members fees
+        1) List of all in arrears
+        2) Change membership fees
+        3) Total income for this season(Activ memebers)
+        4) See our membership fees
         5) Exit program
                                 
         0) Return to main
