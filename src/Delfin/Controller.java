@@ -1,11 +1,13 @@
 package Delfin;
 
+import Colors.FontColors;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
 import Members.Member;
 import UI.UserInterface;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -15,7 +17,6 @@ public class Controller {
 
   private String name;
   private String email;
-  private String choice;
 
   private int phoneNumber;
   private double paymentCategory;
@@ -91,7 +92,7 @@ public class Controller {
 
   public void chairman() {
     ui.printChairmanMenu();
-    choice = ui.readChairmanUi();
+    String choice = ui.readChairmanUi();
     switch (choice) {
       case "0" -> start();
       case "1" -> addMember();
@@ -121,7 +122,7 @@ public class Controller {
       case "M" -> changeActiveOrPassive(member);
       case "EXIT" -> chairman();
       default -> {
-        System.out.println("Invalid decision");
+        wrongInput();
         editMember(member);
       }
     }
@@ -156,19 +157,19 @@ public class Controller {
 
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
-    System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active);
+    System.out.println(FontColors.CYAN + "\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
+        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + FontColors.RESET);
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
         createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory);
         save();
-        System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
+        System.out.println(FontColors.BLUE + "\nMEMBER HAS BEEN SAVED!!\n" + FontColors.RESET);
 
       }
       case "E" -> editMember(null);
-      case "D" -> System.out.println("\nDISCARDED - Nothing have been saved\n");
+      case "D" -> System.out.println(FontColors.RED + "\nDISCARDED - Nothing have been saved\n" + FontColors.RESET);
     }
   }
 
@@ -200,7 +201,7 @@ public class Controller {
 
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
-    choice = input.nextLine();
+    String choice = input.nextLine();
     switch (choice) {
       case "0" -> chairman();
       case "1" -> removeMember();
@@ -226,9 +227,9 @@ public class Controller {
 
   public void typeDOTException() {
     while (!correctInput) {
-    try {
-      typeDOT();
-    } catch (Exception e) {
+      try {
+        typeDOT();
+      } catch (Exception e) {
         wrongInput();
       }
     }
@@ -237,7 +238,7 @@ public class Controller {
   public void typeEmail() {
 
     System.out.print("Email: ");
-    email = input.nextLine();
+    email = input.nextLine().toUpperCase();
   }
 
   public void typeEmailError() {
@@ -260,10 +261,8 @@ public class Controller {
       System.out.print("Active[A] or Passive[P]: ");
       active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
-        //System.out.println("Active member");
         answer = true;
       } else if (active == active2) {
-        //System.out.println("Passive member");
         answer = true;
       } else {
         wrongInput();
@@ -274,11 +273,11 @@ public class Controller {
 
   public void typeName() {
     System.out.print("Enter Name: ");
-    name = input.nextLine();
+    name = input.nextLine().toUpperCase();
     while (!name.matches("^[a-zA-Z ]*$")) {
       wrongInput();
       System.out.print("Please enter a valid name!: ");
-      name = input.nextLine();
+      name = input.nextLine().toUpperCase();
     }
   }
 
@@ -344,7 +343,7 @@ public class Controller {
 
   public void cashier() {
     ui.printCashierMenu();
-    choice = input.nextLine();
+    String choice = input.nextLine();
     switch (choice) {
       //case 1 -> missingPayments();
       case "2" -> changeMemberFees();
@@ -390,14 +389,13 @@ public class Controller {
   public void save() {
 
     try {
-      System.out.println("Saving the database ...");
+      System.out.println(FontColors.BLUE + "Saving the database ...");
       saveDatabase();
       System.out.println("Saving database completed successfully");
-      System.out.println("You can now exit the application");
+      System.out.println("You can now exit the application" + FontColors.RESET);
     } catch (DatabaseException exception) {
-      System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
+      System.out.println(FontColors.RED + "ERROR: Could not save file" + FontColors.RESET);
     }
-
   }
 
   public void saveDatabase() {
@@ -441,7 +439,7 @@ public class Controller {
   }
 
   public void wrongInput() {
-    String wrongInput = "\u001b[1;31mWRONG INPUT! - PLEASE TRY AGAIN\u001b[m";
+    String wrongInput = FontColors.RED + "WRONG INPUT! - PLEASE TRY AGAIN" + FontColors.RESET;
     System.out.println(wrongInput);
   }
 
@@ -452,7 +450,7 @@ public class Controller {
   public void start() {
 
     ui.displayWelcomeMessage();
-    choice = ui.mainMenu();
+    String choice = ui.mainMenu();
     while (programRunning) {
       switch (choice) {
         case "0" -> exit();
