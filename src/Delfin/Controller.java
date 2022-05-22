@@ -3,6 +3,7 @@ package Delfin;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
+import Finance.Payments;
 import Members.Member;
 import UI.UserInterface;
 
@@ -338,6 +339,7 @@ public class Controller {
   //CASHIER
 
   public void cashier() {
+    Payments payments = new Payments();
     ui.printCashierMenu();
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
@@ -347,7 +349,7 @@ public class Controller {
     }
 
     switch (choice) {
-      //case 1 -> missingPayments();
+      case 1 -> payments.missingPayments();
       case 2 -> changeMemberFees();
       //case 3 -> seeAllPayments();
       case 4 -> ui.printMembersFees();

@@ -1,31 +1,42 @@
 package Finance;
 
-import Delfin.Main;
+import Delfin.Controller;
 import Members.Member;
 import UI.UserInterface;
 
 import java.util.ArrayList;
-/*
+
 public class Payments {
-  MembersFee membersFee = new MembersFee();
-  Member members = new Member();
+  //MembersFee membersFee = new MembersFee();
+  //Member members = new Member();
+  //UserInterface ui = new UserInterface();
+
+  ArrayList<Member> restance = new ArrayList<>();
+
+  public int getMemberCount() {
+    return restance.size();
+  }
 
 
-  UserInterface ui = new UserInterface();
-  Main app = new Main();
-
-  public void missingPayments(){
-    ArrayList<Member> restance = new ArrayList<>();
-    for (Member member : app.getMembers()) {
+  //TODO: MADS det er denne, som skal hente missing payments
+  public void missingPayments() {
+    Controller contoll = new Controller();
+    for (Member member : contoll.getAllMembers()) {
       if (member.getPaidOrNot() == 'N') {
         restance.add(member);
         System.out.println(member);
-        System.out.println("\nThe number of members in the list: " + app.getMemberCount() + "\n");
+        System.out.println("\nThe number of members in the list: " + getMemberCount() + "\n");
+        contoll.cashier();
+      } else
+        System.out.println("There is no memebers in restance");
+        contoll.cashier();
       }
     }
   }
 
- */
+
+
+
 
 
 
@@ -72,7 +83,7 @@ public class Payments {
     }
   }
 
-
+//TODO MADS: og denne skal give hele inetjeningen. og abre print på skærmen. begge dele ud fra arraylisten der ligger i  controlleren som hedder members
 
   void sessonTotal() {
     ArrayList<Member> sessonPayments = new ArrayList<>();
