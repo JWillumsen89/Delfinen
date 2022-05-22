@@ -175,27 +175,31 @@ public class Controller {
 
   public void searchMember() {
 
-    System.out.print("\nSEARCH MEMBER - Type name or part of name: ");
+    System.out.print("\nSEARCH MEMBER - Type [0] to return to menu or type member name/part of name: ");
     String memberName = input.nextLine().toLowerCase(Locale.ROOT);
-    System.out.println(" ");
 
-    ArrayList<Member> members = findMemberByName2(memberName);
-    if (members.size() != 0) {
-      for (Member member : members) {
-        System.out.println(member);
-      }
-      System.out.print("\nType [0] to return to chairman menu or select a member by, ID number, that you want to edit: ");
-      int memberID = input.nextInt();
-      scannerBugFix();
-      System.out.println();
-      if (memberID == 0) {
-        System.out.println("\nNo changes have been made.");
-      } else {
-        Member member1 = pickAMember(memberID);
-        searchMemberMenu(member1);
-      }
+    if (memberName.equals("0")) {
+      chairman();
     } else {
-      System.out.println("The member could not be found");
+      ArrayList<Member> members = findMemberByName2(memberName);
+      if (members.size() != 0) {
+        for (Member member : members) {
+          System.out.println(member);
+        }
+        System.out.print("\nType [0] to return to chairman menu or select a member by, ID number, that you want to edit: ");
+        int memberID = input.nextInt();
+        scannerBugFix();
+        System.out.println();
+        if (memberID == 0) {
+          System.out.println("\nNo changes have been made.");
+        } else {
+          Member member1 = pickAMember(memberID);
+          searchMemberMenu(member1);
+        }
+      } else {
+        System.out.println(FontColors.RED + "The member could not be found" + FontColors.RESET);
+        searchMember();
+      }
     }
   }
 
