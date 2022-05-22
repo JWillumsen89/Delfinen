@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 
-
 public class Controller {
 
   private String name;
@@ -39,8 +38,10 @@ public class Controller {
   MembersFee memberFee = new MembersFee();
   Member member = new Member();
 
+
   private ArrayList<Member> members = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
+
 
   //CHAIRMAN
   public void addMember() {
@@ -298,7 +299,7 @@ public class Controller {
     }
   }
 
-  //TODO: Add their category and constructor
+  //TODO: ADD their category and constructor
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
     members.add(newMember);
