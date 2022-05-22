@@ -3,7 +3,6 @@ package Delfin;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
-import Finance.Payments;
 import Members.Member;
 import UI.UserInterface;
 
@@ -339,7 +338,6 @@ public class Controller {
   //CASHIER
 
   public void cashier() {
-    Payments payments = new Payments();
     ui.printCashierMenu();
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
@@ -349,9 +347,9 @@ public class Controller {
     }
 
     switch (choice) {
-      case 1 -> payments.missingPayments();
+      case 1 -> missingPayments();
       case 2 -> changeMemberFees();
-      //case 3 -> seeAllPayments();
+      case 3 -> seeAllPayments();
       case 4 -> ui.printMembersFees();
       case 5 -> exit();
       case 0 -> start();
@@ -468,4 +466,27 @@ public class Controller {
       }
     }
   }
+
+  public void missingPayments() {
+    ArrayList<Member> restance = new ArrayList<>();
+    for (Member member : members) {
+      if (member.getPaidOrNot() == 'N' & member.getActiveOrPassive() == 'A') {
+        restance.add(member);
+        System.out.println(member.toString());
+      }
+    }
+    System.out.println("\nThe number of members in the list: " + restance.size() + "\n");
+  }
+
+  public void seeAllPayments() {
+    double totalPayment = 0.0;
+    for (Member member : members) {
+      if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {
+        totalPayment = +member.getPaymentCategory();
+        System.out.println(member.toString());
+      }
+    }
+    System.out.println("\n The total fees actually paid by activ members is: " + totalPayment + "\n");
+  }
 }
+
