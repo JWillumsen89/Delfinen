@@ -18,6 +18,7 @@ public class Controller {
   private String name;
   private String email;
 
+
   private int phoneNumber;
   private double paymentCategory;
 
@@ -349,9 +350,9 @@ public class Controller {
     ui.printCashierMenu();
     String choice = input.nextLine();
     switch (choice) {
-      //case 1 -> missingPayments();
+      case "1" -> missingPayments();
       case "2" -> changeMemberFees();
-      //case 3 -> seeAllPayments();
+      case "3" -> seeAllPayments();
       case "4" -> ui.printMembersFees();
       case "5" -> exit();
       case "0" -> start();
@@ -359,6 +360,7 @@ public class Controller {
         wrongInput();
         cashier();
       }
+
     }
   }
 
@@ -467,5 +469,37 @@ public class Controller {
         }
       }
     }
+  }
+
+  public void missingPayments() {
+    ArrayList<Member> restance = new ArrayList<>();
+    for (Member member : members) {
+      if (member.getPaidOrNot() == 'N' & member.getActiveOrPassive() == 'A') {
+        restance.add(member);
+        System.out.println(member.toString());
+      }
+    }
+    System.out.println("\nThe number of members that have restance is: " + restance.size() + "\n");
+  }
+
+  public void seeAllPayments() {
+    double totalPayment = 0.0;
+    for (Member member : members) {
+      if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {
+        totalPayment += member.getPaymentCategory();
+        System.out.println(member.toString());
+      }
+    }
+    System.out.println("\n The total income from activ members this sesson is: " + totalPayment + " dkk\n");
+  }
+
+  //TODO: blir ikke brugt. vil have denne til at knytte sig til payments.
+  @Override
+  public String toString() {
+    return "Payments{" +
+        "Name: '" + name + '\'' +
+        ", Member ID: " + memberId + '\'' +
+        ", Member fee: " + paymentCategory +
+        '}';
   }
 }
