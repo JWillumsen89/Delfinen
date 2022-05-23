@@ -64,8 +64,8 @@ public class MembersFee {
     if (result >= 60) {
       category = fees[1] * 0.75;
 
-    } else {
-      //category = member.isActive() ;
+    } else if (member.getActiveOrPassive()== 'P'){
+      category = fees[3];
     }
     return category;
   }

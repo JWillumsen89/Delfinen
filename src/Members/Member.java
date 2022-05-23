@@ -52,6 +52,9 @@ public class Member {
   public void setEmail(String email) {
     this.email = email;
   }
+  public void setPaymentCategory(double paymentCategory){
+    this.paymentCategory = paymentCategory;
+  }
 
   public void setPhoneNumber(Integer phoneNumber) {
     this.phoneNumber = phoneNumber;

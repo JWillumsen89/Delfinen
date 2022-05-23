@@ -20,7 +20,7 @@ public class Controller {
 
   private int phoneNumber;
   private double paymentCategory;
-
+private int passiveMembershipFee = 500;
   private char active;
 
   private LocalDate age;
@@ -67,6 +67,13 @@ public class Controller {
     scannerBugFix();
     if (member != null) {
       member.setActiveOrPassive(active);
+      if (active == 'A'){
+        member.setPaymentCategory(memberFee.paymentCategoryCalculator(member.getAge()));
+        System.out.println(member.getPaymentCategory());
+      }
+      if (active == 'P'){
+        member.setPaymentCategory(passiveMembershipFee);
+      }
       System.out.println(member);
       save();
     } else {
@@ -181,7 +188,7 @@ public class Controller {
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
     System.out.println(FontColors.CYAN + "\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + FontColors.RESET);
+        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + "\nSeasonal membership-fee: " + paymentCategory+ " dkk"+FontColors.RESET);
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
@@ -281,7 +288,7 @@ public class Controller {
 
   public void typeMemberStatus() {
     char active1 = 'A';
-    char active2 = 'P';
+    char passive2 = 'P';
     boolean answer = false;
 
     do {
@@ -289,7 +296,8 @@ public class Controller {
       active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
         answer = true;
-      } else if (active == active2) {
+      } else if (active == passive2) {
+        paymentCategory = passiveMembershipFee;
         answer = true;
       } else {
         wrongInput();
