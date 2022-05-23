@@ -132,5 +132,6 @@ public class Member {
     }
     return
         String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
+
   }
 }

@@ -487,7 +487,7 @@ public class Controller {
     System.out.println("\n The total income from activ members this sesson is: " + totalPayment + ",- kr.\n");
   }
 
-  //TODO: blir ikke brugt. vil ahve denne til at knytte sig til payments.
+  //TODO: blir ikke brugt. vil have denne til at knytte sig til payments.
   @Override
   public String toString() {
     return "Payments{" +
