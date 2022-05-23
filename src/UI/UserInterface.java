@@ -90,6 +90,17 @@ public class UserInterface {
     System.out.println("What is the new members fee for this category?");
   }
 
+  public void printDisciplineMenu() {
+    System.out.println("""
+        1) Butterfly
+        2) Crawl
+        3) Back crawl
+        4) Breaststroke
+        5) Done adding disciplines
+        """);
+    System.out.print("Pick discipline: ");
+  }
+
   public void printMemberList() {
     System.out.println("-------------------------------------------------------MEMBER LIST-------------------------------------------------------------------");
     System.out.printf("%-4s %-30s %-35s %-10s %-16s %-8s %-9s %-5s\n", "ID", "Name", "Email", "AGE", "Phone Number", "Status", "Paid", "Membership Fee");
