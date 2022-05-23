@@ -64,8 +64,15 @@ public class Controller {
 
   public void changeActiveOrPassive(Member member) {
     typeMemberStatus();
-    member.setActiveOrPassive(active);
-    System.out.println(member);
+    scannerBugFix();
+    if (member != null) {
+      member.setActiveOrPassive(active);
+      System.out.println(member);
+      save();
+    } else {
+      saveMember();
+    }
+
   }
 
   public void changeAge() {
@@ -74,20 +81,36 @@ public class Controller {
 
   public void changeEmail(Member member) {
     typeEmail();
-    member.setEmail(email);
-    System.out.println(member);
+    if (member != null) {
+      member.setEmail(email);
+      System.out.println(member);
+      save();
+    } else {
+      saveMember();
+    }
   }
 
   public void changeName(Member member) {
     typeName();
-    member.setName(name);
-    System.out.println(member);
+    if (member != null) {
+      member.setName(name);
+      System.out.println(member);
+      save();
+    } else {
+      saveMember();
+    }
   }
 
   public void changePhoneNumber(Member member) {
     typePhoneNumber();
+    scannerBugFix();
+    if (member != null) {
     member.setPhoneNumber(phoneNumber);
-    System.out.println(member);
+      System.out.println(member);
+      save();
+    } else {
+      saveMember();
+    }
   }
 
   public void chairman() {
@@ -181,7 +204,7 @@ public class Controller {
     if (memberName.equals("0")) {
       chairman();
     } else {
-      ArrayList<Member> members = findMemberByName2(memberName);
+      ArrayList<Member> members = findMemberByName(memberName);
       if (members.size() != 0) {
         for (Member member : members) {
           System.out.println(member);
@@ -425,7 +448,7 @@ public class Controller {
     return null;
   }
 
-  public ArrayList<Member> findMemberByName2(String name) {
+  public ArrayList<Member> findMemberByName(String name) {
     searchedForMembers.clear();
     for (Member member : members) {
       if (member.getName().toLowerCase().contains(name)) {
