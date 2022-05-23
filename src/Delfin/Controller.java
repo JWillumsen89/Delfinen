@@ -350,12 +350,12 @@ public class Controller {
     ui.printCashierMenu();
     String choice = input.nextLine();
     switch (choice) {
-      case 1 -> missingPayments();
-      case 2 -> changeMemberFees();
-      case 3 -> seeAllPayments();
-      case 4 -> ui.printMembersFees();
-      case 5 -> exit();
-      case 0 -> start();
+      case "1" -> missingPayments();
+      case "2" -> changeMemberFees();
+      case "3" -> seeAllPayments();
+      case "4" -> ui.printMembersFees();
+      case "5" -> exit();
+      case "0" -> start();
       default -> {
         wrongInput();
         cashier();

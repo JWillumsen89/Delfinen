@@ -21,10 +21,6 @@ public class Member {
 
   private double paymentCategory;
 
-  //TODO: evt fjernes
-  private ArrayList<Member> members;
-  private ArrayList<Member> restance;
-
   //Constructors
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     this.name = name;
