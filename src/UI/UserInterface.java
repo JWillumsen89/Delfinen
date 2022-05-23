@@ -38,7 +38,7 @@ public class UserInterface {
         ---------
         1) List of all in arrears
         2) Change membership fees
-        3) Total income for this season(Activ memebers)
+        3) Total income for this season(Active members)
         4) See our membership fees
         5) Exit program
                                 
