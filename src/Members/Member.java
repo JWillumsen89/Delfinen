@@ -1,5 +1,7 @@
 package Members;
 
+import UI.UserInterface;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -100,7 +102,8 @@ public class Member {
 
   @Override
   public String toString() {
-
+    UserInterface ui = new UserInterface();
+    ui.printMemberList();
     String active = "ACTIVE";
     String paid = "PAID";
     if (activeOrPassive == 'A' && paidOrNot == 'P') {

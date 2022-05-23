@@ -502,6 +502,8 @@ private int passiveMembershipFee = 500;
   }
 
   public void missingPayments() {
+    ui.printMemberList();
+
     ArrayList<Member> restance = new ArrayList<>();
     for (Member member : members) {
       if (member.getPaidOrNot() == 'N' & member.getActiveOrPassive() == 'A') {
@@ -509,10 +511,12 @@ private int passiveMembershipFee = 500;
         System.out.println(member.toString());
       }
     }
+
     System.out.println("\nThe number of members that have restance is: " + restance.size() + "\n");
   }
 
   public void seeAllPayments() {
+    ui.printMemberList();
     double totalPayment = 0.0;
     for (Member member : members) {
       if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {
@@ -520,6 +524,7 @@ private int passiveMembershipFee = 500;
         System.out.println(member.toString());
       }
     }
+
     System.out.println("\n The total income from activ members this sesson is: " + totalPayment + " dkk\n");
   }
 
