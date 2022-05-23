@@ -2,11 +2,7 @@ package Finance;
 
 import Members.Member;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Scanner;
-
-public class MembersFee extends Member {
+public class MembersFee {
   //Member member = new Member();
 
   private int junior;
@@ -25,7 +21,6 @@ public class MembersFee extends Member {
     junior = juniorFee;
     senior = seniorFee;
     seniorGold = seniorGoldFee;
-    category = category;
 
 
   }
@@ -34,7 +29,7 @@ public class MembersFee extends Member {
 
   }
 
-  //-------------------------------------gette----------------------------
+  //-------------------------------------getter----------------------------
 
   public int getJunior() {
     return junior;
@@ -52,17 +47,18 @@ public class MembersFee extends Member {
     return seniorGold;
   }
 
-  public double paymentCategoryCalculator() {
+  public double paymentCategoryCalculator(double result) {
 
-    //TODO: evt swichcase?
+     Member member = new Member();
 
-    if (newAge < 18) {
+
+    if (result < 18) {
       category = fees[0];
     }
-    if (newAge >= 18) {
+    if (result>= 18) {
       category = fees[1];
     }
-    if (newAge >= 60) {
+    if (result >= 60) {
       category = fees[1] * 0.75;
 
     } else {
@@ -70,7 +66,5 @@ public class MembersFee extends Member {
     }
     return category;
   }
-
-
 
 }

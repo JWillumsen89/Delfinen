@@ -1,13 +1,13 @@
 package Delfin;
 
-import Competitors.Competitors;
-import Competitors.Discipline;
+import Colors.FontColors;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
 import Members.Member;
 import UI.UserInterface;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -18,95 +18,115 @@ public class Controller {
   private String name;
   private String email;
 
-  FileHandler fileHandler = new FileHandler();
-
-
-  //   private LocalDate dateOfBirth;
-  private LocalDate age;
   private int phoneNumber;
+  private double paymentCategory;
 
   private char active;
-  private char paidOrNot;
 
-  MembersFee memberFee = new MembersFee();
+  private LocalDate age;
+
+  boolean programRunning = true;
+  boolean intError;
+  boolean correctInput = false;
+
   Scanner input = new Scanner(System.in);
 
-Member member = new Member();
-
+  //File handler
+  FileHandler fileHandler = new FileHandler();
   private Integer memberId = fileHandler.loadMemberID();
-  private ArrayList<Member> members = new ArrayList<>();
-  private ArrayList<Member> searchedForMembers = new ArrayList<>();
+
   UserInterface ui = new UserInterface();
+  MembersFee memberFee = new MembersFee();
+  Member member = new Member();
 
 
-  public void setMemberId(Integer memberId) {
-    this.memberId = memberId;
+  private ArrayList<Member> members = new ArrayList<>();
+  private final ArrayList<Member> searchedForMembers = new ArrayList<>();
+
+
+  //CHAIRMAN
+  public void addMember() {
+    System.out.println("\nCreate new member\n-----------------");
+    typeName();
+    typeDOTException();
+    typeEmailError();
+    typePhoneNumber();
+    addMemberID();
+    typeMemberStatus();
+    scannerBugFix();
+    saveMember();
   }
 
-  //MembersFee memberFee = new MembersFee();
+  public void addMemberID() {
+    //Adds memberId
+    memberId = fileHandler.loadMemberID() + 1;
+  }
 
-  public void start() {
+  public void changeActiveOrPassive(Member member) {
+    typeMemberStatus();
+    member.setActiveOrPassive(active);
+    System.out.println(member);
+  }
 
-    ui.displayWelcomeMsg();
-    int choice = ui.mainMenu();
-    while (true) {
-      switch (choice) {
-        case 0 -> exit();
-        case 1 -> chairman();
-        case 2 -> cashier();
-        case 3 -> coaches();
-      }
-    }
+  public void changeAge() {
+
+  }
+
+  public void changeEmail(Member member) {
+    typeEmail();
+    member.setEmail(email);
+    System.out.println(member);
+  }
+
+  public void changeName(Member member) {
+    typeName();
+    member.setName(name);
+    System.out.println(member);
+  }
+
+  public void changePhoneNumber(Member member) {
+    typePhoneNumber();
+    member.setPhoneNumber(phoneNumber);
+    System.out.println(member);
   }
 
   public void chairman() {
     ui.printChairmanMenu();
-    int choice = ui.readChairmanUi();
+    String choice = ui.readChairmanUi();
     switch (choice) {
-      case 0 -> start();
-      case 1 -> addMember();
-      case 2 -> removeMember();
-      case 3 -> memberList();
-      case 4 -> searchMember();
-    }
-  }
-
-  public void cashier(){
-    ui.printCaschierMenu();
-    Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
-    while (choice < 0 || choice > 5) {
-      System.out.println("Only values 0-4 allowed");
-      choice = input.nextInt();
-    }
-
-    switch (choice) {
-      //case 1 -> missingpyments();
-      case 2 -> changeMemberFees();
-      //case 3 -> seeAllPayments();
-      case 4 -> ui.printMenmbersFees();
-      case 5 -> exit();
-      case 0 -> start();
-
-
-    }
-  }
-
-  public void changeMemberFees(){
-    ui.printChoseToChangeFees();
-    Scanner sc = new Scanner(System.in);
-    int feeToChange = sc.nextInt();
-    int newMemberFee = sc.nextInt();
-    for (int i = 0;i < memberFee.fees.length;i++){
-      memberFee.fees[i] = feeToChange;
-      if (memberFee .fees[i]== feeToChange){
-        memberFee.fees[i]=newMemberFee;
+      case "0" -> start();
+      case "1" -> addMember();
+      case "2" -> removeMember();
+      case "3" -> memberList();
+      case "4" -> searchMember();
+      default -> {
+        wrongInput();
+        chairman();
       }
     }
-    System.out.println("you have now change the fee from"+ feeToChange+" to " + newMemberFee);
-    cashier();
   }
 
+  public void editMember(Member member) {
+    ui.printChoiceEditMember();
+    String decision = input.nextLine().toUpperCase(Locale.ROOT);
+    switch (decision) {
+      case "N" -> changeName(member);
+      case "D" -> {
+        System.out.println("Change date of birth: ");
+        age = LocalDate.parse(String.valueOf(input.nextInt()));
+        scannerBugFix();
+        saveMember();
+      }
+      case "E" -> changeEmail(member);
+      case "P" -> changePhoneNumber(member);
+      case "M" -> changeActiveOrPassive(member);
+      case "EXIT" -> chairman();
+      default -> {
+        wrongInput();
+        editMember(member);
+      }
+    }
+  }
 
   public void memberList() {
     ui.printMemberList();
@@ -117,31 +137,13 @@ Member member = new Member();
 
   }
 
-  public void searchMember() {
-
-    Scanner sc = new Scanner(System.in);
-    System.out.print("SEARCH MEMBER - Type name of member: ");
-    String memberName = sc.nextLine();
-
-    ArrayList<Member> members = findMemberByName2(memberName);
-    if (members.size() != 0) {
-      for (Member member : members) {
-        System.out.println(member);
-      }
-      System.out.print("Select a member by ID number that you want to edit: ");
-      int memberID = input.nextInt();
-      Member member = pickAMember(memberID);
-      searchMemberMenu(member);
-    } else {
-      System.out.println("The member could not be found");
-
-    }
+  public void paymentCategory(double resultAge) {
+    paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
+    System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
   }
 
   public Member pickAMember(int memberID) {
-
     Member member = findMemberById(memberID);
-
     if (member != null) {
       System.out.println(member);
       return member;
@@ -151,58 +153,110 @@ Member member = new Member();
     return null;
   }
 
+  public void saveMember() {
+
+    char paidOrNot = 'N';
+    System.out.println("\nMember information:");
+    System.out.println(FontColors.CYAN + "\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
+        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + FontColors.RESET);
+    System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
+    String decision = input.nextLine().toUpperCase(Locale.ROOT);
+    switch (decision) {
+      case "Y" -> {
+        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory);
+        save();
+        System.out.println(FontColors.BLUE + "\nMEMBER HAS BEEN SAVED!!\n" + FontColors.RESET);
+
+      }
+      case "E" -> editMember(null);
+      case "D" -> System.out.println(FontColors.RED + "\nDISCARDED - Nothing have been saved\n" + FontColors.RESET);
+    }
+  }
+
+  public void searchMember() {
+
+    System.out.print("\nSEARCH MEMBER - Type [0] to return to menu or type member name/part of name: ");
+    String memberName = input.nextLine().toLowerCase(Locale.ROOT);
+
+    if (memberName.equals("0")) {
+      chairman();
+    } else {
+      ArrayList<Member> members = findMemberByName2(memberName);
+      if (members.size() != 0) {
+        for (Member member : members) {
+          System.out.println(member);
+        }
+        System.out.print("\nType [0] to return to chairman menu or select a member by, ID number, that you want to edit: ");
+        int memberID = input.nextInt();
+        scannerBugFix();
+        System.out.println();
+        if (memberID == 0) {
+          System.out.println("\nNo changes have been made.");
+        } else {
+          Member member1 = pickAMember(memberID);
+          searchMemberMenu(member1);
+        }
+      } else {
+        System.out.println(FontColors.RED + "The member could not be found" + FontColors.RESET);
+        searchMember();
+      }
+    }
+  }
+
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
-    Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
-    input.nextLine(); //Scanner bug fix
-    while (choice < 0 || choice > 3) {
-      System.out.println("Only values 0-3 allowed");
-      choice = input.nextInt();
-      //input.nextLine(); //Scannerbug
-    }
-
+    String choice = input.nextLine();
     switch (choice) {
-      case 0 -> chairman();
-      case 1 -> removeMember();
-      case 2 -> editMember(member);
-      case 3 -> searchMember();
+      case "0" -> chairman();
+      case "1" -> removeMember();
+      case "2" -> editMember(member);
+      case "3" -> searchMember();
+      default -> {
+        wrongInput();
+        searchMemberMenu(member);
+      }
     }
   }
 
-  public void loadDatabase() {
-    FileHandler fileHandler = new FileHandler();
-    members = fileHandler.loadMembersFromFile();
-    memberId = fileHandler.loadMemberID();
-  }
+  public void typeDOT() {
 
-  public void addMember() {
-    System.out.println("\nCreate -new member\n-----------------");
-    Scanner input = new Scanner(System.in);
-    System.out.print("Name: ");
-    name = input.nextLine();
-
-    //------------------ageCalulatorUsed in Payments-------------------------------
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
-    member.calculateAge(temp);
-    int result = (int) memberFee.paymentCategoryCalculator();
-    System.out.println(result); //TODO: skal slettes, kun til test(linjen)
+    double resultAge = member.calculateAge(temp);
+    paymentCategory(resultAge);
     System.out.println(member.getAge());
+    correctInput = true;
+  }
 
+  public void typeDOTException() {
+    while (!correctInput) {
+      try {
+        typeDOT();
+      } catch (Exception e) {
+        wrongInput();
+      }
+    }
+  }
 
-//----------------------------slut----------------------
+  public void typeEmail() {
 
     System.out.print("Email: ");
-    email = input.nextLine();
-    System.out.print("Phonenumber: ");
-    phoneNumber = input.nextInt();
-    input.nextLine(); // ScannerBug fix
+    email = input.nextLine().toUpperCase();
+  }
 
-    memberId = fileHandler.loadMemberID() + 1;
+  public void typeEmailError() {
 
+    String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
 
+    typeEmail();
+    while (!email.matches(regex)) {
+      wrongInput();
+      typeEmail();
+    }
+  }
+
+  public void typeMemberStatus() {
     char active1 = 'A';
     char active2 = 'P';
     boolean answer = false;
@@ -211,21 +265,141 @@ Member member = new Member();
       System.out.print("Active[A] or Passive[P]: ");
       active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
-        System.out.println("Active member");
         answer = true;
       } else if (active == active2) {
-        System.out.println("Passive member");
         answer = true;
       } else {
-        System.out.println("Invalid char");
+        wrongInput();
       }
     }
     while (!answer);
+  }
 
+  public void typeName() {
+    System.out.print("Enter Name: ");
+    name = input.nextLine().toUpperCase();
+    while (!name.matches("^[a-zA-Z ]*$")) {
+      wrongInput();
+      System.out.print("Please enter a valid name!: ");
+      name = input.nextLine().toUpperCase();
+    }
+  }
 
-    input.nextLine();//Scanner bug fix
-    saveMember();
+  public void typePhoneNumber() {
+    phoneNumber = 0;
+    intError = true;
+    System.out.print("Phone number: ");
+    while (intError) {
+      if (input.hasNextInt()) {
+        phoneNumber = input.nextInt();
+      } else {
+        wrongInput();
+        System.out.print("Please enter a valid phone number: ");
+        input.next();
+        continue;
+      }
+      intError = false;
+    }
+  }
 
+  //TODO: ADD their category and constructor
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
+    Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
+    members.add(newMember);
+  }
+
+  public void removeMember() {
+    ui.printRemoveMember();
+    memberId = 0;
+    intError = true;
+    while (intError) {
+      if (input.hasNextInt()) {
+        memberId = input.nextInt();
+      } else {
+        wrongInput();
+        ui.printRemoveMember();
+        input.next();
+        continue;
+      }
+      intError = false;
+    }
+    scannerBugFix();
+
+    Member member = findMemberById(memberId);
+    if (memberId == 0)
+      System.out.println("EXITING REMOVE MENU");
+    else if (member == null) {
+      System.out.println("The member could not be found and can't be deleted");
+    } else {
+      System.out.println("\n" + member);
+      System.out.print("\nAre you sure you want to delete this member? yes [Y] or no[N]: ");
+      String decision = input.nextLine();
+      if (decision.equalsIgnoreCase("Y")) {
+        members.remove(member);
+        System.out.println("\u001b[1;31mTHE MEMBER HAVE BEEN DELETED\u001b[m");
+        save();
+      } else
+        System.out.println("\nYOU DIDNT DELETE THE MEMBER");
+    }
+  }
+
+  //CASHIER
+
+  public void cashier() {
+    ui.printCashierMenu();
+    String choice = input.nextLine();
+    switch (choice) {
+      //case 1 -> missingPayments();
+      case "2" -> changeMemberFees();
+      //case 3 -> seeAllPayments();
+      case "4" -> ui.printMembersFees();
+      case "5" -> exit();
+      case "0" -> start();
+      default -> {
+        wrongInput();
+        cashier();
+      }
+    }
+  }
+
+  public void changeMemberFees() {
+    ui.printChoseToChangeFees();
+    int feeToChange = input.nextInt();
+    int newMemberFee = input.nextInt();
+    for (int i = 0; i < memberFee.fees.length; i++) {
+      memberFee.fees[i] = feeToChange;
+      if (memberFee.fees[i] == feeToChange) {
+        memberFee.fees[i] = newMemberFee;
+      }
+    }
+    System.out.println("you have now change the fee from" + feeToChange + " to " + newMemberFee);
+    cashier();
+  }
+
+  //COACH
+
+  public void coaches() {
+
+  }
+
+  //FILE HANDLER
+
+  public void loadDatabase() {
+    FileHandler fileHandler = new FileHandler();
+    members = fileHandler.loadMembersFromFile();
+    memberId = fileHandler.loadMemberID();
+  }
+
+  public void save() {
+
+    try {
+      System.out.println(FontColors.BLUE + "Saving the database ...");
+      saveDatabase();
+      System.out.println("Saving database completed successfully");
+      System.out.println("You can now exit the application" + FontColors.RESET);
+    } catch (DatabaseException exception) {
+      System.out.println(FontColors.RED + "ERROR: Could not save file" + FontColors.RESET);
+    }
   }
 
   public void saveDatabase() {
@@ -234,191 +408,26 @@ Member member = new Member();
     fileHandler.saveMemberID(memberId);
   }
 
-  public void coaches() {
+  //SYSTEM HANDLER
 
+  public void exit() {
+    System.out.println("\u001b[1;31mPROGRAM SHUTTING DOWN\u001b[m");
+    System.exit(0);
   }
-
-  public void saveMember() {
-
-    char paidOrNot = 'N';
-    System.out.println("\nMember information:");
-    System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active);
-    System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
-    String decision = input.nextLine().toUpperCase(Locale.ROOT);
-    switch (decision) {
-      case "Y" -> {
-        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot);
-        //memberID = memberId;
-        save();
-        System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
-
-      }
-      case "E" -> {
-        editMember(null);
-      }
-      case "D" -> {
-        System.out.println("\nDISCARDED - Nothing have been saved\n");
-
-      }
-    }
-  }
-
-  public void editMember(Member member) {
-    ui.printChoiceEditMember();
-    input.nextLine(); //Scanner bug fix
-    String decision = input.nextLine().toUpperCase(Locale.ROOT);
-    switch (decision) {
-      case "N" -> {
-        changeName(member);
-        save();
-      }
-      case "D" -> {
-        System.out.println("Change date of birth: ");
-        age = LocalDate.parse(String.valueOf(input.nextInt()));
-        input.nextLine(); //Scanner bug fix
-        saveMember();
-      }
-      case "E" -> {
-        changeEmail(member);
-        save();
-      }
-      case "P" -> {
-        changePhoneNumber(member);
-        save();
-      }
-      case "M" -> {
-        changeActiveOrPassive(member);
-        save();
-      }
-      case "EXIT" -> chairman();
-      default -> System.out.println("Invalid decision");
-    }
-  }
-
-  public void changeName(Member member) {
-    System.out.print("Change name: ");
-    name = input.nextLine();
-    if (member != null) {
-      member.setName(name);
-      System.out.println(member);
-    } else {
-      saveMember();
-    }
-  }
-
-  public void changeAge() {
-
-  }
-
-  public void changeEmail(Member member) {
-    System.out.print("Change email: ");
-    email = input.nextLine();
-    if (member != null) {
-      member.setEmail(email);
-      System.out.println(member);
-    } else {
-      saveMember();
-    }
-  }
-
-  public void changePhoneNumber(Member member) {
-    System.out.print("Change phone number: ");
-    phoneNumber = input.nextInt();
-    input.nextLine(); //Scanner bug fix
-    if (member != null) {
-      member.setPhoneNumber(phoneNumber);
-      System.out.println(member);
-    } else {
-      saveMember();
-    }
-  }
-
-  public void changeActiveOrPassive(Member member) {
-    System.out.print("Change member status to Active: [A] or Passive: [P]: ");
-    active = input.next().toUpperCase(Locale.ROOT).charAt(0);
-    input.nextLine(); //Scanner bug fix
-    if (member != null) {
-      member.setActiveOrPassive(active);
-      System.out.println(member);
-    } else {
-      saveMember();
-    }
-  }
-
-  public void save() {
-
-    try {
-      System.out.println("Saving the database ...");
-      saveDatabase();
-      System.out.println("Saving database completed succesfully");
-      System.out.println("You can now exit the application");
-    } catch (DatabaseException exception) {
-      System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
-    }
-
-  }
-
-
-  //TODO: tilføj deres kategori. og konstruktør
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
-    Member newMember = new Member (name,  member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot);
-    members.add(newMember);
-    //System.out.println(member);
-  }
-
-  public void removeMember() {
-    ui.printRemoveMember();
-    Scanner sc = new Scanner(System.in);
-    Integer memberId = sc.nextInt();
-
-    //TODO System.out.println("Are you sure tha"); are you sure?
-
-    Member member = findMemberById(memberId);
-    if (member == null) {
-      System.out.println("The member could not be found and can't be deleted");
-    } else {
-      members.remove(member);
-      System.out.println("The member has been removed");
-      save();
-    }
-
-  }
-
-
 
   public Member findMemberById(Integer memberId) {
     for (Member member : members) {
-      if (member.getMemberID() == memberId) {
+      if (member.getMemberID().equals(memberId)) {
         return member;
       }
     }
     return null;
   }
 
-  public Member searchMember(String name) {
-    Member member = findMemberByName(name);
-    if (member == null) {
-      return null;
-    } else {
-      return member;
-    }
-  }
-
-  public Member findMemberByName(String name) {
-    for (Member member : members) {
-      if (member.getName().equalsIgnoreCase(name)) {
-        return member;
-      }
-    }
-    return null;
-  }
-
-  //TODO Make search more flexible
   public ArrayList<Member> findMemberByName2(String name) {
     searchedForMembers.clear();
     for (Member member : members) {
-      if (member.getName().equalsIgnoreCase(name)) {
+      if (member.getName().toLowerCase().contains(name)) {
         searchedForMembers.add(member);
       }
     }
@@ -433,65 +442,30 @@ Member member = new Member();
     return members.size();
   }
 
+  public void wrongInput() {
+    String wrongInput = FontColors.RED + "WRONG INPUT! - PLEASE TRY AGAIN" + FontColors.RESET;
+    System.out.println(wrongInput);
+  }
 
-   public int getInt() {
-    int number = validateInt();
+  public void scannerBugFix() {
     input.nextLine();
-    return number;
   }
 
-  public void displayLn(String message) {
-    System.out.println(message);
-  }
+  public void start() {
 
-  public void displayLn(int message) {
-    System.out.println(message);
-  }
-
-  public void display(String message) {
-    System.out.print(message);
-  }
-
-  public void display(int message) {
-    System.out.print(message);
-  }
-
-  private int validateInt() {
-    while (!input.hasNextInt()) {
-      display("Invalid number");
-      input.next();
-    }
-    return input.nextInt();
-  }
-
-
-      public Discipline getDiscipline () {
-        int choice;
-
-        do {
-          choice = getInt();
-          if (choice == 1) {
-            return Discipline.BUTTERFLY;
-          } else if (choice == 2) {
-            return Discipline.CRAWL;
-          } else if (choice == 3) {
-            return Discipline.BACKCRAWL;
-          } else if (choice == 4) {
-            return Discipline.BREASTSTROKE;
-          }
-        } while (choice < 0 || choice > 5);
-        return null;
+    ui.displayWelcomeMessage();
+    String choice = ui.mainMenu();
+    while (programRunning) {
+      switch (choice) {
+        case "0" -> exit();
+        case "1" -> chairman();
+        case "2" -> cashier();
+        case "3" -> coaches();
+        default -> {
+          wrongInput();
+          start();
+        }
       }
-
-
-
-
-
-
-  public void exit() {
-    System.out.println("\u001b[1;31mPROGRAM SHUTTING DOWN\u001b[m");
-    System.exit(0);
+    }
   }
 }
-
-

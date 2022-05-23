@@ -2,32 +2,27 @@ package Members;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 
 public class Member {
 
-  private String name;
   private String email;
-  private String active = "ACTIVE";
-  private String passive = "PASSIVE";
-  private String paid = "PAID";
-  private String notPaid = "NOT PAID";
+  private String name;
 
-  private LocalDate dateOfBirth;
-
-  private Integer memberID;
   public int age;
   private int phoneNumber;
 
   private char activeOrPassive;
   private char paidOrNot;
-  private double memberCategory;
 
-  private ArrayList<Member> members;
-  private ArrayList<Member> restance;
 
-  //TODO: add double memberCategory
-  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot) {
+  private LocalDate dateOfBirth;
+
+  private Integer memberID;
+
+  private double paymentCategory;
+
+  //Constructors
+  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     this.name = name;
     this.age = age;
     this.phoneNumber = phoneNumber;
@@ -35,17 +30,18 @@ public class Member {
     this.memberID = memberID;
     this.activeOrPassive = activeOrPassive;
     this.paidOrNot = paidOrNot;
-    this.memberCategory = memberCategory;
+    this.paymentCategory = paymentCategory;
 
-    }
-    public Member(){
+  }
+
+  public Member() {
 
   }
 
   public int calculateAge(LocalDate newAge) {
     LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
     if (newAge != null) {
-// gem fødselsdag under member som attribut
+// gem fødselsdag under member som attribute
 
       age = Period.between(newAge, curDate).getYears();
       return age;
@@ -55,7 +51,6 @@ public class Member {
   }
 
   //-----------------Setter-----------------
-
 
   public void setName(String name) {
     this.name = name;
@@ -103,29 +98,35 @@ public class Member {
     return paidOrNot;
   }
 
-
+  public double getPaymentCategory() {
+    return paymentCategory;
+  }
 
   @Override
   public String toString() {
 
+    String active = "ACTIVE";
+    String paid = "PAID";
     if (activeOrPassive == 'A' && paidOrNot == 'P') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
     }
+    String notPaid = "NOT PAID";
     if (activeOrPassive == 'A' && paidOrNot == 'N') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, notPaid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, notPaid, paymentCategory, "dkk");
     }
+    String passive = "PASSIVE";
     if (activeOrPassive == 'P' && paidOrNot == 'P') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, passive, paid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, passive, paid, paymentCategory, "dkk");
     }
 
     if (activeOrPassive == 'P' && paidOrNot == 'N') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, passive, notPaid);
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, passive, notPaid, paymentCategory, "dkk");
     }
     return
-        String.format("%04d %-30s %-35s %-10d %-16d %-8s %-7s", memberID, name, email, age, phoneNumber, active, paid);
+        String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
   }
 }

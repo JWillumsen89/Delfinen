@@ -11,6 +11,6 @@ class FileHandlerTest {
   void loadMemberID() {
     FileHandler fileHandler = new FileHandler();
     Integer result = fileHandler.loadMemberID();
-    assertEquals(5,result);
+    assertEquals(12,result);
   }
 }
