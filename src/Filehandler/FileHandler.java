@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-  private String fileName = "res/MemberBase.csv";
-  private String fileNameID = "res/IDNumber.txt";
+  private final String fileName = "res/MemberBase.csv";
+  private final String fileNameID = "res/IDNumber.txt";
 
   public ArrayList<Member> loadMembersFromFile() {
 
@@ -26,7 +26,7 @@ public class FileHandler {
         members.add(member);
       }
     } catch (FileNotFoundException exception) {
-
+      System.out.println("\u001b[1;31mMEMBERLIST DID NOT GET LOADED\u001b[m");
     }
     return members;
   }
@@ -40,17 +40,13 @@ public class FileHandler {
       }
       out.close();
     } catch (FileNotFoundException exception) {
-      DatabaseException dbex = new DatabaseException();
-      throw dbex;
+      throw new DatabaseException();
     }
   }
 
   public Member readMember(String line) {
 
     Scanner input = new Scanner(line).useDelimiter(";").useLocale(Locale.ENGLISH);
-
-
-    //TODO MEMBER INPUT
     String name = input.next();
     int age = input.nextInt();
     int phoneNumber = input.nextInt();
@@ -60,10 +56,7 @@ public class FileHandler {
     char paidOrNot = input.next().charAt(0);
     double paymentCategory = input.nextDouble();
 
-
-    Member member = new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot,paymentCategory);
-
-    return member;
+    return new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
   }
 
   public void writeMember(PrintStream out, Member member) {
@@ -84,9 +77,6 @@ public class FileHandler {
     out.print(";");
     out.print(member.getPaymentCategory());
     out.print("\n");
-
-
-
   }
 
   public void saveMemberID(Integer id) {
@@ -106,13 +96,13 @@ public class FileHandler {
     try {
       File myObj = new File(fileNameID);
       Scanner myReader = new Scanner(myObj);
-      if (myReader.hasNextLine())
-        data = myReader.nextLine();
+      data = myReader.nextLine();
       myReader.close();
     } catch (FileNotFoundException e) {
       System.out.println("An error occurred.");
       e.printStackTrace();
     }
+    assert data != null;
     return Integer.parseInt(data);
   }
 }

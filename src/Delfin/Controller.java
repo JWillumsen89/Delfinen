@@ -1,11 +1,13 @@
 package Delfin;
 
+import Colors.FontColors;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
 import Members.Member;
 import UI.UserInterface;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -22,9 +24,11 @@ public class Controller {
 
   private char active;
 
-  private Member member1 = null;
-
   private LocalDate age;
+
+  boolean programRunning = true;
+  boolean intError;
+  boolean correctInput = false;
 
   Scanner input = new Scanner(System.in);
 
@@ -38,7 +42,7 @@ public class Controller {
 
 
   private ArrayList<Member> members = new ArrayList<>();
-  private ArrayList<Member> searchedForMembers = new ArrayList<>();
+  private final ArrayList<Member> searchedForMembers = new ArrayList<>();
 
 
   //CHAIRMAN
@@ -46,7 +50,7 @@ public class Controller {
     System.out.println("\nCreate new member\n-----------------");
     typeName();
     typeDOTException();
-    typeEmail();
+    typeEmailError();
     typePhoneNumber();
     addMemberID();
     typeMemberStatus();
@@ -111,7 +115,7 @@ public class Controller {
       case "D" -> {
         System.out.println("Change date of birth: ");
         age = LocalDate.parse(String.valueOf(input.nextInt()));
-        input.nextLine(); //Scanner bug fix
+        scannerBugFix();
         saveMember();
       }
       case "E" -> changeEmail(member);
@@ -119,7 +123,7 @@ public class Controller {
       case "M" -> changeActiveOrPassive(member);
       case "EXIT" -> chairman();
       default -> {
-        System.out.println("Invalid decision");
+        wrongInput();
         editMember(member);
       }
     }
@@ -134,10 +138,13 @@ public class Controller {
 
   }
 
+  public void paymentCategory(double resultAge) {
+    paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
+    System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
+  }
+
   public Member pickAMember(int memberID) {
-
     Member member = findMemberById(memberID);
-
     if (member != null) {
       System.out.println(member);
       return member;
@@ -151,52 +158,55 @@ public class Controller {
 
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
-    System.out.println("\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
-        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active);
+    System.out.println(FontColors.CYAN + "\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
+        + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + FontColors.RESET);
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
         createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory);
         save();
-        System.out.println("\nMEMBER HAS BEEN SAVED!!\n");
+        System.out.println(FontColors.BLUE + "\nMEMBER HAS BEEN SAVED!!\n" + FontColors.RESET);
 
       }
       case "E" -> editMember(null);
-      case "D" -> System.out.println("\nDISCARDED - Nothing have been saved\n");
+      case "D" -> System.out.println(FontColors.RED + "\nDISCARDED - Nothing have been saved\n" + FontColors.RESET);
     }
   }
 
   public void searchMember() {
 
-    System.out.print("\nSEARCH MEMBER - Type name or part of name: ");
+    System.out.print("\nSEARCH MEMBER - Type [0] to return to menu or type member name/part of name: ");
     String memberName = input.nextLine().toLowerCase(Locale.ROOT);
-    System.out.println(" ");
 
-    ArrayList<Member> members = findMemberByName2(memberName);
-    if (members.size() != 0) {
-      for (Member member : members) {
-        System.out.println(member);
-      }
-      System.out.print("\nType [0] to return to chairman menu or select a member by, ID number, that you want to edit: ");
-      int memberID = input.nextInt();
-      scannerBugFix();
-      System.out.println();
-      if (memberID == 0) {
-        System.out.println("\nNo changes have been made.");
-      } else {
-        member1 = pickAMember(memberID);
-        searchMemberMenu(member1);
-      }
+    if (memberName.equals("0")) {
+      chairman();
     } else {
-      System.out.println("The member could not be found");
+      ArrayList<Member> members = findMemberByName2(memberName);
+      if (members.size() != 0) {
+        for (Member member : members) {
+          System.out.println(member);
+        }
+        System.out.print("\nType [0] to return to chairman menu or select a member by, ID number, that you want to edit: ");
+        int memberID = input.nextInt();
+        scannerBugFix();
+        System.out.println();
+        if (memberID == 0) {
+          System.out.println("\nNo changes have been made.");
+        } else {
+          Member member1 = pickAMember(memberID);
+          searchMemberMenu(member1);
+        }
+      } else {
+        System.out.println(FontColors.RED + "The member could not be found" + FontColors.RESET);
+        searchMember();
+      }
     }
   }
 
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
     String choice = input.nextLine();
-
     switch (choice) {
       case "0" -> chairman();
       case "1" -> removeMember();
@@ -210,40 +220,40 @@ public class Controller {
   }
 
   public void typeDOT() {
+
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
     LocalDate temp = LocalDate.parse(age.toString());
     double resultAge = member.calculateAge(temp);
     paymentCategory(resultAge);
-
-
     System.out.println(member.getAge());
-
-
-  }
-
-  public void paymentCategory(double resultAge) {
-    paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
-    System.out.println(paymentCategory); //TODO: skal slettes, kun til test(linjen)
+    correctInput = true;
   }
 
   public void typeDOTException() {
-    try {
-      typeDOT();
-    } catch (Exception e) {
-      wrongInput();
-      typeDOT();
+    while (!correctInput) {
+      try {
+        typeDOT();
+      } catch (Exception e) {
+        wrongInput();
+      }
     }
   }
 
   public void typeEmail() {
-    try {
-      System.out.print("Email: ");
-      email = input.nextLine();
-    } catch (Exception e) {
+
+    System.out.print("Email: ");
+    email = input.nextLine().toUpperCase();
+  }
+
+  public void typeEmailError() {
+
+    String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
+
+    typeEmail();
+    while (!email.matches(regex)) {
       wrongInput();
-      System.out.print("Email: ");
-      email = input.nextLine();
+      typeEmail();
     }
   }
 
@@ -256,53 +266,54 @@ public class Controller {
       System.out.print("Active[A] or Passive[P]: ");
       active = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (active == active1) {
-        System.out.println("Active member");
         answer = true;
       } else if (active == active2) {
-        System.out.println("Passive member");
         answer = true;
       } else {
-        System.out.println("Invalid character");
+        wrongInput();
       }
     }
     while (!answer);
   }
 
   public void typeName() {
-    System.out.print("Name: ");
-    name = input.nextLine();
+    System.out.print("Enter Name: ");
+    name = input.nextLine().toUpperCase();
+    while (!name.matches("^[a-zA-Z ]*$")) {
+      wrongInput();
+      System.out.print("Please enter a valid name!: ");
+      name = input.nextLine().toUpperCase();
+    }
   }
 
   public void typePhoneNumber() {
     phoneNumber = 0;
-    boolean bError = true;
+    intError = true;
     System.out.print("Phone number: ");
-    while (bError) {
+    while (intError) {
       if (input.hasNextInt()) {
         phoneNumber = input.nextInt();
       } else {
         wrongInput();
-        System.out.print("Phone number: ");
+        System.out.print("Please enter a valid phone number: ");
         input.next();
         continue;
       }
-      bError = false;
+      intError = false;
     }
   }
 
-
-  //TODO: tilføj deres kategori. og konstruktør
+  //TODO: ADD their category and constructor
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
     members.add(newMember);
-    //System.out.println(member);
   }
 
   public void removeMember() {
     ui.printRemoveMember();
     memberId = 0;
-    boolean bError = true;
-    while (bError) {
+    intError = true;
+    while (intError) {
       if (input.hasNextInt()) {
         memberId = input.nextInt();
       } else {
@@ -311,7 +322,7 @@ public class Controller {
         input.next();
         continue;
       }
-      bError = false;
+      intError = false;
     }
     scannerBugFix();
 
@@ -337,13 +348,7 @@ public class Controller {
 
   public void cashier() {
     ui.printCashierMenu();
-    Scanner input = new Scanner(System.in);
-    int choice = input.nextInt();
-    while (choice < 0 || choice > 5) {
-      System.out.println("Only values 0-4 allowed");
-      choice = input.nextInt();
-    }
-
+    String choice = input.nextLine();
     switch (choice) {
       case 1 -> missingPayments();
       case 2 -> changeMemberFees();
@@ -351,16 +356,18 @@ public class Controller {
       case 4 -> ui.printMembersFees();
       case 5 -> exit();
       case 0 -> start();
-
+      default -> {
+        wrongInput();
+        cashier();
+      }
 
     }
   }
 
   public void changeMemberFees() {
     ui.printChoseToChangeFees();
-    Scanner sc = new Scanner(System.in);
-    int feeToChange = sc.nextInt();
-    int newMemberFee = sc.nextInt();
+    int feeToChange = input.nextInt();
+    int newMemberFee = input.nextInt();
     for (int i = 0; i < memberFee.fees.length; i++) {
       memberFee.fees[i] = feeToChange;
       if (memberFee.fees[i] == feeToChange) {
@@ -388,14 +395,13 @@ public class Controller {
   public void save() {
 
     try {
-      System.out.println("Saving the database ...");
+      System.out.println(FontColors.BLUE + "Saving the database ...");
       saveDatabase();
       System.out.println("Saving database completed successfully");
-      System.out.println("You can now exit the application");
+      System.out.println("You can now exit the application" + FontColors.RESET);
     } catch (DatabaseException exception) {
-      System.out.println("\u001b[1;31m ERROR: Could not save file\u001b[m");
+      System.out.println(FontColors.RED + "ERROR: Could not save file" + FontColors.RESET);
     }
-
   }
 
   public void saveDatabase() {
@@ -439,7 +445,7 @@ public class Controller {
   }
 
   public void wrongInput() {
-    String wrongInput = "\u001b[1;31mWRONG INPUT! - PLEASE TRY AGAIN\u001b[m";
+    String wrongInput = FontColors.RED + "WRONG INPUT! - PLEASE TRY AGAIN" + FontColors.RESET;
     System.out.println(wrongInput);
   }
 
@@ -451,7 +457,7 @@ public class Controller {
 
     ui.displayWelcomeMessage();
     String choice = ui.mainMenu();
-    while (true) {
+    while (programRunning) {
       switch (choice) {
         case "0" -> exit();
         case "1" -> chairman();
@@ -497,4 +503,3 @@ public class Controller {
         '}';
   }
 }
-
