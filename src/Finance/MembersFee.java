@@ -16,7 +16,8 @@ public class MembersFee {
 
   //---------------------------constructor-----------------------------------
 
-  public MembersFee(boolean aPmemebership, int juniorFee, int seniorFee, double seniorGoldFee, double category) {
+  /*
+  public MembersFee(boolean activPassivMemebership, int juniorFee, int seniorFee, double seniorGoldFee, double category) {
     //activMebership = aPmemebership;
     junior = juniorFee;
     senior = seniorFee;
@@ -24,6 +25,8 @@ public class MembersFee {
 
 
   }
+
+   */
 
   public MembersFee() {
 
