@@ -3,6 +3,8 @@ package Competitors;
 import Filehandler.FileHandler;
 import Members.Member;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class ManageTeams {
@@ -43,16 +45,8 @@ public class ManageTeams {
         return teams;
     }
 
-  /*  public String getDisciplines() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < disciplines.length; i++) {
-            stringBuilder.append(((i) + 1)).append(". ").append(disciplines.get(i)).append("\n");
-        }
-        return stringBuilder.toString();
 
-    }
 
-   */
 
     public void addToTeam() {
         ArrayList<Competitors> competitors = new ArrayList<>();

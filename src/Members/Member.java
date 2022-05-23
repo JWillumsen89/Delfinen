@@ -57,9 +57,6 @@ public class Member {
   //-----------------Setter-----------------
 
 
-
-  //-----------------Getter-----------------
-
   public void setName(String name) {
     this.name = name;
   }
@@ -75,6 +72,8 @@ public class Member {
   public void setActiveOrPassive(char activeOrPassive) {
     this.activeOrPassive = activeOrPassive;
   }
+
+  //-----------------Getter-----------------
 
   public String getName() {
     return name;

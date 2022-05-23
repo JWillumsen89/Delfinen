@@ -62,6 +62,8 @@ public class Competitors extends Member {
         return competitions;
     }
 
+
+
     public String getName() {
         return super.getName();
     }

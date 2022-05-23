@@ -61,7 +61,7 @@ MembersFee membersFee = new MembersFee();
     return choice;
   }
 
-  public void printCschierMenu(){
+  public void printCaschierMenu(){
     System.out.println("""
         Cashier Menu
         ---------
@@ -136,4 +136,5 @@ MembersFee membersFee = new MembersFee();
     System.out.println("Passiv Membership: " + membersFee.fees[3] + ",- kr. \n\n");
     return null;
   }
+
 }

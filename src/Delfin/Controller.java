@@ -1,5 +1,7 @@
 package Delfin;
 
+import Competitors.Competitors;
+import Competitors.Discipline;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
@@ -25,9 +27,10 @@ public class Controller {
 
   private char active;
   private char paidOrNot;
-  //MembersFee memebrsfees = new MembersFee(); //blir brugt?
-  MembersFee memberFee = new MembersFee(); //blir brugt?
+
+  MembersFee memberFee = new MembersFee();
   Scanner input = new Scanner(System.in);
+
 Member member = new Member();
 
   private Integer memberId = fileHandler.loadMemberID();
@@ -35,9 +38,6 @@ Member member = new Member();
   private ArrayList<Member> searchedForMembers = new ArrayList<>();
   UserInterface ui = new UserInterface();
 
-  public ArrayList<Member> getMembers() {
-    return members;
-  }
 
   public void setMemberId(Integer memberId) {
     this.memberId = memberId;
@@ -72,7 +72,7 @@ Member member = new Member();
   }
 
   public void cashier(){
-    ui.printCschierMenu();
+    ui.printCaschierMenu();
     Scanner input = new Scanner(System.in);
     int choice = input.nextInt();
     while (choice < 0 || choice > 5) {
@@ -386,6 +386,7 @@ Member member = new Member();
   }
 
 
+
   public Member findMemberById(Integer memberId) {
     for (Member member : members) {
       if (member.getMemberID() == memberId) {
@@ -431,6 +432,61 @@ Member member = new Member();
   public int getMemberCount() {
     return members.size();
   }
+
+
+   public int getInt() {
+    int number = validateInt();
+    input.nextLine();
+    return number;
+  }
+
+  public void displayLn(String message) {
+    System.out.println(message);
+  }
+
+  public void displayLn(int message) {
+    System.out.println(message);
+  }
+
+  public void display(String message) {
+    System.out.print(message);
+  }
+
+  public void display(int message) {
+    System.out.print(message);
+  }
+
+  private int validateInt() {
+    while (!input.hasNextInt()) {
+      display("Invalid number");
+      input.next();
+    }
+    return input.nextInt();
+  }
+
+
+      public Discipline getDiscipline () {
+        int choice;
+
+        do {
+          choice = getInt();
+          if (choice == 1) {
+            return Discipline.BUTTERFLY;
+          } else if (choice == 2) {
+            return Discipline.CRAWL;
+          } else if (choice == 3) {
+            return Discipline.BACKCRAWL;
+          } else if (choice == 4) {
+            return Discipline.BREASTSTROKE;
+          }
+        } while (choice < 0 || choice > 5);
+        return null;
+      }
+
+
+
+
+
 
   public void exit() {
     System.out.println("\u001b[1;31mPROGRAM SHUTTING DOWN\u001b[m");
