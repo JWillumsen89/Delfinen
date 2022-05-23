@@ -97,14 +97,13 @@ public class UserInterface {
 
   }
 
-  public Object printMembersFees() {
-    //for (int i = 0; i < fees.length; i++) {
+  public void printMembersFees() {
     System.out.println("-----------Current members fee pr.season-------------\n");
     System.out.println("Junior: " + membersFee.fees[0] + ",- kr. ");
     System.out.println("Senior: " + membersFee.fees[1] + ",- kr. ");
     System.out.println("Senior Gold: " + membersFee.fees[2] + " % Discount off Senior fee");
     System.out.println("Passive Membership: " + membersFee.fees[3] + ",- kr. \n\n");
-    return null;
+
   }
 
   public void printRemoveMember() {
