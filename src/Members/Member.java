@@ -1,7 +1,5 @@
 package Members;
 
-import Competitors.Discipline;
-
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -16,10 +14,7 @@ public class Member {
   private Integer memberID;
   private double paymentCategory;
 
-
-
-  private Discipline butterfly, breastStroke, backCrawl, crawl;
-
+  private String butterfly, breastStroke, backCrawl, crawl;
 
   //Constructor normal member
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
@@ -36,7 +31,7 @@ public class Member {
 
   //Competitor member
   public Member(String name, int age, Integer memberID,
-                Discipline butterfly, Discipline breastStroke, Discipline backCrawl, Discipline crawl)  {
+                String butterfly, String crawl, String backCrawl,String breastStroke) {
     this.name = name;
     this.age = age;
     this.memberID = memberID;
@@ -114,19 +109,19 @@ public class Member {
     return paymentCategory;
   }
 
-  public Discipline getButterfly() {
+  public String getButterfly() {
     return butterfly;
   }
 
-  public Discipline getBreastStroke() {
+  public String getBreastStroke() {
     return breastStroke;
   }
 
-  public Discipline getBackCrawl() {
+  public String getBackCrawl() {
     return backCrawl;
   }
 
-  public Discipline getCrawl() {
+  public String getCrawl() {
     return crawl;
   }
 

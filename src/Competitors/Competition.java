@@ -15,6 +15,7 @@ public class Competition {
 
         //------------------------Getter-------------------------
     }
+
     public String getCompetitorName() {
         return CompetitorName;
     }

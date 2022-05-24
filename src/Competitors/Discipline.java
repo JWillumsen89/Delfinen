@@ -2,21 +2,29 @@ package Competitors;
 
 public enum Discipline {
 
-    BUTTERFLY{@Override
-        public String toString() {
-            return "Butterfly";
-        }},
-    CRAWL{@Override
+  Butterfly {
+    @Override
     public String toString() {
-        return "Crawl";
-    }},
-    BACKCRAWL{@Override
+      return "Butterfly";
+    }
+  },
+  Crawl {
+    @Override
     public String toString() {
-        return "Backcrawl";
-    }},
-    BREASTSTROKE{@Override
+      return "Crawl";
+    }
+  },
+  BackCrawl {
+    @Override
     public String toString() {
-        return "Breaststroke";
-    }}
+      return "BackCrawl";
+    }
+  },
+  Breaststroke {
+    @Override
+    public String toString() {
+      return "Breaststroke";
+    }
+  }
 }
 

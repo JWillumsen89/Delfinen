@@ -8,8 +8,8 @@ public class UserInterface {
 
   private String choice;
 
-  MembersFee membersFee = new MembersFee();
-  Scanner input = new Scanner(System.in);
+  private final MembersFee membersFee = new MembersFee();
+  private final Scanner input = new Scanner(System.in);
 
   public void displayWelcomeMessage() {
     System.out.println("\nWelcome to DELFIN SVØMMEKLUB\n");

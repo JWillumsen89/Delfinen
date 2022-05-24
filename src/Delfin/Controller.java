@@ -1,7 +1,6 @@
 package Delfin;
 
 import Colors.FontColors;
-import Competitors.Discipline;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
@@ -17,7 +16,10 @@ public class Controller {
 
   private String name;
   private String email;
-
+  private String butterfly = "-";
+  private String breastStroke = "-";
+  private String backCrawl = "-";
+  private String crawl = "-";
 
   private int phoneNumber;
   private double paymentCategory;
@@ -25,34 +27,27 @@ public class Controller {
   private char active;
   private char answerCom;
 
-  private Discipline butterfly;
-  private Discipline crawl;
-  private Discipline backCrawl;
-  private Discipline breastStroke;
-
-
   private LocalDate age;
 
-  boolean programRunning = true;
+  final boolean programRunning = true;
   boolean running = true;
   boolean intError;
   boolean correctInput = false;
 
-  Scanner input = new Scanner(System.in);
+  final Scanner input = new Scanner(System.in);
 
   //File handler
-  FileHandler fileHandler = new FileHandler();
+  final FileHandler fileHandler = new FileHandler();
   private Integer memberId = fileHandler.loadMemberID();
 
-  UserInterface ui = new UserInterface();
-  MembersFee memberFee = new MembersFee();
-  Member member = new Member();
+  final UserInterface ui = new UserInterface();
+  final MembersFee memberFee = new MembersFee();
+  final Member member = new Member();
 
 
   private ArrayList<Member> members = new ArrayList<>();
   private ArrayList<Member> competitors = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
-
 
   //CHAIRMAN
   public void addMember() {
@@ -64,10 +59,12 @@ public class Controller {
     addMemberID();
     typeMemberStatus();
     scannerBugFix();
-    typeCompetitionOrNot();
-    scannerBugFix();
-    if (answerCom == 'C') {
-      pickDiscipline();
+    if (active == 'A') {
+      typeCompetitionOrNot();
+      scannerBugFix();
+      if (answerCom == 'C') {
+        pickDiscipline();
+      }
     }
     saveRegularMember();
   }
@@ -178,7 +175,7 @@ public class Controller {
   public void competitorsList() {
     //TODO TITLES
     for (Member competitor : competitors) {
-      System.out.printf("%04d %-30s %-35s %-9s %-7s %-9s %-5s", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
+      System.out.printf("%04d %-30s %-35s %-9s %-5s %-9s %-5s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
           competitor.getButterfly(), competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke());
     }
   }
@@ -230,13 +227,13 @@ public class Controller {
 
   public void activeDiscipline() {
     System.out.println("Active discipline: ");
-    if (butterfly != null)
+    if (!butterfly.equals(" "))
       System.out.println("Butterfly");
-    if (crawl != null)
+    if (!crawl.equals(" "))
       System.out.println("Crawl");
-    if (backCrawl != null)
+    if (!backCrawl.equals(" "))
       System.out.println("Back crawl");
-    if (breastStroke != null)
+    if (!breastStroke.equals(" "))
       System.out.println("Breaststroke");
   }
 
@@ -345,7 +342,7 @@ public class Controller {
   public void typeName() {
     System.out.print("Enter Name: ");
     name = input.nextLine().toUpperCase();
-    while (!name.matches("^[a-zA-Z ]*$")) {
+    while (!name.matches("^[a-zA-ZæøåÆØÅ ]*$")) {
       wrongInput();
       System.out.print("Please enter a valid name!: ");
       name = input.nextLine().toUpperCase();
@@ -389,15 +386,20 @@ public class Controller {
   }
 
   public void pickDiscipline() {
+    running = true;
+    butterfly = "-";
+    crawl = "-";
+    backCrawl = "-";
+    breastStroke = "-";
 
     while (running) {
       ui.printDisciplineMenu();
       String decision = input.nextLine();
       switch (decision) {
-        case "1" -> butterfly = Discipline.BUTTERFLY;
-        case "2" -> crawl = Discipline.CRAWL;
-        case "3" -> backCrawl = Discipline.BACKCRAWL;
-        case "4" -> breastStroke = Discipline.BREASTSTROKE;
+        case "1" -> butterfly = "Butterfly";
+        case "2" -> crawl = "Crawl";
+        case "3" -> backCrawl = "BackCrawl";
+        case "4" -> breastStroke = "Breaststroke";
         case "5" -> running = false;
         default -> wrongInput();
       }
@@ -410,9 +412,13 @@ public class Controller {
     members.add(newMember);
   }
 
-  public void createNewCompetitor(String name, LocalDate age, Integer memberID, Discipline butterfly, Discipline crawl, Discipline backCrawl, Discipline breastStroke) {
+  public void createNewCompetitor(String name, LocalDate age, Integer memberID, String butterfly, String crawl, String backCrawl, String breastStroke) {
     Member newCompetitor = new Member(name, member.getAge(), memberID, butterfly, crawl, backCrawl, breastStroke);
     competitors.add(newCompetitor);
+    this.butterfly = butterfly;
+    this.crawl = crawl;
+    this.backCrawl = backCrawl;
+    this.breastStroke = breastStroke;
   }
 
   public void removeMember() {
@@ -433,9 +439,10 @@ public class Controller {
     scannerBugFix();
 
     Member member = findMemberById(memberId);
+    Member competitor = findCompetitorById(memberId);
     if (memberId == 0)
       System.out.println("EXITING REMOVE MENU");
-    else if (member == null) {
+    else if (member == null || competitor == null) {
       System.out.println("The member could not be found and can't be deleted");
     } else {
       System.out.println("\n" + member);
@@ -443,6 +450,7 @@ public class Controller {
       String decision = input.nextLine();
       if (decision.equalsIgnoreCase("Y")) {
         members.remove(member);
+        competitors.remove(competitor);
         System.out.println("\u001b[1;31mTHE MEMBER HAVE BEEN DELETED\u001b[m");
         save();
       } else
@@ -491,9 +499,9 @@ public class Controller {
     String choice = input.nextLine();
     switch (choice) {
       case "1" -> competitorsList();
-      //case "2" -> changeMemberFees();
-      //case "3" -> seeAllPayments();
-      //case "4" -> ui.printMembersFees();
+      case "2" -> System.out.println("Coach Menu 2");
+      case "3" -> System.out.println("Coach Menu 3");
+      case "4" -> System.out.println("Coach Menu 4");
       case "5" -> exit();
       case "0" -> start();
       default -> {
@@ -509,6 +517,7 @@ public class Controller {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
     memberId = fileHandler.loadMemberID();
+    competitors = fileHandler.loadCompetitorsFromFile();
   }
 
   public void save() {
@@ -527,6 +536,7 @@ public class Controller {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
     fileHandler.saveMemberID(memberId);
+    fileHandler.saveCompetitorsToFile(competitors);
   }
 
   //SYSTEM HANDLER
@@ -545,6 +555,15 @@ public class Controller {
     return null;
   }
 
+  public Member findCompetitorById(Integer memberId) {
+    for (Member competitor : competitors) {
+      if (competitor.getMemberID().equals(memberId)) {
+        return competitor;
+      }
+    }
+    return null;
+  }
+
   public ArrayList<Member> findMemberByName(String name) {
     searchedForMembers.clear();
     for (Member member : members) {
@@ -557,10 +576,6 @@ public class Controller {
 
   public Iterable<Member> getAllMembers() {
     return members;
-  }
-
-  public Iterable<Member> getAllCompetitors() {
-    return competitors;
   }
 
   public int getMemberCount() {
@@ -599,7 +614,7 @@ public class Controller {
     for (Member member : members) {
       if (member.getPaidOrNot() == 'N' & member.getActiveOrPassive() == 'A') {
         restance.add(member);
-        System.out.println(member.toString());
+        System.out.println(member);
       }
     }
     System.out.println("\nThe number of members that have restance is: " + restance.size() + "\n");
@@ -610,7 +625,7 @@ public class Controller {
     for (Member member : members) {
       if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {
         totalPayment += member.getPaymentCategory();
-        System.out.println(member.toString());
+        System.out.println(member);
       }
     }
     System.out.println("\n The total income from activ members this sesson is: " + totalPayment + " dkk\n");

@@ -6,24 +6,24 @@ import Members.Member;
 import java.util.ArrayList;
 
 public class ManageTeams {
-    private FileHandler fileHandler = new FileHandler();
-    private ArrayList<Member> members = fileHandler.loadMembersFromFile();
-    private Teams[] teams;
-    private ArrayList<Discipline> disciplines = new ArrayList<>();
+    private final FileHandler fileHandler = new FileHandler();
+    private final ArrayList<Member> members = fileHandler.loadMembersFromFile();
+    private final Teams[] teams;
+    private final ArrayList<Discipline> disciplines = new ArrayList<>();
 
     public ManageTeams() {
 
         teams = new Teams[8];
-//-----------------------------------JUNIOR CHOACH--------------------------------------
-        teams[0] = new Teams("Choach1 ", "JUNIOR ", Discipline.BACKCRAWL);
-        teams[1] = new Teams("Choach1 ", "JUNIOR ", Discipline.BREASTSTROKE);
-        teams[2] = new Teams("Choach1 ", "JUNIOR ", Discipline.CRAWL);
-        teams[3] = new Teams("Choach2 ", "JUNIOR ", Discipline.BUTTERFLY);
-//-----------------------------------SENIOR CHOACH--------------------------------------
-        teams[4] = new Teams("Choach2 ", "SENIOR ", Discipline.BACKCRAWL);
-        teams[5] = new Teams("Choach2 ", "SENIOR ", Discipline.BREASTSTROKE);
-        teams[6] = new Teams("Choach2 ", "SENIOR ", Discipline.CRAWL);
-        teams[7] = new Teams("Choach1 ", "JUNIOR ", Discipline.BUTTERFLY);
+//-----------------------------------JUNIOR COACH--------------------------------------
+        teams[0] = new Teams("Coach1 ", "JUNIOR ", Discipline.BackCrawl);
+        teams[1] = new Teams("Coach1 ", "JUNIOR ", Discipline.Breaststroke);
+        teams[2] = new Teams("Coach1 ", "JUNIOR ", Discipline.Crawl);
+        teams[3] = new Teams("Coach2 ", "JUNIOR ", Discipline.Butterfly);
+//-----------------------------------SENIOR COACH--------------------------------------
+        teams[4] = new Teams("Coach2 ", "SENIOR ", Discipline.BackCrawl);
+        teams[5] = new Teams("Coach2 ", "SENIOR ", Discipline.Breaststroke);
+        teams[6] = new Teams("Coach2 ", "SENIOR ", Discipline.Crawl);
+        teams[7] = new Teams("Coach1 ", "JUNIOR ", Discipline.Butterfly);
 
         addToTeam();
 
