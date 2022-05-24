@@ -10,7 +10,7 @@ public class MembersFee {
   private int newAge;
   private double seniorGold;
   //  double[] fees = new double[5];
-  public int[] fees = {1000, 1600, 25, 500};
+  public final int[] fees = {1000, 1600, 25, 500};
   double category;
 
 
@@ -64,8 +64,6 @@ public class MembersFee {
     if (result >= 60) {
       category = fees[1] * 0.75;
 
-    } else {
-      //category = member.isActive() ;
     }
     return category;
   }

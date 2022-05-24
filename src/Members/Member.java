@@ -14,7 +14,9 @@ public class Member {
   private Integer memberID;
   private double paymentCategory;
 
-  //Constructors
+  private String butterfly, breastStroke, backCrawl, crawl;
+
+  //Constructor normal member
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     this.name = name;
     this.age = age;
@@ -25,6 +27,18 @@ public class Member {
     this.paidOrNot = paidOrNot;
     this.paymentCategory = paymentCategory;
 
+  }
+
+  //Competitor member
+  public Member(String name, int age, Integer memberID,
+                String butterfly, String crawl, String backCrawl,String breastStroke) {
+    this.name = name;
+    this.age = age;
+    this.memberID = memberID;
+    this.butterfly = butterfly;
+    this.breastStroke = breastStroke;
+    this.backCrawl = backCrawl;
+    this.crawl = crawl;
   }
 
   public Member() {
@@ -95,6 +109,22 @@ public class Member {
     return paymentCategory;
   }
 
+  public String getButterfly() {
+    return butterfly;
+  }
+
+  public String getBreastStroke() {
+    return breastStroke;
+  }
+
+  public String getBackCrawl() {
+    return backCrawl;
+  }
+
+  public String getCrawl() {
+    return crawl;
+  }
+
   @Override
   public String toString() {
 
@@ -102,24 +132,29 @@ public class Member {
     String paid = "PAID";
     if (activeOrPassive == 'A' && paidOrNot == 'P') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID,
+              name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
     }
     String notPaid = "NOT PAID";
     if (activeOrPassive == 'A' && paidOrNot == 'N') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, notPaid, paymentCategory, "dkk");
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID,
+              name, email, age, phoneNumber, active, notPaid, paymentCategory, "dkk");
     }
     String passive = "PASSIVE";
     if (activeOrPassive == 'P' && paidOrNot == 'P') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, passive, paid, paymentCategory, "dkk");
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID,
+              name, email, age, phoneNumber, passive, paid, paymentCategory, "dkk");
     }
 
     if (activeOrPassive == 'P' && paidOrNot == 'N') {
       return
-          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, passive, notPaid, paymentCategory, "dkk");
+          String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID,
+              name, email, age, phoneNumber, passive, notPaid, paymentCategory, "dkk");
     }
     return
-        String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID, name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
+        String.format("%04d %-30s %-35s %-10d %-16d %-8s %-9s %-10.2f %s", memberID,
+            name, email, age, phoneNumber, active, paid, paymentCategory, "dkk");
   }
 }

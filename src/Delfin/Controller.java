@@ -16,33 +16,38 @@ public class Controller {
 
   private String name;
   private String email;
-
+  private String butterfly = "-";
+  private String breastStroke = "-";
+  private String backCrawl = "-";
+  private String crawl = "-";
 
   private int phoneNumber;
   private double paymentCategory;
 
   private char active;
+  private char answerCom;
 
   private LocalDate age;
 
-  boolean programRunning = true;
+  final boolean programRunning = true;
+  boolean running = true;
   boolean intError;
   boolean correctInput = false;
 
-  Scanner input = new Scanner(System.in);
+  final Scanner input = new Scanner(System.in);
 
   //File handler
-  FileHandler fileHandler = new FileHandler();
+  final FileHandler fileHandler = new FileHandler();
   private Integer memberId = fileHandler.loadMemberID();
 
-  UserInterface ui = new UserInterface();
-  MembersFee memberFee = new MembersFee();
-  Member member = new Member();
+  final UserInterface ui = new UserInterface();
+  final MembersFee memberFee = new MembersFee();
+  final Member member = new Member();
 
 
   private ArrayList<Member> members = new ArrayList<>();
+  private ArrayList<Member> competitors = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
-
 
   //CHAIRMAN
   public void addMember() {
@@ -54,7 +59,14 @@ public class Controller {
     addMemberID();
     typeMemberStatus();
     scannerBugFix();
-    saveMember();
+    if (active == 'A') {
+      typeCompetitionOrNot();
+      scannerBugFix();
+      if (answerCom == 'C') {
+        pickDiscipline();
+      }
+    }
+    saveRegularMember();
   }
 
   public void addMemberID() {
@@ -64,8 +76,15 @@ public class Controller {
 
   public void changeActiveOrPassive(Member member) {
     typeMemberStatus();
-    member.setActiveOrPassive(active);
-    System.out.println(member);
+    scannerBugFix();
+    if (member != null) {
+      member.setActiveOrPassive(active);
+      System.out.println(member);
+      save();
+    } else {
+      saveRegularMember();
+    }
+
   }
 
   public void changeAge() {
@@ -74,20 +93,36 @@ public class Controller {
 
   public void changeEmail(Member member) {
     typeEmail();
-    member.setEmail(email);
-    System.out.println(member);
+    if (member != null) {
+      member.setEmail(email);
+      System.out.println(member);
+      save();
+    } else {
+      saveRegularMember();
+    }
   }
 
   public void changeName(Member member) {
     typeName();
-    member.setName(name);
-    System.out.println(member);
+    if (member != null) {
+      member.setName(name);
+      System.out.println(member);
+      save();
+    } else {
+      saveRegularMember();
+    }
   }
 
   public void changePhoneNumber(Member member) {
     typePhoneNumber();
-    member.setPhoneNumber(phoneNumber);
-    System.out.println(member);
+    scannerBugFix();
+    if (member != null) {
+      member.setPhoneNumber(phoneNumber);
+      System.out.println(member);
+      save();
+    } else {
+      saveRegularMember();
+    }
   }
 
   public void chairman() {
@@ -115,7 +150,7 @@ public class Controller {
         System.out.println("Change date of birth: ");
         age = LocalDate.parse(String.valueOf(input.nextInt()));
         scannerBugFix();
-        saveMember();
+        saveRegularMember();
       }
       case "E" -> changeEmail(member);
       case "P" -> changePhoneNumber(member);
@@ -137,6 +172,14 @@ public class Controller {
 
   }
 
+  public void competitorsList() {
+    //TODO TITLES
+    for (Member competitor : competitors) {
+      System.out.printf("%04d %-30s %-35s %-9s %-5s %-9s %-5s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
+          competitor.getButterfly(), competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke());
+    }
+  }
+
   public void paymentCategory(double resultAge) {
     paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
     System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
@@ -152,25 +195,46 @@ public class Controller {
     }
     return null;
   }
- 
-  public void saveMember() {
+
+  public void saveRegularMember() {
 
     char paidOrNot = 'N';
     System.out.println("\nMember information:");
     System.out.println(FontColors.CYAN + "\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
         + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + FontColors.RESET);
+    if (answerCom == 'C') {
+      activeDiscipline();
+    }
     System.out.print("\n\nAre the information correct? Yes[Y], edit[E] or discard[D]: ");
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
         createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory);
+        if (answerCom == 'C') {
+          saveCompetitionSwimmer();
+        }
         save();
         System.out.println(FontColors.BLUE + "\nMEMBER HAS BEEN SAVED!!\n" + FontColors.RESET);
-
       }
       case "E" -> editMember(null);
       case "D" -> System.out.println(FontColors.RED + "\nDISCARDED - Nothing have been saved\n" + FontColors.RESET);
     }
+  }
+
+  public void saveCompetitionSwimmer() {
+    createNewCompetitor(name, age, memberId, butterfly, crawl, backCrawl, breastStroke);
+  }
+
+  public void activeDiscipline() {
+    System.out.println("Active discipline: ");
+    if (!butterfly.equals(" "))
+      System.out.println("Butterfly");
+    if (!crawl.equals(" "))
+      System.out.println("Crawl");
+    if (!backCrawl.equals(" "))
+      System.out.println("Back crawl");
+    if (!breastStroke.equals(" "))
+      System.out.println("Breaststroke");
   }
 
   public void searchMember() {
@@ -181,7 +245,7 @@ public class Controller {
     if (memberName.equals("0")) {
       chairman();
     } else {
-      ArrayList<Member> members = findMemberByName2(memberName);
+      ArrayList<Member> members = findMemberByName(memberName);
       if (members.size() != 0) {
         for (Member member : members) {
           System.out.println(member);
@@ -278,7 +342,7 @@ public class Controller {
   public void typeName() {
     System.out.print("Enter Name: ");
     name = input.nextLine().toUpperCase();
-    while (!name.matches("^[a-zA-Z ]*$")) {
+    while (!name.matches("^[a-zA-ZæøåÆØÅ ]*$")) {
       wrongInput();
       System.out.print("Please enter a valid name!: ");
       name = input.nextLine().toUpperCase();
@@ -302,10 +366,59 @@ public class Controller {
     }
   }
 
+  public void typeCompetitionOrNot() {
+    char comp = 'C';
+    char regular = 'R';
+    boolean answer = false;
+
+    do {
+      System.out.print("Competition swimmer[C] or regular[R]: ");
+      answerCom = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      if (answerCom == comp) {
+        answer = true;
+      } else if (answerCom == regular) {
+        answer = true;
+      } else {
+        wrongInput();
+      }
+    }
+    while (!answer);
+  }
+
+  public void pickDiscipline() {
+    running = true;
+    butterfly = "-";
+    crawl = "-";
+    backCrawl = "-";
+    breastStroke = "-";
+
+    while (running) {
+      ui.printDisciplineMenu();
+      String decision = input.nextLine();
+      switch (decision) {
+        case "1" -> butterfly = "Butterfly";
+        case "2" -> crawl = "Crawl";
+        case "3" -> backCrawl = "BackCrawl";
+        case "4" -> breastStroke = "Breaststroke";
+        case "5" -> running = false;
+        default -> wrongInput();
+      }
+    }
+  }
+
   //TODO: ADD their category and constructor
   public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
     members.add(newMember);
+  }
+
+  public void createNewCompetitor(String name, LocalDate age, Integer memberID, String butterfly, String crawl, String backCrawl, String breastStroke) {
+    Member newCompetitor = new Member(name, member.getAge(), memberID, butterfly, crawl, backCrawl, breastStroke);
+    competitors.add(newCompetitor);
+    this.butterfly = butterfly;
+    this.crawl = crawl;
+    this.backCrawl = backCrawl;
+    this.breastStroke = breastStroke;
   }
 
   public void removeMember() {
@@ -326,9 +439,10 @@ public class Controller {
     scannerBugFix();
 
     Member member = findMemberById(memberId);
+    Member competitor = findCompetitorById(memberId);
     if (memberId == 0)
       System.out.println("EXITING REMOVE MENU");
-    else if (member == null) {
+    else if (member == null || competitor == null) {
       System.out.println("The member could not be found and can't be deleted");
     } else {
       System.out.println("\n" + member);
@@ -336,6 +450,7 @@ public class Controller {
       String decision = input.nextLine();
       if (decision.equalsIgnoreCase("Y")) {
         members.remove(member);
+        competitors.remove(competitor);
         System.out.println("\u001b[1;31mTHE MEMBER HAVE BEEN DELETED\u001b[m");
         save();
       } else
@@ -359,7 +474,6 @@ public class Controller {
         wrongInput();
         cashier();
       }
-
     }
   }
 
@@ -379,8 +493,22 @@ public class Controller {
 
   //COACH
 
+  //TODO ADD UI
   public void coaches() {
 
+    String choice = input.nextLine();
+    switch (choice) {
+      case "1" -> competitorsList();
+      case "2" -> System.out.println("Coach Menu 2");
+      case "3" -> System.out.println("Coach Menu 3");
+      case "4" -> System.out.println("Coach Menu 4");
+      case "5" -> exit();
+      case "0" -> start();
+      default -> {
+        wrongInput();
+        coaches();
+      }
+    }
   }
 
   //FILE HANDLER
@@ -389,6 +517,7 @@ public class Controller {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
     memberId = fileHandler.loadMemberID();
+    competitors = fileHandler.loadCompetitorsFromFile();
   }
 
   public void save() {
@@ -407,6 +536,7 @@ public class Controller {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
     fileHandler.saveMemberID(memberId);
+    fileHandler.saveCompetitorsToFile(competitors);
   }
 
   //SYSTEM HANDLER
@@ -425,7 +555,16 @@ public class Controller {
     return null;
   }
 
-  public ArrayList<Member> findMemberByName2(String name) {
+  public Member findCompetitorById(Integer memberId) {
+    for (Member competitor : competitors) {
+      if (competitor.getMemberID().equals(memberId)) {
+        return competitor;
+      }
+    }
+    return null;
+  }
+
+  public ArrayList<Member> findMemberByName(String name) {
     searchedForMembers.clear();
     for (Member member : members) {
       if (member.getName().toLowerCase().contains(name)) {
@@ -471,25 +610,22 @@ public class Controller {
   }
 
   public void missingPayments() {
-    ui.printMemberList();
     ArrayList<Member> restance = new ArrayList<>();
     for (Member member : members) {
       if (member.getPaidOrNot() == 'N' & member.getActiveOrPassive() == 'A') {
         restance.add(member);
-        System.out.println(member.toString());
+        System.out.println(member);
       }
     }
     System.out.println("\nThe number of members that have restance is: " + restance.size() + "\n");
   }
 
   public void seeAllPayments() {
-    ui.printMemberList();
-
     double totalPayment = 0.0;
     for (Member member : members) {
       if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {
         totalPayment += member.getPaymentCategory();
-        System.out.println(member.toString());
+        System.out.println(member);
       }
     }
     System.out.println("\n The total income from activ members this sesson is: " + totalPayment + " dkk\n");

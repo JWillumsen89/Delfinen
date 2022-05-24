@@ -8,8 +8,8 @@ public class UserInterface {
 
   private String choice;
 
-  MembersFee membersFee = new MembersFee();
-  Scanner input = new Scanner(System.in);
+  private final MembersFee membersFee = new MembersFee();
+  private final Scanner input = new Scanner(System.in);
 
   public void displayWelcomeMessage() {
     System.out.println("\nWelcome to DELFIN SVØMMEKLUB\n");
@@ -88,6 +88,17 @@ public class UserInterface {
     System.out.print("Passive Membership: " + membersFee.fees[3] + ",- kr. Type 4\n");
 
     System.out.println("What is the new members fee for this category?");
+  }
+
+  public void printDisciplineMenu() {
+    System.out.println("""
+        1) Butterfly
+        2) Crawl
+        3) Back crawl
+        4) Breaststroke
+        5) Done adding disciplines
+        """);
+    System.out.print("Pick discipline: ");
   }
 
   public void printMemberList() {
