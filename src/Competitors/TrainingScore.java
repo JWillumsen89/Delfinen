@@ -25,16 +25,16 @@ public class TrainingScore implements Comparable<TrainingScore> {
         return DISCIPLIN;
     }
     public String toString() {
-        return "Date: " + DATE + "Time: " + TIME.getSeconds() + "Seconds" + "Discipline" + DISCIPLIN;
+        return "Date: " + DATE + "Time: " + TIME.toMillis() + "MS: " + "Discipline" + DISCIPLIN;
     }
 
     @Override
     public int compareTo(TrainingScore other) {
-        if (this.getTIME().getSeconds() == 0 && other.getTIME().getSeconds() == 0) {
+        if (this.getTIME().toMillis() == 0 && other.getTIME().toMillis() == 0) {
             return 0;
-        } else if (this.getTIME().getSeconds() == 0) {
+        } else if (this.getTIME().toMillis() == 0) {
             return 1;
-        } else if (other.getTIME().getSeconds() == 0) {
+        } else if (other.getTIME().toMillis() == 0) {
             return -1;
         }
         return (this.getTIME().compareTo(other.getTIME()));
