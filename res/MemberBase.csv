@@ -1,27 +1,3 @@
 name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory
-Hans Christian Andersen;0;12345678;Hans@ndersen.dk;1;A;P;1600.0
-Jens Hansen;0;22334455;hansens@bondegaard.dk;2;A;N;1600.0
-Lars Løkke;0;88457164;larsloekke@mail.dk;3;P;N;1600.0
-Micky Mouse;0;77777777;mickymouse@disney.dk;4;A;P;1600.0
-Tony Stark;0;66666666;tony.s@starkindustries.com;5;A;P;1600.0
-Jack Sparrow;33;46794675;sparrow@pirates.com;6;A;N;1600.0
-Mary Donaldson;121;97794611;mary@kongehuset.dk;7;P;N;1600.0
-Casper Christensen;32;66885599;casper@klovn.dk;8;A;N;1600.0
-Anders Lund Madsen;32;77994477;anders.lund@madsen.dk;9;A;N;1600.0
-Christian;33;57385669;Rodrigo@sweetnoize.com;10;A;N;1600.0
-HENRIK HANSEN;32;31150173;JHON2010@LIVE.DK;13;P;N;1600.0
-SØREN;61;1;L@L.DK;14;A;N;1200.0
-ÅGE;71;2;AA@GE.DK;15;A;N;1200.0
-HENNING;71;3;H@NNING.DK;16;A;N;1200.0
-ÅGE;92;2;A@GE.DK;17;A;N;1200.0
-PEDER;92;4;PEDER@P.DK;18;A;N;1200.0
-OLE;102;7;L@L.DK;19;A;N;1200.0
-HANNE;102;6;HANNEPIGEN@G.DK;20;A;N;1200.0
-KARSTEN;66;8;E@S.DK;21;A;N;1200.0
-PIA;63;12334;L@L.DK;22;A;N;1200.0
-PERNILLE;51;12345;P@RNILLE.DK;23;A;N;1600.0
-NICOLAJ;26;1;A@S.DK;24;A;N;1600.0
-SIGNE;26;3;U@T.DK;25;A;N;1600.0
-HANSI;120;7;G@G.SK;27;P;N;1200.0
-LARS;120;21345;H@H.DK;28;A;N;1200.0
-J;32;1;J@J.DK;27;A;N;1600.0
+JONATHAN WILLUMSEN;32;31150173;JHON2010@LIVE.DK;1;A;N;1600.0
+SIMON MELBYE;28;12345678;SIMON@LIVE.DK;2;A;N;1600.0

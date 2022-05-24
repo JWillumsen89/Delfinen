@@ -227,13 +227,13 @@ public class Controller {
 
   public void activeDiscipline() {
     System.out.println("Active discipline: ");
-    if (!butterfly.equals(" "))
+    if (!butterfly.equals("-"))
       System.out.println("Butterfly");
-    if (!crawl.equals(" "))
+    if (!crawl.equals("-"))
       System.out.println("Crawl");
-    if (!backCrawl.equals(" "))
+    if (!backCrawl.equals("-"))
       System.out.println("Back crawl");
-    if (!breastStroke.equals(" "))
+    if (!breastStroke.equals("-"))
       System.out.println("Breaststroke");
   }
 
