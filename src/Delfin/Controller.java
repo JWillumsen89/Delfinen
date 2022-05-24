@@ -153,7 +153,7 @@ public class Controller {
     }
     return null;
   }
-
+ 
   public void saveMember() {
 
     char paidOrNot = 'N';
@@ -472,6 +472,7 @@ public class Controller {
   }
 
   public void missingPayments() {
+    ui.printMemberList();
     ArrayList<Member> restance = new ArrayList<>();
     for (Member member : members) {
       if (member.getPaidOrNot() == 'N' & member.getActiveOrPassive() == 'A') {
@@ -483,6 +484,8 @@ public class Controller {
   }
 
   public void seeAllPayments() {
+    ui.printMemberList();
+
     double totalPayment = 0.0;
     for (Member member : members) {
       if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {

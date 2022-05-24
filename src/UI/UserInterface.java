@@ -1,18 +1,23 @@
 package UI;
 
 import Finance.MembersFee;
+import Colors.FontColors;
 
+import java.awt.*;
 import java.util.Scanner;
+
 
 public class UserInterface {
 
   private String choice;
 
   MembersFee membersFee = new MembersFee();
+
+
   Scanner input = new Scanner(System.in);
 
   public void displayWelcomeMessage() {
-    System.out.println("\nWelcome to DELFIN SVØMMEKLUB\n");
+    System.out.println(FontColors.WHITE_BRIGHT + "\nWELCOME TO DELFIN SVØMMEKLUB \n" + FontColors.RESET);
 
   }
 
@@ -26,7 +31,7 @@ public class UserInterface {
                         
         0) Exit application
         """);
-    System.out.print("Pick a menu: ");
+    System.out.print("Pick a menu: \n");
     choice = input.nextLine();
 
     return choice;
