@@ -34,7 +34,7 @@ public class FileHandler {
   public void saveMembersToFile(ArrayList<Member> members) {
     try {
       PrintStream out = new PrintStream(fileNameMemberList);
-      out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory");
+      out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory;butterfly;crawl;backCrawl;breaststroke;team;coach;added;competitorOrRegular");
       for (Member member : members) {
         writeMember(out, member);
       }
@@ -55,8 +55,17 @@ public class FileHandler {
     char activeOrPassive = input.next().charAt(0);
     char paidOrNot = input.next().charAt(0);
     double paymentCategory = input.nextDouble();
+    String butterfly = input.next();
+    String crawl = input.next();
+    String backCrawl = input.next();
+    String breastStroke = input.next();
+    String team = input.next();
+    String coach = input.next();
+    boolean added = input.nextBoolean();
+    char competitorOrRegular = input.next().charAt(0);
 
-    return new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
+    return new Member(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory,
+        butterfly, crawl, backCrawl, breastStroke, team, coach, added, competitorOrRegular);
   }
 
   public void writeMember(PrintStream out, Member member) {
@@ -76,11 +85,25 @@ public class FileHandler {
     out.print(member.getPaidOrNot());
     out.print(";");
     out.print(member.getPaymentCategory());
+    out.print(";");
+    out.print(member.getButterfly());
+    out.print(";");
+    out.print(member.getCrawl());
+    out.print(";");
+    out.print(member.getBackCrawl());
+    out.print(";");
+    out.print(member.getBreastStroke());
+    out.print(";");
+    out.print(member.getTeams());
+    out.print(";");
+    out.print(member.getCoach());
+    out.print(";");
+    out.print(member.isAdded());
     out.print("\n");
   }
 
   //Competitor list
-  public ArrayList<Member> loadCompetitorsFromFile() {
+  /*public ArrayList<Member> loadCompetitorsFromFile() {
 
     ArrayList<Member> competitors = new ArrayList<>();
 
@@ -142,6 +165,8 @@ public class FileHandler {
     out.print(member.getBreastStroke());
     out.print("\n");
   }
+
+   */
 
   //MemberId
   public void saveMemberID(Integer id) {

@@ -41,7 +41,7 @@ public class Teams {
         StringBuilder stringBuilder = new StringBuilder();
         if (competitors != null) {
             for (Competitors competitors : competitors) {
-                stringBuilder.append(competitors.getName());
+               // stringBuilder.append(competitors.getName());
             }
         } else {
             stringBuilder.append("No competitors available!");

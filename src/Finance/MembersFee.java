@@ -52,7 +52,7 @@ public class MembersFee {
 
   public double paymentCategoryCalculator(double result) {
 
-     Member member = new Member();
+     //Member member = new Member(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory, butterfly, crawl, backCrawl, breastStroke, team, coach, added);
 
 
     if (result < 18) {
