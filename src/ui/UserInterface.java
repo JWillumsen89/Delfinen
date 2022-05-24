@@ -1,6 +1,6 @@
-package UI;
+package ui;
 
-import Finance.MembersFee;
+import finance.MembersFee;
 
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
-package Filehandler;
+package filehandler;
 
-import Members.Member;
+import members.Member;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Locale;

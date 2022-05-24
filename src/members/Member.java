@@ -1,4 +1,4 @@
-package Members;
+package members;
 
 import java.time.LocalDate;
 import java.time.Period;

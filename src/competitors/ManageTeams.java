@@ -1,10 +1,8 @@
-package Competitors;
+package competitors;
 
-import Filehandler.FileHandler;
-import Members.Member;
+import filehandler.FileHandler;
+import members.Member;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 
 public class ManageTeams {

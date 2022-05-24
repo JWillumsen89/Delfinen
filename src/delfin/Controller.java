@@ -1,11 +1,11 @@
-package Delfin;
+package delfin;
 
-import Colors.FontColors;
-import Filehandler.DatabaseException;
-import Filehandler.FileHandler;
-import Finance.MembersFee;
-import Members.Member;
-import UI.UserInterface;
+import colors.FontColors;
+import filehandler.DatabaseException;
+import filehandler.FileHandler;
+import finance.MembersFee;
+import members.Member;
+import ui.UserInterface;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ public class Controller {
   private String breastStroke = "-";
   private String backCrawl = "-";
   private String crawl = "-";
-  private String team = "-";
-  private String coach = "-";
+  private final String team = "-";
+  private final String coach = "-";
 
   private int phoneNumber;
   private double paymentCategory;
@@ -37,7 +37,7 @@ public class Controller {
   boolean running = true;
   boolean intError;
   boolean correctInput = false;
-  boolean added = false;
+  final boolean added = false;
 
   final Scanner input = new Scanner(System.in);
 
@@ -271,7 +271,6 @@ public class Controller {
 
   public void paymentCategory(double resultAge) {
     paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
-    System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
   }
 
   public Member pickAMember(int memberID) {
@@ -371,7 +370,6 @@ public class Controller {
     LocalDate temp = LocalDate.parse(age.toString());
     double resultAge = member.calculateAge(temp);
     paymentCategory(resultAge);
-    System.out.println(member.getAge());
     correctInput = true;
   }
 

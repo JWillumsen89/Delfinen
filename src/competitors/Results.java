@@ -1,4 +1,4 @@
-package Competitors;
+package competitors;
 
 public class Results {
 }

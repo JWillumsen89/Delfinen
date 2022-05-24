@@ -1,6 +1,6 @@
-package Finance;
+package finance;
 
-import Members.Member;
+
 
 public class MembersFee {
   //Member member = new Member();
