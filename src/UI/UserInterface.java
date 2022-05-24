@@ -44,6 +44,8 @@ public class UserInterface {
                                 
         0) Return to main
         """);
+
+    System.out.print("Pick a menu: ");
   }
 
   public void printChairmanMenu() {
@@ -88,6 +90,22 @@ public class UserInterface {
     System.out.print("Passive Membership: " + membersFee.fees[3] + ",- kr. Type 4\n");
 
     System.out.println("What is the new members fee for this category?");
+  }
+
+  public void printCoachMenu() {
+    System.out.println("""
+        Coach Menu
+        ---------
+        1) List of all competitor swimmers
+        2) Teams
+        3) Training results
+        4) Top 5 results
+        5) Exit program
+                                
+        0) Return to main
+        """);
+
+    System.out.print("Pick a menu: ");
   }
 
   public void printDisciplineMenu() {
