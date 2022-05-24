@@ -1,9 +1,11 @@
 package Delfin;
 
 import Colors.FontColors;
+import Competitors.ManageTeams;
 import Filehandler.DatabaseException;
 import Filehandler.FileHandler;
 import Finance.MembersFee;
+import Members.CompetitorTeams;
 import Members.Member;
 import UI.UserInterface;
 
@@ -20,6 +22,8 @@ public class Controller {
   private String breastStroke = "-";
   private String backCrawl = "-";
   private String crawl = "-";
+  private String team = "";
+  private String coach = "";
 
   private int phoneNumber;
   private double paymentCategory;
@@ -36,6 +40,7 @@ public class Controller {
 
   final Scanner input = new Scanner(System.in);
 
+
   //File handler
   final FileHandler fileHandler = new FileHandler();
   private Integer memberId = fileHandler.loadMemberID();
@@ -43,10 +48,13 @@ public class Controller {
   final UserInterface ui = new UserInterface();
   final MembersFee memberFee = new MembersFee();
   final Member member = new Member();
+  final ManageTeams manageTeams = new ManageTeams();
+
 
 
   private ArrayList<Member> members = new ArrayList<>();
   private ArrayList<Member> competitors = new ArrayList<>();
+  private ArrayList<Member> teams = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
 
   //CHAIRMAN
@@ -174,9 +182,17 @@ public class Controller {
 
   public void competitorsList() {
     //TODO TITLES
-    for (Member competitor : competitors) {
+    for (Member competitor : competitors)
       System.out.printf("%04d %-30s %-35s %-9s %-5s %-9s %-5s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
           competitor.getButterfly(), competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke());
+    }
+
+
+  public void teamsList() {
+    //TODO TITLES
+    for (Member competitor : teams) {
+      System.out.printf("%04d %-30s %-35s %-9s %-5s %-9s %-5s %-7s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
+              competitor.getButterfly(), competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke(), competitor.getTeams(), competitor.getCoach());
     }
   }
 
@@ -421,6 +437,17 @@ public class Controller {
     this.breastStroke = breastStroke;
   }
 
+  public void createNewCompetitorTeams(String name, int age, Integer memberID, String butterfly, String crawl, String backCrawl, String breastStroke, String team, String coach) {
+    Member newCompetitorTeams = new Member(name, member.getAge(), memberID, butterfly, crawl, backCrawl, breastStroke, team, coach);
+    teams.add(newCompetitorTeams);
+    this.butterfly = butterfly;
+    this.crawl = crawl;
+    this.backCrawl = backCrawl;
+    this.breastStroke = breastStroke;
+    System.out.println(memberID + " " + name + " " + age + " " + butterfly + " "
+     + crawl + " " + backCrawl + " " + breastStroke + " " + team + " " + coach);
+  }
+
   public void removeMember() {
     ui.printRemoveMember();
     memberId = 0;
@@ -499,7 +526,8 @@ public class Controller {
     String choice = input.nextLine();
     switch (choice) {
       case "1" -> competitorsList();
-      case "2" -> System.out.println("Coach Menu 2");
+      case "2" -> {addToTeams();
+      teamsList();}
       case "3" -> System.out.println("Coach Menu 3");
       case "4" -> System.out.println("Coach Menu 4");
       case "5" -> exit();
@@ -509,6 +537,80 @@ public class Controller {
         coaches();
       }
     }
+  }
+
+  public void addToTeams() {
+
+
+
+    for (Member competitor : competitors) {
+      if (competitor.getAge() < 18) {
+        team = "Junior";
+        coach = "Coach 1";
+      }
+      else if (competitor.getAge() >= 18) {
+        team = "Senior";
+        coach = "Coach 2";
+      }
+      createNewCompetitorTeams(competitor.getName(), competitor.getAge(), competitor.getMemberID(), competitor.getButterfly(),competitor.getCrawl(),
+              competitor.getBackCrawl(),competitor.getBreastStroke(),team,coach);
+    }
+
+   /* for (int i = 0; i < manageTeams.getTeams().length ; i++ ){
+      manageTeams.getTeams()[i].getCompetitors().clear();
+    }
+
+
+    for (Member competitor : competitors) {
+      competitors.add(competitor);
+    }
+
+    for (Competitors competitor : competitors) {
+
+      for (int i = 0; i < competitor.getDisciplines().size(); i++) {
+        Discipline discipline = competitor.getDisciplines().get(i);
+        LocalDate dateOfBirth = LocalDate.ofEpochDay(competitor.getAge());
+        int age = Period.between(dateOfBirth, LocalDate.now()).getYears();
+
+        if (discipline == Discipline.Crawl) {
+
+          if (age >= 18) {
+            manageTeams.getTeams()[2].getCompetitors().add(competitor);
+          } else {
+            manageTeams.getTeams()[6].getCompetitors().add(competitor);
+          }
+
+        } else if (discipline == Discipline.BackCrawl) {
+
+          if (age >= 18) {
+            manageTeams.getTeams()[0].getCompetitors().add(competitor);
+          } else {
+            manageTeams.getTeams()[4].getCompetitors().add(competitor);
+          }
+
+        } else if (discipline == Discipline.Butterfly) {
+
+          if (age >= 18) {
+            manageTeams.getTeams()[3].getCompetitors().add(competitor);
+          } else {
+            manageTeams.getTeams()[7].getCompetitors().add(competitor);
+          }
+
+        } else if (discipline == Discipline.Breaststroke) {
+
+          if (age >= 18) {
+            manageTeams.getTeams()[1].getCompetitors().add(competitor);
+          } else {
+            manageTeams.getTeams()[5].getCompetitors().add(competitor);
+          }
+
+        }
+      }
+    }
+
+    */
+
+
   }
 
   //FILE HANDLER

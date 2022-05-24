@@ -40,6 +40,34 @@ public class Member {
     this.backCrawl = backCrawl;
     this.crawl = crawl;
   }
+  public String getCoach() {
+    return coach;
+  }
+
+  public String getTeams() {
+    return teams;
+  }
+
+  private String coach;
+  private String teams;
+
+
+  public Member(String name, int age, Integer memberID,
+                         String butterfly, String crawl, String backCrawl, String breastStroke, String coach, String teams) {
+    this.name = name;
+    this.age = age;
+    this.memberID = memberID;
+    this.butterfly = butterfly;
+    this.breastStroke = breastStroke;
+    this.backCrawl = backCrawl;
+    this.crawl = crawl;
+    this.coach = coach;
+    this.teams = teams;
+
+
+
+
+  }
 
   public Member() {
 

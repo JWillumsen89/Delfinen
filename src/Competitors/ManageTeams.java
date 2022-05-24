@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class ManageTeams {
     private final FileHandler fileHandler = new FileHandler();
     private final ArrayList<Member> members = fileHandler.loadMembersFromFile();
-    private final Teams[] teams;
+    final Teams[] teams;
+
     private final ArrayList<Discipline> disciplines = new ArrayList<>();
 
     public ManageTeams() {
@@ -27,7 +28,7 @@ public class ManageTeams {
         teams[6] = new Teams("Coach2 ", "SENIOR ", Discipline.Crawl);
         teams[7] = new Teams("Coach1 ", "JUNIOR ", Discipline.Butterfly);
 
-        addToTeam();
+      //  addToTeam();
 
     }
 
@@ -48,18 +49,16 @@ public class ManageTeams {
 
 
 
-    public void addToTeam() {
-        ArrayList<Competitors> competitors = new ArrayList<>();
+   /* public void addToTeam(Competitors competitors) {
+      //  ArrayList<Competitors> competitors = new ArrayList<>();
 
         for (int i = 0; i < teams.length; i++) {
             teams[i].getCompetitors().clear();
         }
 
 
-        for (Member member : members) {
-            if (member instanceof Competitors) {
-                competitors.add((Competitors) member);
-            }
+        for (Member competitor : competitors) {
+            competitors.add(competitor);
         }
 
         for (Competitors competitor : competitors) {
@@ -69,7 +68,7 @@ public class ManageTeams {
                 LocalDate dateOfBirth = LocalDate.ofEpochDay(competitor.getAge());
                 int age = Period.between(dateOfBirth, LocalDate.now()).getYears();
 
-                if (discipline == Discipline.CRAWL) {
+                if (discipline == Discipline.Crawl) {
 
                     if (age >= 18) {
                         teams[2].getCompetitors().add(competitor);
@@ -77,7 +76,7 @@ public class ManageTeams {
                         teams[6].getCompetitors().add(competitor);
                     }
 
-                } else if (discipline == Discipline.BACKCRAWL) {
+                } else if (discipline == Discipline.BackCrawl) {
 
                     if (age >= 18) {
                         teams[0].getCompetitors().add(competitor);
@@ -85,7 +84,7 @@ public class ManageTeams {
                         teams[4].getCompetitors().add(competitor);
                     }
 
-                } else if (discipline == Discipline.BUTTERFLY) {
+                } else if (discipline == Discipline.Butterfly) {
 
                     if (age >= 18) {
                         teams[3].getCompetitors().add(competitor);
@@ -93,7 +92,7 @@ public class ManageTeams {
                         teams[7].getCompetitors().add(competitor);
                     }
 
-                } else if (discipline == Discipline.BREASTSTROKE) {
+                } else if (discipline == Discipline.Breaststroke) {
 
                     if (age >= 18) {
                         teams[1].getCompetitors().add(competitor);
@@ -112,22 +111,22 @@ public class ManageTeams {
             LocalDate dateOfBirth = LocalDate.ofEpochDay(competitor.getAge());
             int age = Period.between(dateOfBirth, LocalDate.now()).getYears();
 
-            if (discipline == Discipline.CRAWL) {
+            if (discipline == Discipline.Crawl) {
                 if (age >= 18) {
                     teams[2].getCompetitors().remove(competitor);
                 }
                 teams[6].getCompetitors().remove(competitor);
-            } else if (discipline == Discipline.BACKCRAWL) {
+            } else if (discipline == Discipline.BackCrawl) {
                 if (age >= 18) {
                     teams[0].getCompetitors().remove(competitor);
                 }
                 teams[4].getCompetitors().remove(competitor);
-            } else if (discipline == Discipline.BUTTERFLY) {
+            } else if (discipline == Discipline.Butterfly) {
                 if (age >= 18) {
                     teams[3].getCompetitors().remove(competitor);
                 }
                 teams[7].getCompetitors().remove(competitor);
-            } else if (discipline == Discipline.BREASTSTROKE) {
+            } else if (discipline == Discipline.Breaststroke) {
                 if (age >= 18) {
                     teams[1].getCompetitors().remove(competitor);
                 }
@@ -135,5 +134,7 @@ public class ManageTeams {
             }
         }
     }
+
+    */
 }
 
