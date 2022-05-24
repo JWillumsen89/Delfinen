@@ -1,23 +1,18 @@
 package UI;
 
 import Finance.MembersFee;
-import Colors.FontColors;
 
-import java.awt.*;
 import java.util.Scanner;
-
 
 public class UserInterface {
 
   private String choice;
 
   MembersFee membersFee = new MembersFee();
-
-
   Scanner input = new Scanner(System.in);
 
   public void displayWelcomeMessage() {
-    System.out.println(FontColors.WHITE_BRIGHT + "\nWELCOME TO DELFIN SVØMMEKLUB \n" + FontColors.RESET);
+    System.out.println("\nWelcome to DELFIN SVØMMEKLUB\n");
 
   }
 
@@ -31,7 +26,7 @@ public class UserInterface {
                         
         0) Exit application
         """);
-    System.out.print("Pick a menu: \n");
+    System.out.print("Pick a menu: ");
     choice = input.nextLine();
 
     return choice;
@@ -43,7 +38,7 @@ public class UserInterface {
         ---------
         1) List of all in arrears
         2) Change membership fees
-        3) Total income for this season(Activ memebers)
+        3) Total income for this season(Active members)
         4) See our membership fees
         5) Exit program
                                 
@@ -103,12 +98,12 @@ public class UserInterface {
   }
 
   public void printMembersFees() {
-    //for (int i = 0; i < fees.length; i++) {
     System.out.println("-----------Current members fee pr.season-------------\n");
     System.out.println("Junior: " + membersFee.fees[0] + ",- kr. ");
     System.out.println("Senior: " + membersFee.fees[1] + ",- kr. ");
     System.out.println("Senior Gold: " + membersFee.fees[2] + " % Discount off Senior fee");
     System.out.println("Passive Membership: " + membersFee.fees[3] + ",- kr. \n\n");
+
   }
 
   public void printRemoveMember() {

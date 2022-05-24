@@ -4,21 +4,14 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Member {
-
+  //private LocalDate dateOfBirth; //TODO: Skal evt bruges hvis der skal stå fødselsdag og ikke alder i print
   private String email;
   private String name;
-
-  public int age;
+  private int age;
   private int phoneNumber;
-
   private char activeOrPassive;
   private char paidOrNot;
-
-
-  private LocalDate dateOfBirth;
-
   private Integer memberID;
-
   private double paymentCategory;
 
   //Constructors
