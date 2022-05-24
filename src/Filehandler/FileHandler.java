@@ -10,7 +10,6 @@ public class FileHandler {
 
   private final String fileNameMemberList = "res/MemberBase.csv";
   private final String fileNameID = "res/IDNumber.txt";
-  private final String fileNameCompetitorList = "res/CompetitorBase.csv";
 
   //Members list
   public ArrayList<Member> loadMembersFromFile() {
@@ -101,72 +100,6 @@ public class FileHandler {
     out.print(member.isAdded());
     out.print("\n");
   }
-
-  //Competitor list
-  /*public ArrayList<Member> loadCompetitorsFromFile() {
-
-    ArrayList<Member> competitors = new ArrayList<>();
-
-    try {
-      Scanner fileScanner = new Scanner(new File(fileNameCompetitorList));
-      fileScanner.nextLine();
-      while (fileScanner.hasNextLine()) {
-        String lineCompetitor = fileScanner.nextLine();
-        Member competitor = readCompetitor(lineCompetitor);
-        competitors.add(competitor);
-      }
-    } catch (FileNotFoundException exception) {
-      System.out.println("\u001b[1;31mCOMPETITORLIST DID NOT GET LOADED\u001b[m");
-    }
-    return competitors;
-  }
-
-  public void saveCompetitorsToFile(ArrayList<Member> competitors) {
-    try {
-      PrintStream out = new PrintStream(fileNameCompetitorList);
-      out.println("name;age;memberId;butterfly;crawl;backCrawl;breaststroke");
-      for (Member competitor : competitors) {
-        writeCompetitor(out, competitor);
-      }
-      out.close();
-    } catch (FileNotFoundException exception) {
-      throw new DatabaseException();
-    }
-  }
-
-  public Member readCompetitor(String line) {
-
-    Scanner input = new Scanner(line).useDelimiter(";").useLocale(Locale.ENGLISH);
-    String name = input.next();
-    int age = input.nextInt();
-    Integer memberID = input.nextInt();
-    String butterfly = input.next();
-    String crawl = input.next();
-    String backCrawl = input.next();
-    String breaststroke = input.next();
-
-    return new Member(name, age, memberID, butterfly, crawl, backCrawl, breaststroke);
-  }
-
-  public void writeCompetitor(PrintStream out, Member member) {
-
-    out.print(member.getName());
-    out.print(";");
-    out.print(member.getAge());
-    out.print(";");
-    out.print(member.getMemberID());
-    out.print(";");
-    out.print(member.getButterfly());
-    out.print(";");
-    out.print(member.getCrawl());
-    out.print(";");
-    out.print(member.getBackCrawl());
-    out.print(";");
-    out.print(member.getBreastStroke());
-    out.print("\n");
-  }
-
-   */
 
   //MemberId
   public void saveMemberID(Integer id) {

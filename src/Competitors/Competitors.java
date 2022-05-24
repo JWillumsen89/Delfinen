@@ -1,7 +1,5 @@
 package Competitors;
 
-import Members.Member;
-
 import java.util.ArrayList;
 
 public class Competitors{
@@ -65,18 +63,6 @@ public class Competitors{
     public  ArrayList<Competition> getCompetitions() {
         return competitions;
     }
-
-
-
-    /*public String getName() {
-        return super.getName();
-    }
-
-    public int getAge() {
-        return super.getAge();
-    }
-
-     */
 
     public String toString() {
         return super.toString() +

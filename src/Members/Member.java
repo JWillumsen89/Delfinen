@@ -9,34 +9,15 @@ public class Member {
   private String name;
   private String coach;
   private String teams;
+  private String butterfly, breastStroke, backCrawl, crawl;
   private int age;
   private int phoneNumber;
-  private char activeOrPassive;
-  private char paidOrNot;
-
-  public void setCoach(String coach) {
-    this.coach = coach;
-  }
-
-  public void setTeams(String teams) {
-    this.teams = teams;
-  }
-
-  private char competitorOrRegular;
   private Integer memberID;
   private double paymentCategory;
-
-  private String butterfly, breastStroke, backCrawl, crawl;
-
+  private char activeOrPassive;
+  private char paidOrNot;
+  private char competitorOrRegular;
   private boolean added = false;
-
-  public void setAdded(boolean added) {
-    this.added = added;
-  }
-
-  public boolean isAdded() {
-    return added;
-  }
 
   //Constructor normal member
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot,
@@ -61,38 +42,6 @@ public class Member {
 
   }
 
-  //Competitor member
-  /*public Member(String name, int age, Integer memberID, String butterfly, String crawl, String backCrawl, String breastStroke) {
-    this.name = name;
-    this.age = age;
-    this.memberID = memberID;
-    this.butterfly = butterfly;
-    this.breastStroke = breastStroke;
-    this.backCrawl = backCrawl;
-    this.crawl = crawl;
-  }
-
-  public Member(String name, int age, Integer memberID, String butterfly, String crawl, String backCrawl, String breastStroke, String coach, String teams, boolean added) {
-    this.name = name;
-    this.age = age;
-    this.memberID = memberID;
-    this.butterfly = butterfly;
-    this.breastStroke = breastStroke;
-    this.backCrawl = backCrawl;
-    this.crawl = crawl;
-    this.coach = coach;
-    this.teams = teams;
-    this.added = added;
-
-
-  }
-
-   */
-
-
-
-
-
   public Member(String name, LocalDate age, int phoneNumber, String email, Integer memberId, char active, char paidOrNot, double paymentCategory, String butterfly, String crawl, String backCrawl, String breastStroke, String team, String coach, boolean added, char competitorOrRegular) {
 
   }
@@ -110,7 +59,6 @@ public class Member {
   }
 
   //-----------------Setter-----------------
-
   public void setName(String name) {
     this.name = name;
   }
@@ -127,8 +75,19 @@ public class Member {
     this.activeOrPassive = activeOrPassive;
   }
 
-  //-----------------Getter-----------------
+  public void setCoach(String coach) {
+    this.coach = coach;
+  }
 
+  public void setTeams(String teams) {
+    this.teams = teams;
+  }
+
+  public void setAdded(boolean added) {
+    this.added = added;
+  }
+
+  //-----------------Getter-----------------
   public String getName() {
     return name;
   }
@@ -187,6 +146,10 @@ public class Member {
 
   public char getCompetitorOrRegular() {
     return competitorOrRegular;
+  }
+
+  public boolean isAdded() {
+    return added;
   }
 
   @Override
