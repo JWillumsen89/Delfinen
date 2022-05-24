@@ -495,7 +495,7 @@ public class Controller {
 
   //TODO ADD UI
   public void coaches() {
-
+    ui.printCoachMenu();
     String choice = input.nextLine();
     switch (choice) {
       case "1" -> competitorsList();
