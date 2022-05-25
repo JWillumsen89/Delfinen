@@ -1,4 +1,4 @@
-package members;
+package Members;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -21,6 +21,7 @@ public class Member {
   private char competitorOrRegular;
   private boolean added = false;
   LocalDate curDate = LocalDate.now();
+
 
 
   //Constructor normal member
