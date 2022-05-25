@@ -691,7 +691,8 @@ public class Controller {
       }
       case "3" -> System.out.println("Coach Menu 3");
       case "4" -> System.out.println("Coach Menu 4");
-      case "5" -> exit();
+      case "5" -> System.out.println();
+      case "6" -> exit();
       case "0" -> start();
       default -> {
         wrongInput();

@@ -115,7 +115,8 @@ public class UserInterface {
         2) Teams
         3) Training results
         4) Top 5 results
-        5) Close program
+        5) Add results
+        6) Close program
                                 
         0) Return to main
         """);
