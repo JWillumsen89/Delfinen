@@ -537,6 +537,7 @@ public class Controller {
     scannerBugFix();
 
     Member member = findMemberById(memberId);
+    Competitor competitor = findCompetitorById(memberId);
     if (memberId == 0)
       System.out.println("EXITING REMOVE MENU");
     else if (member == null) {
@@ -547,6 +548,7 @@ public class Controller {
       String decision = input.nextLine();
       if (decision.equalsIgnoreCase("Y")) {
         members.remove(member);
+        swimResults.remove(competitor);
         System.out.println("\u001b[1;31mTHE MEMBER HAVE BEEN DELETED\u001b[m");
         save();
       } else
@@ -724,7 +726,7 @@ public class Controller {
         ui.printCompetitorList();
         for (Member competitor : members) {
           if (competitor.getCompetitorOrRegular() == 'C') {
-            System.out.printf("%-4d %-30s %-10s %-7s %-11s %-14s \n", competitor.getMemberID(), competitor.getName(), competitor.getButterfly(),
+            System.out.printf("%04d %-30s %-10s %-7s %-11s %-14s \n", competitor.getMemberID(), competitor.getName(), competitor.getButterfly(),
                 competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke());
           }
         }
@@ -819,7 +821,6 @@ public class Controller {
 
   public void addResult(Member competitor) {
 
-
     char competition = 'C';
     char training = 'T';
     String discipline = "-";
@@ -899,6 +900,7 @@ public class Controller {
 
     swimResults.add(new Competitor(name, id, discipline,
         resultTypeCompetitionTraining, time, competitionLocation, competitionResult, combinedMilliseconds));
+    saveDatabase();
     System.out.println(swimResults);
   }
 
@@ -924,12 +926,22 @@ public class Controller {
     }
   }
 
+  public Competitor findCompetitorById(Integer memberId) {
+    for (Competitor competitor : swimResults) {
+      if (competitor.getMemberID().equals(memberId)) {
+        return competitor;
+      }
+    }
+    return null;
+  }
+
   //FILE HANDLER
 
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
     memberId = fileHandler.loadMemberID();
+    swimResults = fileHandler.loadCompetitorListFromFile();
   }
 
   public void save() {
@@ -948,6 +960,7 @@ public class Controller {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
     fileHandler.saveMemberID(memberId);
+    fileHandler.saveCompetitorToFile(swimResults);
   }
 
   //SYSTEM HANDLER

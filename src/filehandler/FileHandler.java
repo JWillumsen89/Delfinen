@@ -1,5 +1,6 @@
 package filehandler;
 
+import competitors.Competitor;
 import members.Member;
 import java.io.*;
 import java.util.ArrayList;
@@ -8,7 +9,8 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-  private final String fileName = "res/MemberBase.csv";
+  private final String fileNameMemberBase = "res/MemberBase.csv";
+  private final String fileNameCompetitorList = "res/CompetitorList.csv";
   private final String fileNameID = "res/IDNumber.txt";
 
   //Members list
@@ -17,7 +19,7 @@ public class FileHandler {
     ArrayList<Member> members = new ArrayList<>();
 
     try {
-      Scanner fileScanner = new Scanner(new File(fileName));
+      Scanner fileScanner = new Scanner(new File(fileNameMemberBase));
       fileScanner.nextLine();
       while (fileScanner.hasNextLine()) {
         String line = fileScanner.nextLine();
@@ -32,7 +34,7 @@ public class FileHandler {
 
   public void saveMembersToFile(ArrayList<Member> members) {
     try {
-      PrintStream out = new PrintStream(fileName);
+      PrintStream out = new PrintStream(fileNameMemberBase);
       out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory;butterfly;crawl;backCrawl;breaststroke;team;coach;added;competitorOrRegular");
       for (Member member : members) {
         writeMember(out, member);
@@ -100,6 +102,75 @@ public class FileHandler {
     out.print(member.isAdded());
     out.print(";");
     out.print(member.getCompetitorOrRegular());
+    out.print("\n");
+  }
+
+  //Competitor result list
+  public ArrayList<Competitor> loadCompetitorListFromFile() {
+
+    ArrayList<Competitor> competitors = new ArrayList<>();
+
+    try {
+      Scanner fileScanner = new Scanner(new File(fileNameCompetitorList));
+      fileScanner.nextLine();
+      while (fileScanner.hasNextLine()) {
+        String line = fileScanner.nextLine();
+        Competitor competitor = readCompetitor(line);
+        competitors.add(competitor);
+      }
+    } catch (FileNotFoundException exception) {
+      System.out.println("\u001b[1;31mCOMPETITOR LIST DID NOT GET LOADED\u001b[m");
+    }
+    return competitors;
+  }
+
+  public void saveCompetitorToFile(ArrayList<Competitor> competitors) {
+    try {
+      PrintStream out = new PrintStream(fileNameCompetitorList);
+      out.println("name;memberId;discipline;resultTypeCompetitionTraining" +
+          ";time;competitionLocation;competitionResult;combinedMilliseconds");
+      for (Competitor competitor : competitors) {
+        writeCompetitor(out, competitor);
+      }
+      out.close();
+    } catch (FileNotFoundException exception) {
+      throw new DatabaseException();
+    }
+  }
+
+  public Competitor readCompetitor(String line) {
+
+    Scanner input = new Scanner(line).useDelimiter(";").useLocale(Locale.ENGLISH);
+    String name = input.next();
+    Integer memberID = input.nextInt();
+    String discipline = input.next();
+    char resultTypeCompetitionTraining = input.next().charAt(0);
+    String time = input.next();
+    String competitionLocation = input.next();
+    int competitionResult = input.nextInt();
+    int combinedMilliseconds = input.nextInt();
+
+    return new Competitor(name, memberID, discipline,
+        resultTypeCompetitionTraining, time, competitionLocation, competitionResult, combinedMilliseconds);
+  }
+
+  public void writeCompetitor(PrintStream out, Competitor competitor) {
+
+    out.print(competitor.getName());
+    out.print(";");
+    out.print(competitor.getMemberID());
+    out.print(";");
+    out.print(competitor.getDiscipline());
+    out.print(";");
+    out.print(competitor.getTrainingOrCompetition());
+    out.print(";");
+    out.print(competitor.getTime());
+    out.print(";");
+    out.print(competitor.getCompetitionLocation());
+    out.print(";");
+    out.print(competitor.getCompetitionResult());
+    out.print(";");
+    out.print(competitor.getMilliseconds());
     out.print("\n");
   }
 
