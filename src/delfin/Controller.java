@@ -1,6 +1,7 @@
 package delfin;
 
 import colors.FontColors;
+import competitors.TrainingScore;
 import filehandler.DatabaseException;
 import filehandler.FileHandler;
 import finance.MembersFee;
@@ -41,7 +42,6 @@ public class Controller {
 
   final Scanner input = new Scanner(System.in);
 
-
   //File handler
   final FileHandler fileHandler = new FileHandler();
   private Integer memberId = fileHandler.loadMemberID();
@@ -52,6 +52,7 @@ public class Controller {
 
   private ArrayList<Member> members = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
+  private ArrayList<TrainingScore> trainingScores = new ArrayList<>();
 
   //CHAIRMAN
   public void addMember() {
@@ -656,6 +657,10 @@ public class Controller {
     */
 
 
+  }
+
+  public void addTrainingResult() {
+    
   }
 
   //FILE HANDLER
