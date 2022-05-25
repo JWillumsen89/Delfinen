@@ -1,8 +1,0 @@
-name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory;butterfly;crawl;backCrawl;breaststroke;team;coach;added;competitorOrRegular
-JONATHAN WILLUMSEN;32;31150173;JHON2010@LIVE.DK;1;A;N;1600.0;-;-;-;-;-;-;false
-SIMON MELBYE;28;12345678;SIMON@LIVE.DK;2;A;N;1600.0;Butterfly;Crawl;BackCrawl;Breaststroke;-;-;false
-SILLE;13;12345;L@L.DK;3;A;N;1000.0;-;-;-;Breaststroke;-;-;false
-J;32;1;J@K.DK;4;A;N;1600.0;Butterfly;-;BackCrawl;-;-;-;false
-D;32;1;E@D.DK;5;A;N;1600.0;-;Crawl;BackCrawl;-;-;-;false
-D;32;1;F@D.DK;6;A;N;1600.0;Butterfly;-;-;Breaststroke;-;-;false
-JONATHAN WILLUMSEN;33;31150173;JHON2010@LIVE.DK;7;A;N;1600.0;-;-;-;-;-;-;false
