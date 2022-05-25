@@ -18,15 +18,15 @@ public class Member {
   private double paymentCategory;
   private char activeOrPassive;
 
-  public void setPaidOrNot(char paidOrNot) {
-    this.paidOrNot = paidOrNot;
-  }
-
   private char paidOrNot;
+
   private char competitorOrRegular;
   private boolean added = false;
   LocalDate curDate = LocalDate.now();
 
+  public void setPaidOrNot(char paidOrNot) {
+    this.paidOrNot = paidOrNot;
+  }
 
 
   //Constructor normal member

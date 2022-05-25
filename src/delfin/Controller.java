@@ -1,6 +1,7 @@
 package delfin;
 
 import colors.*;
+import competitors.Competitor;
 import competitors.TrainingScore;
 import filehandler.DatabaseException;
 import filehandler.FileHandler;
@@ -8,10 +9,16 @@ import finance.MembersFee;
 import members.Member;
 import ui.UserInterface;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -34,6 +41,7 @@ public class Controller {
   private char answerCom;
   private char competitorOrRegular;
   private char paidOrNot = 'N';
+  private char resultTypeCompetitionTraining;
 
   private LocalDate age;
 
@@ -42,6 +50,7 @@ public class Controller {
   boolean intError;
   boolean correctInput = false;
   final boolean added = false;
+
 
   final Scanner input = new Scanner(System.in);
 
@@ -55,7 +64,8 @@ public class Controller {
 
   private ArrayList<Member> members = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
-  private ArrayList<TrainingScore> trainingScores = new ArrayList<>();
+  private ArrayList<Competitor> swimResults = new ArrayList<>();
+  String[] output;
 
   //CHAIRMAN
   public void addMember() {
@@ -689,7 +699,7 @@ public class Controller {
         addToTeams();
         teamsList();
       }
-      case "3" -> System.out.println("Coach Menu 3");
+      case "3" -> addResultMenu();
       case "4" -> System.out.println("Coach Menu 4");
       case "5" -> System.out.println();
       case "6" -> exit();
@@ -697,6 +707,40 @@ public class Controller {
       default -> {
         wrongInput();
         coaches();
+      }
+    }
+  }
+
+  public void searchMemberCoach() {
+
+    System.out.print("\nSEARCH COMPETITOR SWIMMER - Type [0] to return to menu or type member name/part of name: ");
+    String memberName = input.nextLine().toLowerCase(Locale.ROOT);
+    lineSpace();
+    if (memberName.equals("0")) {
+      addResultMenu();
+    } else {
+      ArrayList<Member> members = findMemberByName(memberName);
+      if (members.size() != 0) {
+        ui.printCompetitorList();
+        for (Member competitor : members) {
+          if (competitor.getCompetitorOrRegular() == 'C') {
+            System.out.printf("%-4d %-30s %-10s %-7s %-11s %-14s \n", competitor.getMemberID(), competitor.getName(), competitor.getButterfly(),
+                competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke());
+          }
+        }
+        System.out.print("\nType [0] to return to add result menu or select a member by, ID number, that you want to edit: ");
+        int memberID = input.nextInt();
+        scannerBugFix();
+        System.out.println();
+        if (memberID == 0) {
+          System.out.println("\nNo changes have been made.");
+        } else {
+          Member competitor1 = pickAMember(memberID);
+          addResult(competitor1);
+        }
+      } else {
+        System.out.println(FontColors.RED + "The member could not be found" + FontColors.RESET);
+        addResultMenu();
       }
     }
   }
@@ -773,8 +817,111 @@ public class Controller {
 
   }
 
-  public void addTrainingResult() {
+  public void addResult(Member competitor) {
 
+
+    char competition = 'C';
+    char training = 'T';
+    String discipline = "-";
+    int competitionResult = 0;
+    String competitionLocation = "-";
+    int combinedMilliseconds = 0;
+
+    boolean answer = false;
+
+    do {
+      System.out.print("Competition[C] or training[T] result: ");
+      resultTypeCompetitionTraining = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      scannerBugFix();
+      if (resultTypeCompetitionTraining == competition) {
+        answer = true;
+      } else if (resultTypeCompetitionTraining == training) {
+        answer = true;
+      } else {
+        wrongInput();
+      }
+    }
+    while (!answer);
+
+    System.out.println("Discipline list for competitor: \n");
+    if (!competitor.getButterfly().equals("-")) {
+      System.out.println(competitor.getButterfly() + "[BF]");
+    }
+    if (!competitor.getCrawl().equals("-")) {
+      System.out.println(competitor.getCrawl() + "[C]");
+    }
+    if (!competitor.getBackCrawl().equals("-")) {
+      System.out.println(competitor.getBackCrawl() + "[BC]");
+    }
+    if (!competitor.getBreastStroke().equals("-")) {
+      System.out.println(competitor.getBreastStroke() + "[BS]");
+    }
+
+    boolean correct = false;
+    while (!correct) {
+      System.out.println("Pick discipline: ");
+      String decision = input.nextLine();
+      if (decision.equalsIgnoreCase("BF")) {
+        discipline = competitor.getButterfly();
+        correct = true;
+      } else if (decision.equalsIgnoreCase("C")) {
+        discipline = competitor.getCrawl();
+        correct = true;
+      } else if (decision.equalsIgnoreCase("BC")) {
+        discipline = competitor.getBackCrawl();
+        correct = true;
+      } else if (decision.equalsIgnoreCase("BS")) {
+        discipline = competitor.getBreastStroke();
+        correct = true;
+      } else
+        wrongInput();
+    }
+
+
+    if (resultTypeCompetitionTraining == 'C') {
+      System.out.print("Enter competition name: ");
+      competitionLocation = input.nextLine();
+      System.out.print("Enter swimmers ranking for the competition: ");
+      competitionResult = input.nextInt();
+      scannerBugFix();
+    }
+    System.out.print("Type time result in format[mm:ss:SSS]: ");
+    String time = input.nextLine();
+    output = time.split(":");
+    int minutes = Integer.parseInt(output[0]);
+    int seconds = Integer.parseInt(output[1]);
+    int milliseconds = Integer.parseInt(output[2]);
+    combinedMilliseconds = milliseconds + (seconds * 1000) + (minutes * 60000);
+    System.out.println(minutes + " " + seconds + " " + milliseconds);
+
+    int id = competitor.getMemberID();
+    String name = competitor.getName();
+
+    swimResults.add(new Competitor(name, id, discipline,
+        resultTypeCompetitionTraining, time, competitionLocation, competitionResult, combinedMilliseconds));
+    System.out.println(swimResults);
+  }
+
+  public void printResults() {
+    for (Competitor competitor: swimResults ) {
+      System.out.println(competitor);
+    }
+  }
+
+  public void addResultMenu() {
+
+    ui.printCoachAddResultMenu();
+    String choice = input.nextLine();
+    switch (choice) {
+      case "1" -> searchMemberCoach();
+      case "2" -> printResults();
+      case "3" -> exit();
+      case "0" -> start();
+      default -> {
+        wrongInput();
+        addResultMenu();
+      }
+    }
   }
 
   //FILE HANDLER
@@ -865,7 +1012,7 @@ public class Controller {
     }
   }
 
-  public void lineSpace(){
+  public void lineSpace() {
     System.out.println();
   }
 

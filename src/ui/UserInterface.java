@@ -124,6 +124,20 @@ public class UserInterface {
     System.out.print("Pick a menu: ");
   }
 
+  public void printCoachAddResultMenu() {
+    System.out.println("""
+        Add result
+        ---------
+        1) Add result
+        2) Print results
+        3) Close program
+                                
+        0) Return to main
+        """);
+
+    System.out.print("Pick a menu: ");
+  }
+
   public void printDisciplineMenu() {
     System.out.println("""
         1) Butterfly
@@ -142,6 +156,15 @@ public class UserInterface {
     System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
 
   }
+
+  public void printCompetitorList() {
+
+    System.out.println("-------------------------------------------------------COMPETITOR LIST-------------------------------------------------------------------");
+    System.out.printf("%-4s %-30s %-10s %-7s %-11s %-14s\n", "ID", "Name", "Discipline", "Discipline", "Discipline", "Discipline");
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+  }
+
+
 
   public void printMembersFees() {
     System.out.println("-----------Current members fee pr.season-------------\n");
