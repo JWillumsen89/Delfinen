@@ -210,7 +210,6 @@ public class Controller {
 
   public void paymentCategory(double resultAge) {
     paymentCategory = memberFee.paymentCategoryCalculator(resultAge);
-    System.out.println(paymentCategory); //TODO: NEEDS TO BE DELETED, TEST LINE
   }
 
   public Member pickAMember(int memberID) {
@@ -322,7 +321,6 @@ public class Controller {
     LocalDate temp = LocalDate.parse(age.toString());
     double resultAge = member.calculateAge(temp);
     paymentCategory(resultAge);
-    System.out.println(member.getAge());
     correctInput = true;
   }
 
