@@ -2,6 +2,8 @@ package Members;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class Member {
   //private LocalDate dateOfBirth; //TODO: Skal evt bruges hvis der skal stå fødselsdag og ikke alder i print
@@ -13,6 +15,7 @@ public class Member {
   private char paidOrNot;
   private Integer memberID;
   private double paymentCategory;
+  LocalDate curDate = LocalDate.now();
 
   private String butterfly, breastStroke, backCrawl, crawl;
 
@@ -74,16 +77,35 @@ public class Member {
   }
 
   public int calculateAge(LocalDate newAge) {
-    LocalDate curDate = LocalDate.now(); // nu bruger lokal tid og dato med now.
     if (newAge != null) {
-// gem fødselsdag under member som attribute
-
       age = Period.between(newAge, curDate).getYears();
       return age;
     } else {
       return 0;
     }
   }
+
+/*
+  public String formatAge(String birthday) {
+    curDate = LocalDate.parse(birthday);
+    String dateToString = curDate.toString();
+    dateToString = curDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+    System.out.println("My age" + dateToString);
+
+    return dateToString;
+  }
+  public String convertDateToString (String birthday) {
+
+    curDate = LocalDate.parse(birthday);
+
+
+    String dateToString = curDate.toString();
+
+    // Return the result
+    return (dateToString);
+  }
+
+ */
 
   //-----------------Setter-----------------
 

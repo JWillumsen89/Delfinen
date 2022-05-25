@@ -10,6 +10,8 @@ import Members.Member;
 import UI.UserInterface;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -37,6 +39,7 @@ public class Controller {
   boolean running = true;
   boolean intError;
   boolean correctInput = false;
+  private String dateToString;
 
   final Scanner input = new Scanner(System.in);
 
@@ -80,6 +83,15 @@ public class Controller {
   public void addMemberID() {
     //Adds memberId
     memberId = fileHandler.loadMemberID() + 1;
+  }
+
+  public String formatAge(String birthday) {
+    age = LocalDate.parse(birthday);
+    String dateToString;
+    dateToString = age.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+    System.out.println("My age" + dateToString);
+
+    return dateToString;
   }
 
   public void changeActiveOrPassive(Member member) {
@@ -264,9 +276,13 @@ public class Controller {
       ArrayList<Member> members = findMemberByName(memberName);
       if (members.size() != 0) {
         for (Member member : members) {
+          lineSpace();//TODO:tilføjet
+          ui.printMemberList();//TODO:tilføjet
           System.out.println(member);
+          lineSpace();//TODO:tilføjet
         }
         System.out.print("\nType [0] to return to chairman menu or select a member by, ID number, that you want to edit: ");
+        lineSpace();
         int memberID = input.nextInt();
         scannerBugFix();
         System.out.println();
@@ -282,6 +298,7 @@ public class Controller {
       }
     }
   }
+
 
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
@@ -423,7 +440,7 @@ public class Controller {
   }
 
   //TODO: ADD their category and constructor
-  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
+  public void createNewMember(String name, LocalDate age , int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
     Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
     members.add(newMember);
   }
@@ -731,6 +748,13 @@ public class Controller {
       }
     }
     System.out.println("\n The total income from activ members this sesson is: " + totalPayment + " dkk\n");
+  }
+
+  public void lineSpace(){
+    System.out.println();
+    System.out.println();
+    System.out.println();
+
   }
 
 }
