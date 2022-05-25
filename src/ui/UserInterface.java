@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class UserInterface {
 
   private String choice;
-
   private final MembersFee membersFee = new MembersFee();
   private final Scanner input = new Scanner(System.in);
 
@@ -24,7 +23,7 @@ public class UserInterface {
         2) Cashier
         3) Coaches
                         
-        0) Exit application
+        0) Close program
         """);
     System.out.print("Pick a menu: ");
     choice = input.nextLine();
@@ -34,18 +33,33 @@ public class UserInterface {
 
   public void printCashierMenu() {
     System.out.println("""
+        
         Cashier Menu
         ---------
         1) List of all in arrears
         2) Change membership fees
         3) Total income for this season
         4) See our membership fees
-        5) Exit program
+        5) Change payment status
+        6) Close program
                                 
         0) Return to main
         """);
 
     System.out.print("Pick a menu: ");
+  }
+
+  public void printCashierEditStatusMenu() {
+    System.out.println("""
+        
+        EDIT STATUS MENU:
+        
+        1) Edit member payment status
+        2) Search for another member
+                  
+        0) Return to Cashier menu
+        """);
+    System.out.print("What do you want to do?: ");
   }
 
   public void printChairmanMenu() {
@@ -58,6 +72,7 @@ public class UserInterface {
         2) Remove member
         3) Member list
         4) Search for member
+        5) Close program
                         
         0) Return to main
         """);
@@ -100,7 +115,7 @@ public class UserInterface {
         2) Teams
         3) Training results
         4) Top 5 results
-        5) Exit program
+        5) Close program
                                 
         0) Return to main
         """);
@@ -114,6 +129,7 @@ public class UserInterface {
         2) Crawl
         3) Back crawl
         4) Breaststroke
+        
         5) Done adding disciplines
         """);
     System.out.print("Pick discipline: ");
