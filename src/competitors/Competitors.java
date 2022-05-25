@@ -1,8 +1,10 @@
 package competitors;
 
+import delfin.Controller;
+
 import java.util.ArrayList;
 
-public class Competitors{
+public class Competitors extends Controller {
 
     private ArrayList<Discipline>disciplines = new ArrayList<>();
     private ArrayList<TrainingScore>trainingScores = new ArrayList<>();

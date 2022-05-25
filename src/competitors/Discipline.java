@@ -1,5 +1,7 @@
 package competitors;
 
+import delfin.Controller;
+
 public enum Discipline {
 
   Butterfly {

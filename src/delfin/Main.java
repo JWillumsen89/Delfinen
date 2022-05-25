@@ -1,6 +1,6 @@
 package delfin;
 
-public class Main {
+public class Main extends Controller {
 
   public static void main(String[] args) {
 
