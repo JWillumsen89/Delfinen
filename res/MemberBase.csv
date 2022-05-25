@@ -1,0 +1,4 @@
+name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory;butterfly;crawl;backCrawl;breaststroke;team;coach;added;competitorOrRegular
+JONATHAN;32;13;J@J.DK;1;A;N;1600.0;Butterfly;Crawl;-;-;-;-;false;C
+CHRISTIAN;32;1;J@J.DK;2;A;P;1600.0;-;-;-;-;-;-;false;R
+SILLE;32;23;J@J.DJ;3;A;N;1600.0;-;-;-;-;-;-;false;R
