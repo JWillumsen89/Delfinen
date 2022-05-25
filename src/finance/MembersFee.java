@@ -3,57 +3,18 @@ package finance;
 
 
 public class MembersFee {
-  //Member member = new Member();
 
-  private int junior;
-  private int senior;
-  private int newAge;
-  private double seniorGold;
-  //  double[] fees = new double[5];
   public final int[] fees = {1000, 1600, 25, 500};
   double category;
 
-
   //---------------------------constructor-----------------------------------
-
-  /*
-  public MembersFee(boolean activPassivMemebership, int juniorFee, int seniorFee, double seniorGoldFee, double category) {
-    //activMebership = aPmemebership;
-    junior = juniorFee;
-    senior = seniorFee;
-    seniorGold = seniorGoldFee;
-
-
-  }
-
-   */
-
   public MembersFee() {
 
   }
 
   //-------------------------------------getter----------------------------
 
-  public int getJunior() {
-    return junior;
-  }
-
-  public double getCategory() {
-    return category;
-  }
-
-  public int getSenior() {
-    return senior;
-  }
-
-  public double getSeniorGold() {
-    return seniorGold;
-  }
-
   public double paymentCategoryCalculator(double result) {
-
-     //Member member = new Member(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory, butterfly, crawl, backCrawl, breastStroke, team, coach, added);
-
 
     if (result < 18) {
       category = fees[0];
