@@ -1,3 +1,0 @@
-name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory;butterfly;crawl;backCrawl;breaststroke;team;coach;added;competitorOrRegular
-JONATHAN WILLUMSEN;32;31150173;JHON2010@LIVE.DK;8;A;N;1600.0;Butterfly;Crawl;BackCrawl;Breaststroke;-;-;false
-CHRISTIAN RODRIGO;32;12345678;RODRIGO@LIVE.DK;9;A;N;1600.0;-;Crawl;BackCrawl;-;-;-;false

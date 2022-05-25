@@ -98,6 +98,8 @@ public class FileHandler {
     out.print(member.getCoach());
     out.print(";");
     out.print(member.isAdded());
+    out.print(";");
+    out.print(member.getCompetitorOrRegular());
     out.print("\n");
   }
 
