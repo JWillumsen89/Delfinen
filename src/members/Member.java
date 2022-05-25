@@ -17,6 +17,11 @@ public class Member {
   private Integer memberID;
   private double paymentCategory;
   private char activeOrPassive;
+
+  public void setPaidOrNot(char paidOrNot) {
+    this.paidOrNot = paidOrNot;
+  }
+
   private char paidOrNot;
   private char competitorOrRegular;
   private boolean added = false;

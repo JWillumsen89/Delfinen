@@ -1,6 +1,6 @@
 package delfin;
 
-import colors.FontColors;
+import colors.*;
 import competitors.TrainingScore;
 import filehandler.DatabaseException;
 import filehandler.FileHandler;
@@ -25,6 +25,7 @@ public class Controller {
   private String crawl = "-";
   private final String team = "-";
   private final String coach = "-";
+  private String dateToString;
 
   private int phoneNumber;
   private double paymentCategory;
@@ -32,7 +33,7 @@ public class Controller {
   private char active;
   private char answerCom;
   private char competitorOrRegular;
-  char paidOrNot = 'N';
+  private char paidOrNot = 'N';
 
   private LocalDate age;
 
@@ -41,7 +42,6 @@ public class Controller {
   boolean intError;
   boolean correctInput = false;
   final boolean added = false;
-  private String dateToString;
 
   final Scanner input = new Scanner(System.in);
 
@@ -101,7 +101,6 @@ public class Controller {
     } else {
       saveRegularMember();
     }
-
   }
 
   public void changeAge() {
@@ -151,6 +150,7 @@ public class Controller {
       case "2" -> removeMember();
       case "3" -> memberList();
       case "4" -> searchMember();
+      case "5" -> exit();
       default -> {
         wrongInput();
         chairman();
@@ -341,14 +341,11 @@ public class Controller {
     } else {
       ArrayList<Member> members = findMemberByName(memberName);
       if (members.size() != 0) {
+        ui.printMemberList();
         for (Member member : members) {
-          lineSpace();//TODO:tilføjet
-          ui.printMemberList();//TODO:tilføjet
           System.out.println(member);
-          lineSpace();//TODO:tilføjet
         }
         System.out.print("\nType [0] to return to chairman menu or select a member by, ID number, that you want to edit: ");
-        lineSpace();
         int memberID = input.nextInt();
         scannerBugFix();
         System.out.println();
@@ -364,7 +361,6 @@ public class Controller {
       }
     }
   }
-
 
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
@@ -548,8 +544,8 @@ public class Controller {
     }
   }
 
-  //CASHIER
 
+  //CASHIER
   public void cashier() {
     ui.printCashierMenu();
     String choice = input.nextLine();
@@ -558,7 +554,8 @@ public class Controller {
       case "2" -> changeMemberFees();
       case "3" -> seeAllPayments();
       case "4" -> ui.printMembersFees();
-      case "5" -> exit();
+      case "5" -> searchMemberCashier();
+      case "6" -> exit();
       case "0" -> start();
       default -> {
         wrongInput();
@@ -581,9 +578,108 @@ public class Controller {
     cashier();
   }
 
+  public void missingPayments() {
+    ArrayList<Member> arrears = new ArrayList<>();
+    for (Member member : members) {
+      if (member.getPaidOrNot() == 'N') {
+        arrears.add(member);
+        System.out.println(member);
+      }
+    }
+    System.out.println("\nThe number of members that have arrears is: " + arrears.size() + "\n");
+  }
+
+  public void seeAllPayments() {
+    double totalPayment = 0.0;
+    for (Member member : members) {
+      totalPayment += member.getPaymentCategory();
+      System.out.println(member);
+    }
+    System.out.println("\n The total income from members this season: " + totalPayment + " dkk\n");
+  }
+
+  public void typePaymentStatus() {
+    char paid = 'P';
+    char not = 'N';
+    boolean answer = false;
+
+    do {
+      lineSpace();
+      System.out.print("Paid[P] or Not[N]: ");
+      paidOrNot = input.next().toUpperCase(Locale.ROOT).charAt(0);
+      if (paidOrNot == paid) {
+        answer = true;
+      } else if (paidOrNot == not) {
+        answer = true;
+      } else {
+        wrongInput();
+      }
+    }
+    while (!answer);
+  }
+
+  public void changePaymentStatus(Member member) {
+    typePaymentStatus();
+    scannerBugFix();
+    if (member != null) {
+      member.setPaidOrNot(paidOrNot);
+      lineSpace();
+      System.out.println(member);
+      lineSpace();
+      save();
+    } else {
+      saveRegularMember();
+    }
+    paidOrNot = 'N';
+  }
+
+  public void editStatus(Member member) {
+    ui.printCashierEditStatusMenu();
+    String choice = input.nextLine();
+    switch (choice) {
+      case "0" -> cashier();
+      case "1" -> changePaymentStatus(member);
+      case "2" -> searchMemberCashier();
+      default -> {
+        wrongInput();
+        editMember(member);
+      }
+    }
+  }
+
+  public void searchMemberCashier() {
+
+    System.out.print("\nSEARCH MEMBER - Type [0] to return to menu or type member name/part of name: ");
+    String memberName = input.nextLine().toLowerCase(Locale.ROOT);
+    lineSpace();
+    if (memberName.equals("0")) {
+      cashier();
+    } else {
+      ArrayList<Member> members = findMemberByName(memberName);
+      if (members.size() != 0) {
+        ui.printMemberList();
+        for (Member member : members) {
+          System.out.println(member);
+        }
+        System.out.print("\nType [0] to return to cashier menu or select a member by, ID number, that you want to edit: ");
+        int memberID = input.nextInt();
+        scannerBugFix();
+        System.out.println();
+        if (memberID == 0) {
+          System.out.println("\nNo changes have been made.");
+        } else {
+          Member member1 = pickAMember(memberID);
+          editStatus(member1);
+        }
+      } else {
+        System.out.println(FontColors.RED + "The member could not be found" + FontColors.RESET);
+        searchMemberCashier();
+      }
+    }
+  }
+
   //COACH
 
-  //TODO ADD UI
   public void coaches() {
     ui.printCoachMenu();
     String choice = input.nextLine();
@@ -768,31 +864,8 @@ public class Controller {
     }
   }
 
-  public void missingPayments() {
-    ArrayList<Member> arrears = new ArrayList<>();
-    for (Member member : members) {
-      if (member.getPaidOrNot() == 'N') {
-        arrears.add(member);
-        System.out.println(member);
-      }
-    }
-    System.out.println("\nThe number of members that have arrears is: " + arrears.size() + "\n");
-  }
-
-  public void seeAllPayments() {
-    double totalPayment = 0.0;
-    for (Member member : members) {
-        totalPayment += member.getPaymentCategory();
-        System.out.println(member);
-    }
-    System.out.println("\n The total income from members this season: " + totalPayment + " dkk\n");
-  }
-
   public void lineSpace(){
     System.out.println();
-    System.out.println();
-    System.out.println();
-
   }
 
 }

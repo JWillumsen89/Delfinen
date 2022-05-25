@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class FileHandler {
 
-  private final String fileNameMemberList = "res/MemberBase.csv";
+  private final String fileName = "res/MemberBase.csv";
   private final String fileNameID = "res/IDNumber.txt";
 
   //Members list
@@ -17,7 +17,7 @@ public class FileHandler {
     ArrayList<Member> members = new ArrayList<>();
 
     try {
-      Scanner fileScanner = new Scanner(new File(fileNameMemberList));
+      Scanner fileScanner = new Scanner(new File(fileName));
       fileScanner.nextLine();
       while (fileScanner.hasNextLine()) {
         String line = fileScanner.nextLine();
@@ -32,7 +32,7 @@ public class FileHandler {
 
   public void saveMembersToFile(ArrayList<Member> members) {
     try {
-      PrintStream out = new PrintStream(fileNameMemberList);
+      PrintStream out = new PrintStream(fileName);
       out.println("name;age;phoneNumber;email;memberId;active(A)OrPassive(P);paid(P)OrNot(N);PaymentCategory;butterfly;crawl;backCrawl;breaststroke;team;coach;added;competitorOrRegular");
       for (Member member : members) {
         writeMember(out, member);
