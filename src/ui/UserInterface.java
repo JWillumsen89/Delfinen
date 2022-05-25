@@ -1,6 +1,6 @@
-package UI;
+package ui;
 
-import Finance.MembersFee;
+import finance.MembersFee;
 
 import java.util.Scanner;
 
@@ -38,7 +38,7 @@ public class UserInterface {
         ---------
         1) List of all in arrears
         2) Change membership fees
-        3) Total income for this season(Active members)
+        3) Total income for this season
         4) See our membership fees
         5) Exit program
                                 

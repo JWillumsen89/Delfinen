@@ -1,16 +1,14 @@
-package Competitors;
-
-import Members.Member;
+package competitors;
 
 import java.util.ArrayList;
 
-public class Competitors extends Member {
+public class Competitors{
 
     private ArrayList<Discipline>disciplines = new ArrayList<>();
     private ArrayList<TrainingScore>trainingScores = new ArrayList<>();
     private ArrayList<Competition>competitions = new ArrayList<>();
 
-    public Competitors(String name,
+   /* public Competitors(String name,
                        int age,
                        int phoneNumber,
                        String email,
@@ -40,6 +38,8 @@ public class Competitors extends Member {
         super(name, age, phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
         setDisciplines(disciplines);
     }
+
+    */
 // ----------------------------------SETTER--------------------------------------------
 
     public void setDisciplines(ArrayList<Discipline> disciplines) {
@@ -62,16 +62,6 @@ public class Competitors extends Member {
     }
     public  ArrayList<Competition> getCompetitions() {
         return competitions;
-    }
-
-
-
-    public String getName() {
-        return super.getName();
-    }
-
-    public int getAge() {
-        return super.getAge();
     }
 
     public String toString() {

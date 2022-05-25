@@ -1,4 +1,4 @@
-package Delfin;
+package delfin;
 
 public class Main {
 

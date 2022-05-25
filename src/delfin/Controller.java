@@ -1,13 +1,12 @@
-package Delfin;
+package delfin;
 
-import Colors.FontColors;
-import Competitors.ManageTeams;
-import Filehandler.DatabaseException;
-import Filehandler.FileHandler;
-import Finance.MembersFee;
-import Members.CompetitorTeams;
-import Members.Member;
-import UI.UserInterface;
+import colors.FontColors;
+import competitors.TrainingScore;
+import filehandler.DatabaseException;
+import filehandler.FileHandler;
+import finance.MembersFee;
+import members.Member;
+import ui.UserInterface;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,25 +23,27 @@ public class Controller {
   private String breastStroke = "-";
   private String backCrawl = "-";
   private String crawl = "-";
-  private String team = "";
-  private String coach = "";
+  private final String team = "-";
+  private final String coach = "-";
 
   private int phoneNumber;
   private double paymentCategory;
 
   private char active;
   private char answerCom;
+  private char competitorOrRegular;
+  char paidOrNot = 'N';
 
   private LocalDate age;
 
-  final boolean programRunning = true;
+  boolean programRunning = true;
   boolean running = true;
   boolean intError;
   boolean correctInput = false;
+  final boolean added = false;
   private String dateToString;
 
   final Scanner input = new Scanner(System.in);
-
 
   //File handler
   final FileHandler fileHandler = new FileHandler();
@@ -50,21 +51,17 @@ public class Controller {
 
   final UserInterface ui = new UserInterface();
   final MembersFee memberFee = new MembersFee();
-  final Member member = new Member();
-  final ManageTeams manageTeams = new ManageTeams();
-
-
+  final Member member = new Member(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory, butterfly, crawl, backCrawl, breastStroke, team, coach, added, competitorOrRegular);
 
   private ArrayList<Member> members = new ArrayList<>();
-  private ArrayList<Member> competitors = new ArrayList<>();
-  private ArrayList<Member> teams = new ArrayList<>();
   private final ArrayList<Member> searchedForMembers = new ArrayList<>();
+  private ArrayList<TrainingScore> trainingScores = new ArrayList<>();
 
   //CHAIRMAN
   public void addMember() {
     System.out.println("\nCreate new member\n-----------------");
     typeName();
-    typeDOTException();
+    typeDOBException();
     typeEmailError();
     typePhoneNumber();
     addMemberID();
@@ -194,17 +191,94 @@ public class Controller {
 
   public void competitorsList() {
     //TODO TITLES
-    for (Member competitor : competitors)
-      System.out.printf("%04d %-30s %-35s %-9s %-5s %-9s %-5s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
-          competitor.getButterfly(), competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke());
-    }
-
+    for (Member competitor : members)
+      if (competitor.getCompetitorOrRegular() == 'C') {
+        System.out.printf("%04d %-30s %-35s %-9s %-5s %-9s %-5s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
+            competitor.getButterfly(), competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke());
+      }
+  }
 
   public void teamsList() {
     //TODO TITLES
-    for (Member competitor : teams) {
-      System.out.printf("%04d %-30s %-35s %-9s %-5s %-9s %-5s %-7s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(),
-              competitor.getButterfly(), competitor.getCrawl(), competitor.getBackCrawl(), competitor.getBreastStroke(), competitor.getTeams(), competitor.getCoach());
+    printButterflySeniorTeam();
+    printButterflyJuniorTeam();
+    printCrawlSeniorTeam();
+    printCrawlJuniorTeam();
+    printSeniorBackCrawlTeam();
+    printJuniorBackCrawlTeam();
+    printSeniorBreaststrokeTeam();
+    printJuniorBreaststrokeTeam();
+  }
+
+  public void printButterflySeniorTeam() {
+    System.out.println("------------------List of senior butterfly swimmers:------------------");
+    for (Member competitor : members) {
+      if (!competitor.getButterfly().equals("-") && competitor.getTeams().equals("Senior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
+    }
+  }
+
+  public void printButterflyJuniorTeam() {
+    System.out.println("------------------List of junior butterfly swimmers:------------------");
+    for (Member competitor : members) {
+      if (!competitor.getButterfly().equals("-") && competitor.getTeams().equals("Junior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
+    }
+  }
+
+  public void printCrawlSeniorTeam() {
+    System.out.println("------------------List of senior crawl swimmers-----------------------");
+    for (Member competitor : members) {
+      if (!competitor.getCrawl().equals("-") && competitor.getTeams().equals("Senior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
+    }
+  }
+
+  public void printCrawlJuniorTeam() {
+    System.out.println("------------------List of junior crawl swimmers-----------------------");
+    for (Member competitor : members) {
+      if (!competitor.getCrawl().equals("-") && competitor.getTeams().equals("Junior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
+    }
+  }
+
+  public void printSeniorBackCrawlTeam() {
+    System.out.println("------------------List of senior back crawl swimmers:-----------------");
+    for (Member competitor : members) {
+      if (!competitor.getBackCrawl().equals("-") && competitor.getTeams().equals("Senior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
+    }
+  }
+
+  public void printJuniorBackCrawlTeam() {
+    System.out.println("------------------List of junior back crawl swimmers:-----------------");
+    for (Member competitor : members) {
+      if (!competitor.getBackCrawl().equals("-") && competitor.getTeams().equals("Junior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
+    }
+  }
+
+  public void printSeniorBreaststrokeTeam() {
+    System.out.println("------------------List of senior breaststroke swimmers:---------------");
+    for (Member competitor : members) {
+      if (!competitor.getBreastStroke().equals("-") && competitor.getTeams().equals("Senior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
+    }
+  }
+
+  public void printJuniorBreaststrokeTeam() {
+    System.out.println("------------------List of junior breaststroke swimmers:---------------");
+    for (Member competitor : members) {
+      if (!competitor.getBreastStroke().equals("-") && competitor.getTeams().equals("Junior")) {
+        System.out.printf("%04d %-30s %-4s %-8s\n", competitor.getMemberID(), competitor.getName(), competitor.getAge(), competitor.getCoach());
+      }
     }
   }
 
@@ -225,7 +299,7 @@ public class Controller {
 
   public void saveRegularMember() {
 
-    char paidOrNot = 'N';
+    paidOrNot = 'N';
     System.out.println("\nMember information:");
     System.out.println(FontColors.CYAN + "\nName: " + name + "\nDate of birth: " + age + "\nEmail: " + email + "\nPhone number: "
         + phoneNumber + "\nmember ID: " + memberId + "\nActive or passive: " + active + FontColors.RESET);
@@ -236,10 +310,7 @@ public class Controller {
     String decision = input.nextLine().toUpperCase(Locale.ROOT);
     switch (decision) {
       case "Y" -> {
-        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory);
-        if (answerCom == 'C') {
-          saveCompetitionSwimmer();
-        }
+        createNewMember(name, age, phoneNumber, email, memberId, active, paidOrNot, paymentCategory, butterfly, crawl, backCrawl, breastStroke, team, coach, added, competitorOrRegular);
         save();
         System.out.println(FontColors.BLUE + "\nMEMBER HAS BEEN SAVED!!\n" + FontColors.RESET);
       }
@@ -248,19 +319,15 @@ public class Controller {
     }
   }
 
-  public void saveCompetitionSwimmer() {
-    createNewCompetitor(name, age, memberId, butterfly, crawl, backCrawl, breastStroke);
-  }
-
   public void activeDiscipline() {
     System.out.println("Active discipline: ");
-    if (!butterfly.equals(" "))
+    if (!butterfly.equals("-"))
       System.out.println("Butterfly");
-    if (!crawl.equals(" "))
+    if (!crawl.equals("-"))
       System.out.println("Crawl");
-    if (!backCrawl.equals(" "))
+    if (!backCrawl.equals("-"))
       System.out.println("Back crawl");
-    if (!breastStroke.equals(" "))
+    if (!breastStroke.equals("-"))
       System.out.println("Breaststroke");
   }
 
@@ -314,7 +381,7 @@ public class Controller {
     }
   }
 
-  public void typeDOT() {
+  public void typeDOB() {
 
     System.out.print("Enter date of birth in YYYY-MM-DD format: ");
     age = LocalDate.parse(input.nextLine());
@@ -324,10 +391,10 @@ public class Controller {
     correctInput = true;
   }
 
-  public void typeDOTException() {
+  public void typeDOBException() {
     while (!correctInput) {
       try {
-        typeDOT();
+        typeDOB();
       } catch (Exception e) {
         wrongInput();
       }
@@ -406,8 +473,10 @@ public class Controller {
       System.out.print("Competition swimmer[C] or regular[R]: ");
       answerCom = input.next().toUpperCase(Locale.ROOT).charAt(0);
       if (answerCom == comp) {
+        competitorOrRegular = 'C';
         answer = true;
       } else if (answerCom == regular) {
+        competitorOrRegular = 'R';
         answer = true;
       } else {
         wrongInput();
@@ -438,29 +507,10 @@ public class Controller {
   }
 
   //TODO: ADD their category and constructor
-  public void createNewMember(String name, LocalDate age , int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
-    Member newMember = new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory);
-    members.add(newMember);
-  }
-
-  public void createNewCompetitor(String name, LocalDate age, Integer memberID, String butterfly, String crawl, String backCrawl, String breastStroke) {
-    Member newCompetitor = new Member(name, member.getAge(), memberID, butterfly, crawl, backCrawl, breastStroke);
-    competitors.add(newCompetitor);
-    this.butterfly = butterfly;
-    this.crawl = crawl;
-    this.backCrawl = backCrawl;
-    this.breastStroke = breastStroke;
-  }
-
-  public void createNewCompetitorTeams(String name, int age, Integer memberID, String butterfly, String crawl, String backCrawl, String breastStroke, String team, String coach) {
-    Member newCompetitorTeams = new Member(name, member.getAge(), memberID, butterfly, crawl, backCrawl, breastStroke, team, coach);
-    teams.add(newCompetitorTeams);
-    this.butterfly = butterfly;
-    this.crawl = crawl;
-    this.backCrawl = backCrawl;
-    this.breastStroke = breastStroke;
-    System.out.println(memberID + " " + name + " " + age + " " + butterfly + " "
-     + crawl + " " + backCrawl + " " + breastStroke + " " + team + " " + coach);
+  public void createNewMember(String name, LocalDate age, int phoneNumber, String email, Integer memberID, char activeOrPassive,
+                              char paidOrNot, double paymentCategory, String butterfly, String crawl, String backCrawl,
+                              String breastStroke, String team, String coach, Boolean added, char competitorOrRegular) {
+    members.add(new Member(name, member.getAge(), phoneNumber, email, memberID, activeOrPassive, paidOrNot, paymentCategory, butterfly, crawl, backCrawl, breastStroke, team, coach, added, competitorOrRegular));
   }
 
   public void removeMember() {
@@ -481,10 +531,9 @@ public class Controller {
     scannerBugFix();
 
     Member member = findMemberById(memberId);
-    Member competitor = findCompetitorById(memberId);
     if (memberId == 0)
       System.out.println("EXITING REMOVE MENU");
-    else if (member == null || competitor == null) {
+    else if (member == null) {
       System.out.println("The member could not be found and can't be deleted");
     } else {
       System.out.println("\n" + member);
@@ -492,7 +541,6 @@ public class Controller {
       String decision = input.nextLine();
       if (decision.equalsIgnoreCase("Y")) {
         members.remove(member);
-        competitors.remove(competitor);
         System.out.println("\u001b[1;31mTHE MEMBER HAVE BEEN DELETED\u001b[m");
         save();
       } else
@@ -541,8 +589,10 @@ public class Controller {
     String choice = input.nextLine();
     switch (choice) {
       case "1" -> competitorsList();
-      case "2" -> {addToTeams();
-      teamsList();}
+      case "2" -> {
+        addToTeams();
+        teamsList();
+      }
       case "3" -> System.out.println("Coach Menu 3");
       case "4" -> System.out.println("Coach Menu 4");
       case "5" -> exit();
@@ -555,20 +605,18 @@ public class Controller {
   }
 
   public void addToTeams() {
-
-
-
-    for (Member competitor : competitors) {
-      if (competitor.getAge() < 18) {
-        team = "Junior";
-        coach = "Coach 1";
+    for (Member competitor : members) {
+      if (!competitor.isAdded() && competitor.getCompetitorOrRegular() == 'C') {
+        if (competitor.getAge() < 18) {
+          competitor.setTeams("Junior");
+          competitor.setCoach("Coach 1");
+          competitor.setAdded(true);
+        } else if (competitor.getAge() >= 18) {
+          competitor.setTeams("Senior");
+          competitor.setCoach("Coach 2");
+          competitor.setAdded(true);
+        }
       }
-      else if (competitor.getAge() >= 18) {
-        team = "Senior";
-        coach = "Coach 2";
-      }
-      createNewCompetitorTeams(competitor.getName(), competitor.getAge(), competitor.getMemberID(), competitor.getButterfly(),competitor.getCrawl(),
-              competitor.getBackCrawl(),competitor.getBreastStroke(),team,coach);
     }
 
    /* for (int i = 0; i < manageTeams.getTeams().length ; i++ ){
@@ -628,13 +676,16 @@ public class Controller {
 
   }
 
+  public void addTrainingResult() {
+
+  }
+
   //FILE HANDLER
 
   public void loadDatabase() {
     FileHandler fileHandler = new FileHandler();
     members = fileHandler.loadMembersFromFile();
     memberId = fileHandler.loadMemberID();
-    competitors = fileHandler.loadCompetitorsFromFile();
   }
 
   public void save() {
@@ -653,13 +704,13 @@ public class Controller {
     FileHandler fileHandler = new FileHandler();
     fileHandler.saveMembersToFile(members);
     fileHandler.saveMemberID(memberId);
-    fileHandler.saveCompetitorsToFile(competitors);
   }
 
   //SYSTEM HANDLER
 
   public void exit() {
     System.out.println("\u001b[1;31mPROGRAM SHUTTING DOWN\u001b[m");
+    programRunning = false;
     System.exit(0);
   }
 
@@ -667,15 +718,6 @@ public class Controller {
     for (Member member : members) {
       if (member.getMemberID().equals(memberId)) {
         return member;
-      }
-    }
-    return null;
-  }
-
-  public Member findCompetitorById(Integer memberId) {
-    for (Member competitor : competitors) {
-      if (competitor.getMemberID().equals(memberId)) {
-        return competitor;
       }
     }
     return null;
@@ -727,25 +769,23 @@ public class Controller {
   }
 
   public void missingPayments() {
-    ArrayList<Member> restance = new ArrayList<>();
+    ArrayList<Member> arrears = new ArrayList<>();
     for (Member member : members) {
-      if (member.getPaidOrNot() == 'N' & member.getActiveOrPassive() == 'A') {
-        restance.add(member);
+      if (member.getPaidOrNot() == 'N') {
+        arrears.add(member);
         System.out.println(member);
       }
     }
-    System.out.println("\nThe number of members that have restance is: " + restance.size() + "\n");
+    System.out.println("\nThe number of members that have arrears is: " + arrears.size() + "\n");
   }
 
   public void seeAllPayments() {
     double totalPayment = 0.0;
     for (Member member : members) {
-      if (member.getPaidOrNot() == 'P' & member.getActiveOrPassive() == 'A') {
         totalPayment += member.getPaymentCategory();
         System.out.println(member);
-      }
     }
-    System.out.println("\n The total income from activ members this sesson is: " + totalPayment + " dkk\n");
+    System.out.println("\n The total income from members this season: " + totalPayment + " dkk\n");
   }
 
   public void lineSpace(){

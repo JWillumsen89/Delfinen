@@ -9,18 +9,25 @@ public class Member {
   //private LocalDate dateOfBirth; //TODO: Skal evt bruges hvis der skal stå fødselsdag og ikke alder i print
   private String email;
   private String name;
+  private String coach;
+  private String teams;
+  private String butterfly, breastStroke, backCrawl, crawl;
   private int age;
   private int phoneNumber;
-  private char activeOrPassive;
-  private char paidOrNot;
   private Integer memberID;
   private double paymentCategory;
+  private char activeOrPassive;
+  private char paidOrNot;
+  private char competitorOrRegular;
+  private boolean added = false;
   LocalDate curDate = LocalDate.now();
 
   private String butterfly, breastStroke, backCrawl, crawl;
 
   //Constructor normal member
-  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot, double paymentCategory) {
+  public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot,
+                double paymentCategory, String butterfly, String crawl, String backCrawl,
+                String breastStroke, String coach, String teams, boolean added, char competitorOrRegular) {
     this.name = name;
     this.age = age;
     this.phoneNumber = phoneNumber;
@@ -29,50 +36,18 @@ public class Member {
     this.activeOrPassive = activeOrPassive;
     this.paidOrNot = paidOrNot;
     this.paymentCategory = paymentCategory;
-
-  }
-
-  //Competitor member
-  public Member(String name, int age, Integer memberID,
-                String butterfly, String crawl, String backCrawl,String breastStroke) {
-    this.name = name;
-    this.age = age;
-    this.memberID = memberID;
-    this.butterfly = butterfly;
-    this.breastStroke = breastStroke;
-    this.backCrawl = backCrawl;
-    this.crawl = crawl;
-  }
-  public String getCoach() {
-    return coach;
-  }
-
-  public String getTeams() {
-    return teams;
-  }
-
-  private String coach;
-  private String teams;
-
-
-  public Member(String name, int age, Integer memberID,
-                         String butterfly, String crawl, String backCrawl, String breastStroke, String coach, String teams) {
-    this.name = name;
-    this.age = age;
-    this.memberID = memberID;
     this.butterfly = butterfly;
     this.breastStroke = breastStroke;
     this.backCrawl = backCrawl;
     this.crawl = crawl;
     this.coach = coach;
     this.teams = teams;
-
-
-
+    this.added = added;
+    this.competitorOrRegular = competitorOrRegular;
 
   }
 
-  public Member() {
+  public Member(String name, LocalDate age, int phoneNumber, String email, Integer memberId, char active, char paidOrNot, double paymentCategory, String butterfly, String crawl, String backCrawl, String breastStroke, String team, String coach, boolean added, char competitorOrRegular) {
 
   }
 
@@ -108,7 +83,6 @@ public class Member {
  */
 
   //-----------------Setter-----------------
-
   public void setName(String name) {
     this.name = name;
   }
@@ -125,8 +99,19 @@ public class Member {
     this.activeOrPassive = activeOrPassive;
   }
 
-  //-----------------Getter-----------------
+  public void setCoach(String coach) {
+    this.coach = coach;
+  }
 
+  public void setTeams(String teams) {
+    this.teams = teams;
+  }
+
+  public void setAdded(boolean added) {
+    this.added = added;
+  }
+
+  //-----------------Getter-----------------
   public String getName() {
     return name;
   }
@@ -173,6 +158,22 @@ public class Member {
 
   public String getCrawl() {
     return crawl;
+  }
+
+  public String getCoach() {
+    return coach;
+  }
+
+  public String getTeams() {
+    return teams;
+  }
+
+  public char getCompetitorOrRegular() {
+    return competitorOrRegular;
+  }
+
+  public boolean isAdded() {
+    return added;
   }
 
   @Override

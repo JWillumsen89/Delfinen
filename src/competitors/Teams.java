@@ -1,4 +1,4 @@
-package Competitors;
+package competitors;
 
 import java.util.ArrayList;
 
@@ -36,26 +36,6 @@ public class Teams {
 
     public Discipline getDiscipline() {
         return discipline;
-    }
-    public String getStringOfCompetitors() {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (competitors != null) {
-            for (Competitors competitors : competitors) {
-                stringBuilder.append(competitors.getName());
-            }
-        } else {
-            stringBuilder.append("No competitors available!");
-        }
-        return stringBuilder.toString();
-    }
-
-    public String toString() {
-        return "Team: " +
-                teamName
-                + "Coach: "
-                + coachName
-                + "Competitors: "
-                + getStringOfCompetitors();
     }
 
 }
