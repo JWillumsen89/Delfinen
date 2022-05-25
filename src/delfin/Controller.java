@@ -1,6 +1,6 @@
 package delfin;
 
-import colors.FontColors;
+import colors.*;
 import competitors.TrainingScore;
 import filehandler.DatabaseException;
 import filehandler.FileHandler;
@@ -364,7 +364,6 @@ public class Controller {
       }
     }
   }
-
 
   public void searchMemberMenu(Member member) {
     ui.printSearchMenu();
