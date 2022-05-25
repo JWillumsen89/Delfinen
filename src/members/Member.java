@@ -1,4 +1,4 @@
-package Members;
+package members;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,7 +22,7 @@ public class Member {
   private boolean added = false;
   LocalDate curDate = LocalDate.now();
 
-  private String butterfly, breastStroke, backCrawl, crawl;
+
 
   //Constructor normal member
   public Member(String name, int age, int phoneNumber, String email, Integer memberID, char activeOrPassive, char paidOrNot,
